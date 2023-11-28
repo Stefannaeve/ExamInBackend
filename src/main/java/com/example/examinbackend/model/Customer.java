@@ -35,7 +35,7 @@ public class Customer {
     @OneToMany(cascade = CascadeType.ALL)
     @JsonIgnoreProperties("customer_id")
     @JoinColumn(name = "customer_id")
-    private List<Addresses> addresses = new ArrayList<>();
+    private List<Address> addresses = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL)
     @JsonIgnoreProperties("customer_id")
