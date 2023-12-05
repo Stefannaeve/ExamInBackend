@@ -26,4 +26,8 @@ public class Address {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    public Address(String address) {
+        this.address = address;
+    }
+
 }
