@@ -1,5 +1,6 @@
 package com.example.examinbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,7 +26,7 @@ public class Subassembly {
     @Column(name = "subassembly_name")
     private String name;
 
-    @OneToMany
-    @JoinColumn(name = "part_id")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "subassembly_id")
     private List<Part> parts;
 }
