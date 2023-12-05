@@ -25,4 +25,9 @@ public class Order {
     @JsonIgnoreProperties("orders")
     private Customer customer;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("order_id")
+    @JoinColumn(name = "order_id")
+    private List<Machine> machines = new ArrayList<>();
+
 }
