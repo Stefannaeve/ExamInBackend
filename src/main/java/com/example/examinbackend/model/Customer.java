@@ -33,12 +33,12 @@ public class Customer {
     private String phone;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("customer_id")
+    @JsonIgnoreProperties("customer")
     @JoinColumn(name = "customer_id")
     private List<Address> addresses = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("customer_id")
+    @JsonIgnoreProperties("customer")
     @JoinColumn(name = "customer_id")
     private List<Order> orders = new ArrayList<>();
 
