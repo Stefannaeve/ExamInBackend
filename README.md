@@ -17,16 +17,14 @@
     - [ ] **Customer**
         - [x] Create
         - [ ] Update
-          - [ ] Name
-          - [ ] Address
-          - [ ] Phone
-          - [ ] Email
+          - [x] Name
+          - [x] Phone
+          - [x] Email
         - [ ] Delete
   - [ ] **Address**
       - [x] Create
       - [ ] Update
-          - [ ] Name
-          - [ ] Customer
+          - [ ] Address
       - [ ] Delete
     - [ ] **Order**
         - [ ] Create
