@@ -1,11 +1,12 @@
 package com.example.examinbackend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -23,7 +24,7 @@ public class Machine {
     @Column(name = "machine_name")
     private String name;
 
-//    @ManyToOne
-//    @JoinColumn(name = "subassembly_id")
-//    private List<Subassembly> subassembly;
+    @OneToMany
+    @JoinColumn(name = "subassembly_id")
+    private List<Subassembly> subassemblies;
 }
