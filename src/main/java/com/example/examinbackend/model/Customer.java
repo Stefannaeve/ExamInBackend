@@ -18,7 +18,7 @@ import java.util.List;
 public class Customer {
 
     @Id
-    @GeneratedValue(generator = "customer_generator")
+    @GeneratedValue(generator = "customer_generator", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "customer_generator", sequenceName = "customer_seq", initialValue = 1, allocationSize = 1)
     @Column(name = "customer_id")
     private Long id;
@@ -26,10 +26,10 @@ public class Customer {
     @Column(name = "customer_name")
     private String customerName;
 
-    @Column(name = "email")
+    @Column(name = "customer_email")
     private String email;
 
-    @Column(name = "phone")
+    @Column(name = "customer_phone")
     private String phone;
 
     @OneToMany(cascade = CascadeType.ALL)
