@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @ToString
@@ -25,9 +28,9 @@ public class Order {
     @JsonIgnoreProperties("orders")
     private Customer customer;
 
-//    @OneToMany(cascade = CascadeType.ALL)
-//    @JsonIgnoreProperties("order_id")
-//    @JoinColumn(name = "order_id")
-//    private List<Machine> machines = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("order_id")
+    @JoinColumn(name = "order_id")
+    private List<Machine> machines = new ArrayList<>();
 
 }
