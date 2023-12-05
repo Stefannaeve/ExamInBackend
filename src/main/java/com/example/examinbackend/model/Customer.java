@@ -42,4 +42,9 @@ public class Customer {
     @JoinColumn(name = "customer_id")
     private List<Order> orders = new ArrayList<>();
 
+    public Customer(String customerName, String email, String phone) {
+        this.customerName = customerName;
+        this.email = email;
+        this.phone = phone;
+    }
 }
