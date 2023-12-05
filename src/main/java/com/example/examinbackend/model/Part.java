@@ -11,6 +11,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @Entity
+@Table(name = "part")
 public class Part {
 
     @Id
@@ -21,4 +22,8 @@ public class Part {
 
     @Column(name = "part_name")
     private String name;
+
+    public Part(String name) {
+        this.name = name;
+    }
 }

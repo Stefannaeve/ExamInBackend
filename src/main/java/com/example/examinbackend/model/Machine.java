@@ -13,6 +13,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @Entity
+@Table(name = "machine")
 public class Machine {
 
     @Id

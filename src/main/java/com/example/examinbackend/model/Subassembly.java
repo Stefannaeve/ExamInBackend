@@ -13,6 +13,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @Entity
+@Table(name = "subassembly")
 public class Subassembly {
 
     @Id
