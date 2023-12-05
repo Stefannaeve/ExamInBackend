@@ -13,8 +13,8 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
 @Entity
+@Table(name = "orders")
 public class Order {
 
     @Id
@@ -29,7 +29,7 @@ public class Order {
     private Customer customer;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("order_id")
+    @JsonIgnoreProperties("order")
     @JoinColumn(name = "order_id")
     private List<Machine> machines = new ArrayList<>();
 
