@@ -22,6 +22,16 @@ public class PartService {
         return partRepository.save(part);
     }
 
+    public void deletePart(Long id) {
+        partRepository.deleteById(id);
+    }
+
+    public Part updatePartName(Long id, Part part) {
+        Part existingPart = getPartById(id);
+        existingPart.setPartName(part.getPartName());
+        return partRepository.save(existingPart);
+    }
+
     public List<Part> getAllParts() {
         return partRepository.findAll();
     }
