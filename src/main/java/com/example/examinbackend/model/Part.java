@@ -20,9 +20,9 @@ public class Part {
     private Long id;
 
     @Column(name = "part_name")
-    private String name;
+    private String partName;
 
-    public Part(String name) {
-        this.name = name;
+    public Part(String partName) {
+        this.partName = partName;
     }
 }

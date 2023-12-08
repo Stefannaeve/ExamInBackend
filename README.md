@@ -31,19 +31,20 @@
         - [ ] Update
             - [ ] Machines
         - [ ] Delete
-    - [ ] Machine
-        - [ ] Create
-        - [ ] Update
+    - [x] Machine
+        - [x] Create
+        - [x] Update
             - [ ] Name
-        - [ ] Delete
-    - [ ] Subassembly
-        - [ ] Create
-        - [ ] Update
-            - [ ] Parts
-    - [ ] Part
-        - [ ] Create
-        - [ ] Update
-            - [ ] Name
+        - [x] Delete
+    - [x] Subassembly
+        - [x] Create
+        - [x] Update
+            - [] Parts
+    - [x] Part
+        - [x] Create
+        - [x] Update
+        - [x] Delete
+            - [x] Name
 
 ### Priority 2
 
