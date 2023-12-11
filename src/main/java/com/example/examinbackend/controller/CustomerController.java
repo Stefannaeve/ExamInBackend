@@ -46,7 +46,7 @@ public class CustomerController {
         customerService.createCustomer(customer);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/update/{id}/name")
     public Customer updateCustomerName(@PathVariable Long id, @RequestBody Customer customer) {
         return customerService.updateCustomerName(id, customer);
     }

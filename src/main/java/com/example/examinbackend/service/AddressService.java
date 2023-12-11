@@ -5,6 +5,8 @@ import com.example.examinbackend.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class AddressService {
 
@@ -27,5 +29,9 @@ public class AddressService {
         Address existingAddress = getAddressById(id);
         existingAddress.setAddress(address.getAddress());
         return addressRepository.save(existingAddress);
+    }
+
+    public List<Address> getAllAddresses() {
+        return addressRepository.findAll();
     }
 }
