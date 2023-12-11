@@ -18,6 +18,9 @@ public class PartService {
     public Part getPartById(Long id) {
         return partRepository.findById(id).orElse(null);
     }
+    public Part getPartByName(String name) {
+        return partRepository.findByPartName(name).orElse(null);
+    }
     public Part createPart(Part part) {
         return partRepository.save(part);
     }
