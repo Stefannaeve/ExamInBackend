@@ -24,7 +24,7 @@ public class Machine {
     private Long id;
 
     @Column(name = "machine_name")
-    private String name;
+    private String machineName;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "machine_id")
