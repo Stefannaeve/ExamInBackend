@@ -33,4 +33,7 @@ public class Order {
     @JoinColumn(name = "order_id")
     private List<Machine> machines = new ArrayList<>();
 
+    public Order(Customer customer) {
+        this.customer = customer;
+    }
 }
