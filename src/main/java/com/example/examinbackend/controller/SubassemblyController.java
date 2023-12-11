@@ -15,7 +15,7 @@ public class SubassemblyController {
     public SubassemblyController(SubassemblyService subassemblyService) {
         this.subassemblyService = subassemblyService;
     }
-    @GetMapping("/id")
+    @GetMapping("/{id}")
     public Subassembly getSubassembly(@PathVariable Long id) {
         return subassemblyService.getSubassemblyById(id);
     }
