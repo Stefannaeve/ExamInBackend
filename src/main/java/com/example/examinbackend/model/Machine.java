@@ -29,4 +29,8 @@ public class Machine {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "machine_id")
     private List<Subassembly> subassemblies;
+
+    public Machine(String machineName) {
+        this.machineName = machineName;
+    }
 }
