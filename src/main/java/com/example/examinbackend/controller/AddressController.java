@@ -4,6 +4,8 @@ import com.example.examinbackend.model.Address;
 import com.example.examinbackend.service.AddressService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/address")
 public class AddressController {
@@ -22,5 +24,9 @@ public class AddressController {
     @PutMapping("/update/{id}")
     public Address updateAddress(@PathVariable Long id, @RequestBody Address address) {
         return addressService.updateAddressById(id, address);
+    }
+    @GetMapping("/all")
+    public List<Address> getAllAddresses() {
+        return addressService.getAllAddresses();
     }
 }
