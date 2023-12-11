@@ -23,9 +23,13 @@ public class OrderController {
     public List<Order> getAllOrders() {
         return orderService.getAllOrders();
     }
-    @PostMapping("/add")
-    public Order createOrder(@RequestBody Order order) {
-        return orderService.createOrder(order);
+    @PostMapping("/add/customer/{customerId}")
+    public Order createOrder(@RequestBody Order order, @PathVariable Long customerId) {
+        return orderService.createOrder(order, customerId);
+    }
+    @PostMapping("/update/{orderId}/machines/{machineId}")
+    public Order updateOrderMachines(@PathVariable Long orderId, @PathVariable Long machineId) {
+        return orderService.updateOrderMachines(machineId, orderId);
     }
     @DeleteMapping("/delete/{id}")
     public void deleteOrder(@PathVariable Long id) {
