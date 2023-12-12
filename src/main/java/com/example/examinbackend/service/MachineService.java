@@ -1,6 +1,8 @@
 package com.example.examinbackend.service;
 
 import com.example.examinbackend.model.Machine;
+import com.example.examinbackend.model.Part;
+import com.example.examinbackend.model.Subassembly;
 import com.example.examinbackend.repository.MachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,11 @@ public class MachineService {
         return optionalMachine;
     }
     public Machine createMachine(Machine machine) {
+        long subassemblyPrice = 0;
+        for (Subassembly subassembly : machine.getSubassemblies()) {
+            subassemblyPrice += subassembly.getSubassemblyPrice();
+        }
+        machine.setMachinePrice(subassemblyPrice);
         return machineRepository.save(machine);
     }
     public List<Machine> getAllMachines() {
