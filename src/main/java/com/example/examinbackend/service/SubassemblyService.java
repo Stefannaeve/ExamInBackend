@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SubassemblyService {
@@ -17,8 +18,13 @@ public class SubassemblyService {
         this.subassemblyRepository = subassemblyRepository;
     }
 
-    public Subassembly getSubassemblyById(Long id) {
-        return subassemblyRepository.findById(id).orElse(null);
+    public Optional<Subassembly> getSubassemblyById(Long id) {
+        Optional<Subassembly> optionalSubassembly = subassemblyRepository.findById(id);
+        if (optionalSubassembly.isEmpty()) {
+            return Optional.empty();
+        }else {
+            return optionalSubassembly;
+        }
     }
 
     public void createSubassembly(Subassembly subassembly) {
@@ -29,13 +35,21 @@ public class SubassemblyService {
         return subassemblyRepository.findAll();
     }
 
-    public void deleteSubassembly(Long id) {
+    public Optional<Subassembly> deleteSubassembly(Long id) {
+        Optional<Subassembly> optionalSubassembly = getSubassemblyById(id);
+        if (optionalSubassembly.isEmpty()) {
+            return Optional.empty();
+        }
         subassemblyRepository.deleteById(id);
+        return optionalSubassembly;
     }
-    public Subassembly updateSubassemblyName(Long id, Subassembly subassembly) {
-        Subassembly existingSubassembly = getSubassemblyById(id);
-        existingSubassembly.setSubassemblyName(subassembly.getSubassemblyName());
-        return subassemblyRepository.save(existingSubassembly);
+    public Optional<Subassembly> updateSubassemblyName(Long id, Subassembly subassembly) {
+        Optional<Subassembly> existingSubassembly = getSubassemblyById(id);
+        if (existingSubassembly.isEmpty()) {
+            return Optional.empty();
+        }
+        existingSubassembly.get().setSubassemblyName(subassembly.getSubassemblyName());
+        return Optional.of(subassemblyRepository.save(existingSubassembly.get()));
     }
 
     public Subassembly getSubassemblyByName(String name) {
