@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MachineService {
@@ -16,8 +17,8 @@ public class MachineService {
     public MachineService(MachineRepository machineRepository) {
         this.machineRepository = machineRepository;
     }
-    public Machine getMachineById(Long id) {
-        return machineRepository.findById(id).orElse(null);
+    public Optional<Machine> getMachineById(Long id) {
+        return machineRepository.findById(id);
     }
     public Machine createMachine(Machine machine) {
         return machineRepository.save(machine);
