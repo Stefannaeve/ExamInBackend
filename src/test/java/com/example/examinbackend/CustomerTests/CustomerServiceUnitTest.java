@@ -37,7 +37,7 @@ public class CustomerServiceUnitTest {
     }
 
     @Test
-    void shouldDeleteANewCustomer() {
+    void shouldDeleteANewCustomerById() {
         Customer customer = new Customer("Customer 1", "Address 1", "Phone 1");
         customerService.deleteCustomer(1L);
         assert customerService.getAllCustomers().size() == 0;
