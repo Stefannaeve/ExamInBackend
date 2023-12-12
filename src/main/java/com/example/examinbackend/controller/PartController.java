@@ -3,9 +3,12 @@ package com.example.examinbackend.controller;
 import com.example.examinbackend.model.Part;
 import com.example.examinbackend.service.PartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/part")
@@ -19,8 +22,13 @@ public class PartController {
     }
 
     @GetMapping("/{id}")
-    public Part getPartById(@PathVariable Long id) {
-        return partService.getPartById(id);
+    public ResponseEntity<Part> getPartById(@PathVariable Long id) {
+        Optional<Part> optionalPart = partService.getPartById(id);
+        if (optionalPart.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body(optionalPart.get());
+        }
     }
 
     @GetMapping("/all")
@@ -34,12 +42,22 @@ public class PartController {
     }
 
     @PutMapping("/update/{id}")
-    public Part updatePartName(@PathVariable Long id, @RequestBody Part part) {
-        return partService.updatePartName(id, part);
+    public ResponseEntity<Part> updatePartName(@PathVariable Long id, @RequestBody Part part) {
+        Optional<Part> optionalPart = partService.updatePartName(id, part);
+        if (optionalPart.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body(optionalPart.get());
+        }
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deletePart(@PathVariable Long id) {
-        partService.deletePart(id);
+    public ResponseEntity<Part> deletePart(@PathVariable Long id) {
+        Optional<Part> optionalPart = partService.deletePart(id);
+        if (optionalPart.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body(optionalPart.get());
+        }
     }
 }
