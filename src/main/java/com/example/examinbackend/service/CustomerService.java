@@ -80,4 +80,17 @@ public class CustomerService {
         existingCustomer.get().getAddresses().add(address);
         return Optional.of(customerRepository.save(existingCustomer.get()));
     }
+
+    public List<Address> getAllAddresses(Customer customer) {
+        return customer.getAddresses();
+    }
+
+    public Optional<Customer> addAddress(Address address, Long id) {
+        Optional<Customer> optionalCustomer = getCustomerById(id);
+        if (optionalCustomer.isEmpty()) {
+            return Optional.empty();
+        }
+        optionalCustomer.get().getAddresses().add(address);
+        return Optional.of(customerRepository.save(optionalCustomer.get()));
+    }
 }
