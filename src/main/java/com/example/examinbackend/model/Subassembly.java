@@ -27,6 +27,9 @@ public class Subassembly {
     @Column(name = "subassembly_name")
     private String subassemblyName;
 
+    @Column(name = "subassembly_price")
+    private Long subassemblyPrice;
+
     @JsonIgnoreProperties("subassemblies")
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "subassembly_part", joinColumns = {@JoinColumn(name = "subassembly_id")})
