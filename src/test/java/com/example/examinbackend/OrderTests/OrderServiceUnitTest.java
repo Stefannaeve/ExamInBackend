@@ -31,7 +31,7 @@ public class OrderServiceUnitTest {
         Order orderTwo = new Order(customerTwo);
         when(orderRepository.findById(2L)).thenReturn(java.util.Optional.of(orderTwo));
         var orderById = orderService.getOrderById(2L);
-        assert orderById.getCustomer().equals(customerTwo);
+        assert orderById.get().getCustomer().equals(customerTwo);
     }
 
     @Test
@@ -40,7 +40,7 @@ public class OrderServiceUnitTest {
         Order order = new Order(customer);
         when(orderRepository.save(order)).thenReturn(order);
         var newOrder = orderService.createOrder(1L);
-        assert newOrder.getCustomer().equals(customer);
+        assert newOrder.get().getCustomer().equals(customer);
     }
     @Test
     void shouldGetAllOrders() {

@@ -27,7 +27,7 @@ public class PartServiceUnitTest {
         Part partTwo = new Part("Part 2");
         when(partRepository.findById(2L)).thenReturn(java.util.Optional.of(partTwo));
         var partById = partService.getPartById(2L);
-        assert partById.getPartName().equals("Part 2");
+        assert partById.get().getPartName().equals("Part 2");
     }
     @Test
     void shouldCreateANewPart() {

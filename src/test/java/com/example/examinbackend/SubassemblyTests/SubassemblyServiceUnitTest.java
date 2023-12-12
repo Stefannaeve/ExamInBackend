@@ -29,7 +29,7 @@ public class SubassemblyServiceUnitTest {
         Subassembly subassemblyTwo = new Subassembly("Subassembly 2", parts);
         when(subassemblyRepository.findById(2L)).thenReturn(java.util.Optional.of(subassemblyTwo));
         var foundSubassembly = subassemblyService.getSubassemblyById(2L);
-        assert foundSubassembly.getSubassemblyName().equals("Subassembly 2");
+        assert foundSubassembly.get().getSubassemblyName().equals("Subassembly 2");
     }
 
     @Test

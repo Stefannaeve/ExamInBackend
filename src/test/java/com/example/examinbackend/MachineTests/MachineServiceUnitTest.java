@@ -27,7 +27,7 @@ public class MachineServiceUnitTest {
         Machine machineTwo = new Machine("Machine 2", subassemblies);
         when(machineRepository.findById(2L)).thenReturn(java.util.Optional.of(machineTwo));
         var machineById = machineService.getMachineById(2L);
-        assert machineById.getMachineName().equals("Machine 2");
+        assert machineById.get().getMachineName().equals("Machine 2");
     }
     @Test
     void shouldCreateANewMachine() {
