@@ -24,8 +24,8 @@ public class OrderService {
         this.machineService = machineService;
     }
 
-    public Order getOrderById(Long id) {
-        return orderRepository.findById(id).orElse(null);
+    public Optional<Order> getOrderById(Long id) {
+        return orderRepository.findById(id);
     }
 
     public Optional<Order> createOrder(Long customerId) {
@@ -42,16 +42,24 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
-    public void deleteOrder(Long id) {
+    public Optional<Order> deleteOrder(Long id) {
+        Optional<Order> optionalOrder = getOrderById(id);
+        if (optionalOrder.isEmpty()) {
+            return Optional.empty();
+        }
         orderRepository.deleteById(id);
+        return optionalOrder;
     }
 
-    public Order updateOrderMachines(List<Machine> machines, Long orderId) {
-        Order order = getOrderById(orderId);
+    public Optional<Order> updateOrderMachines(List<Machine> machines, Long orderId) {
+        Optional<Order> optionalOrder = getOrderById(orderId);
         for (Machine machine : machines) {
-            machine = machineService.getMachineById(machine.getId());
-            order.getMachines().add(machine);
+            Optional<Machine> optionalMachine = machineService.getMachineById(machine.getId());
+            if (optionalMachine.isEmpty()) {
+                return Optional.empty();
+            }
+            optionalOrder.get().getMachines().add(optionalMachine.get());
         }
-        return orderRepository.save(order);
+        return Optional.of(orderRepository.save(optionalOrder.get()));
     }
 }

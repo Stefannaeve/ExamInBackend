@@ -22,8 +22,13 @@ public class OrderController {
     }
 
     @GetMapping("/id")
-    public Order getOrder(@PathVariable Long id) {
-        return orderService.getOrderById(id);
+    public ResponseEntity<Order> getOrder(@PathVariable Long id) {
+        Optional<Order> optionalOrder = orderService.getOrderById(id);
+        if (optionalOrder.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body(optionalOrder.get());
+        }
     }
 
     @GetMapping("/all")
@@ -42,12 +47,22 @@ public class OrderController {
     }
 
     @PostMapping("/update/{orderId}")
-    public Order updateOrderMachines(@PathVariable Long orderId, @RequestBody List<Machine> machines) {
-        return orderService.updateOrderMachines(machines, orderId);
+    public ResponseEntity<Order> updateOrderMachines(@PathVariable Long orderId, @RequestBody List<Machine> machines) {
+        Optional<Order> optionalOrder = orderService.updateOrderMachines(machines, orderId);
+        if (optionalOrder.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body(optionalOrder.get());
+        }
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteOrder(@PathVariable Long id) {
-        orderService.deleteOrder(id);
+    public ResponseEntity<Order> deleteOrder(@PathVariable Long id) {
+        Optional<Order> optionalOrder = orderService.deleteOrder(id);
+        if (optionalOrder.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body(optionalOrder.get());
+        }
     }
 }
