@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -18,8 +19,13 @@ public class CustomerService {
         this.customerRepository = customerRepository;
     }
 
-    public Customer getCustomerById(Long id) {
-        return customerRepository.findById(id).orElse(null);
+    public Optional<Customer> getCustomerById(Long id) {
+        Optional<Customer> optionalCustomer = customerRepository.findById(id);
+        if (optionalCustomer.isEmpty()) {
+            return Optional.empty();
+        }else {
+            return optionalCustomer;
+        }
     }
 
     public Customer createCustomer(Customer customer) {
@@ -34,21 +40,38 @@ public class CustomerService {
         customerRepository.deleteById(id);
     }
 
-    public Customer updateCustomerName(Long id, Customer customer) {
-        Customer existingCustomer = getCustomerById(id);
-        existingCustomer.setCustomerName(customer.getCustomerName());
-        return customerRepository.save(existingCustomer);
+    public Optional<Customer> updateCustomerName(Long id, Customer customer) {
+        Optional<Customer> existingCustomer = getCustomerById(id);
+        if (existingCustomer.isEmpty()) {
+            return Optional.empty();
+        }
+        existingCustomer.get().setCustomerName(customer.getCustomerName());
+        return Optional.of(customerRepository.save(existingCustomer.get()));
     }
 
-    public Customer updateCustomerEmail(Long id, Customer customer) {
-        Customer existingCustomer = getCustomerById(id);
-        existingCustomer.setEmail(customer.getEmail());
-        return customerRepository.save(existingCustomer);
+    public Optional<Customer> updateCustomerEmail(Long id, Customer customer) {
+        Optional<Customer> existingCustomer = getCustomerById(id);
+        if (existingCustomer.isEmpty()) {
+            return Optional.empty();
+        }
+        existingCustomer.get().setEmail(customer.getEmail());
+        return Optional.of(customerRepository.save(existingCustomer.get()));
     }
 
-    public Customer updateCustomerPhone(Long id, Customer customer) {
-        Customer existingCustomer = getCustomerById(id);
-        existingCustomer.setPhone(customer.getPhone());
-        return customerRepository.save(existingCustomer);
+    public Optional<Customer> updateCustomerPhone(Long id, Customer customer) {
+        Optional<Customer> existingCustomer = getCustomerById(id);
+        if (existingCustomer.isEmpty()) {
+            return Optional.empty();
+        }
+        existingCustomer.get().setPhone(customer.getPhone());
+        return Optional.of(customerRepository.save(existingCustomer.get()));
+    }
+    public Optional<Customer> addCustomerAddress(Long id, Address address) {
+        Optional<Customer> existingCustomer = getCustomerById(id);
+        if (existingCustomer.isEmpty()) {
+            return Optional.empty();
+        }
+        existingCustomer.get().getAddresses().add(address);
+        return Optional.of(customerRepository.save(existingCustomer.get()));
     }
 }

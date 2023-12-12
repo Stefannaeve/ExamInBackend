@@ -5,10 +5,14 @@ import com.example.examinbackend.model.Customer;
 import com.example.examinbackend.service.AddressService;
 import com.example.examinbackend.service.CustomerService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/customer")
@@ -23,8 +27,13 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}")
-    public Customer getCustomer(@PathVariable Long id) {
-        return customerService.getCustomerById(id);
+    public ResponseEntity<Customer> getCustomer(@PathVariable Long id) {
+        Optional<Customer> optionalCustomer = customerService.getCustomerById(id);
+        if (optionalCustomer.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }else {
+            return ResponseEntity.status(HttpStatus.OK).body(optionalCustomer.get());
+        }
     }
 
     @GetMapping("/all")
@@ -37,28 +46,45 @@ public class CustomerController {
         return customerService.createCustomer(customer);
     }
 
-    @PostMapping("/add/{customerId}/{addressId}")
-    public void addCustomerAddress(@PathVariable Long customerId, @PathVariable Long addressId) {
-        Customer customer = customerService.getCustomerById(customerId);
-        Address address = addressService.getAddressById(addressId);
-
-        customer.getAddresses().add(address);
-        customerService.createCustomer(customer);
+    @PostMapping("/add/{customerId}/address")
+    public ResponseEntity<Customer> addCustomerAddress(@PathVariable Long customerId, @RequestBody Address address) {
+        Optional<Customer> optionalCustomer = customerService.getCustomerById(customerId);
+        if (optionalCustomer.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.CREATED).body(optionalCustomer.get());
+        }
     }
 
     @PutMapping("/update/{id}/name")
-    public Customer updateCustomerName(@PathVariable Long id, @RequestBody Customer customer) {
-        return customerService.updateCustomerName(id, customer);
+    public ResponseEntity<Customer> updateCustomerName(@PathVariable Long id, @RequestBody Customer customer) {
+        Optional<Customer> optionalCustomer = customerService.updateCustomerName(id, customer);
+        if (optionalCustomer.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }else {
+            return ResponseEntity.status(HttpStatus.CREATED).body(optionalCustomer.get());
+        }
     }
 
     @PutMapping("/update/{id}/email")
-    public Customer updateCustomerEmail(@PathVariable Long id, @RequestBody Customer customer) {
-        return customerService.updateCustomerEmail(id, customer);
+    public ResponseEntity<Customer> updateCustomerEmail(@PathVariable Long id, @RequestBody Customer customer) {
+        Optional<Customer> optionalCustomer = customerService.updateCustomerEmail(id, customer);
+        if (optionalCustomer.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }else {
+            return ResponseEntity.status(HttpStatus.CREATED).body(optionalCustomer.get());
+        }
     }
 
     @PutMapping("/update/{id}/phone")
-    public Customer updateCustomerPhone(@PathVariable Long id, @RequestBody Customer customer) {
-        return customerService.updateCustomerPhone(id, customer);
+    public ResponseEntity<Customer> updateCustomerPhone(@PathVariable Long id, @RequestBody Customer customer) {
+        Optional<Customer> optionalCustomer = customerService.updateCustomerPhone(id, customer);
+        if (optionalCustomer.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }else {
+            return ResponseEntity.status(HttpStatus.CREATED).body(optionalCustomer.get());
+        }
     }
 
     @DeleteMapping("/delete/{id}")
