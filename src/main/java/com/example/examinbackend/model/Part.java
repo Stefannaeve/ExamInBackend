@@ -25,10 +25,14 @@ public class Part {
     @Column(name = "part_name")
     private String partName;
 
+    @Column(name = "part_price")
+    private Long partPrice;
+
     @ManyToMany(mappedBy = "parts")
     private List<Subassembly> subassemblies = new ArrayList<>();
 
-    public Part(String partName) {
+    public Part(String partName, Long partPrice) {
         this.partName = partName;
+        this.partPrice = partPrice;
     }
 }
