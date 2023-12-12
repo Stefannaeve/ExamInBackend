@@ -33,38 +33,38 @@ public class DatabaseInitializer implements CommandLineRunner {
         //region Parts
 
         //CPU
-        partService.createPart(new Part("CPU"));
-        partService.createPart(new Part("Laptop CPU"));
-        partService.createPart(new Part("Mac CPU"));
-        partService.createPart(new Part("MacBook CPU"));
-        partService.createPart(new Part("Gaming CPU"));
-        partService.createPart(new Part("CPU Cooler"));
-        partService.createPart(new Part("Thermal Paste"));
+        partService.createPart(new Part("CPU", 1000L));
+        partService.createPart(new Part("Laptop CPU", 800L));
+        partService.createPart(new Part("Mac CPU", 1400L));
+        partService.createPart(new Part("MacBook CPU", 1350L));
+        partService.createPart(new Part("Gaming CPU", 2000L));
+        partService.createPart(new Part("CPU Cooler", 600L));
+        partService.createPart(new Part("Thermal Paste", 50L));
 
         //Motherboard
-        partService.createPart(new Part("Motherboard"));
-        partService.createPart(new Part("Laptop Motherboard"));
-        partService.createPart(new Part("Mac Motherboard"));
-        partService.createPart(new Part("Macbook Motherboard"));
-        partService.createPart(new Part("Gaming Motherboard"));
-        partService.createPart(new Part("BIOS FIRMWARE"));
-        partService.createPart(new Part("On-Board Audio and Network Card"));
+        partService.createPart(new Part("Motherboard", 2000L));
+        partService.createPart(new Part("Laptop Motherboard", 1500L));
+        partService.createPart(new Part("Mac Motherboard", 2200L));
+        partService.createPart(new Part("Macbook Motherboard", 2400L));
+        partService.createPart(new Part("Gaming Motherboard", 2800L));
+        partService.createPart(new Part("BIOS FIRMWARE", 400L));
+        partService.createPart(new Part("On-Board Audio and Network Card", 600L));
 
         //RAM
-        partService.createPart(new Part("8gb RAM"));
-        partService.createPart(new Part("8gb*2 RAM"));
-        partService.createPart(new Part("16gb RAM"));
-        partService.createPart(new Part("32gb RAM"));
-        partService.createPart(new Part("64gb RAM"));
-        partService.createPart(new Part("Memory Slots"));
+        partService.createPart(new Part("8gb RAM", 500L));
+        partService.createPart(new Part("8gb*2 RAM", 1300L));
+        partService.createPart(new Part("16gb RAM", 1200L));
+        partService.createPart(new Part("32gb RAM", 2100L));
+        partService.createPart(new Part("64gb RAM", 3000L));
+        partService.createPart(new Part("Memory Slots", 300L));
 
         //GPU
-        partService.createPart(new Part("GPU"));
-        partService.createPart(new Part("Laptop GPU"));
-        partService.createPart(new Part("Mac GPU"));
-        partService.createPart(new Part("Macbook GPU"));
-        partService.createPart(new Part("Gaming GPU"));
-        partService.createPart(new Part("GPU Cooling System"));
+        partService.createPart(new Part("GPU", 6300L));
+        partService.createPart(new Part("Laptop GPU", 4500L));
+        partService.createPart(new Part("Mac GPU", 7300L));
+        partService.createPart(new Part("Macbook GPU", 7000L));
+        partService.createPart(new Part("Gaming GPU", 10000L));
+        partService.createPart(new Part("GPU Cooling System", 1200L));
 
         //endregion
 
@@ -225,48 +225,38 @@ public class DatabaseInitializer implements CommandLineRunner {
 
         //region Machines
 
-        List<Subassembly> windowsDesktop = new ArrayList<>(Arrays.asList(
-                subassemblyService.getSubassemblyByName("CPU"),
-                subassemblyService.getSubassemblyByName("Motherboard"),
-                subassemblyService.getSubassemblyByName("Ram"),
-                subassemblyService.getSubassemblyByName("Gpu")
-        ));
+        List<Subassembly> windowsDesktop = new ArrayList<>();
+        Arrays.asList("CPU", "Motherboard", "Ram", "Gpu").forEach(name -> {
+            subassemblyService.getSubassemblyByName(name).ifPresent(windowsDesktop::add);
+        });
 
         machineService.createMachine(new Machine("Windows Desktop", windowsDesktop));
 
-        List<Subassembly> windowsLaptop = new ArrayList<>(Arrays.asList(
-                subassemblyService.getSubassemblyByName("Laptop CPU"),
-                subassemblyService.getSubassemblyByName("Laptop Motherboard"),
-                subassemblyService.getSubassemblyByName("Laptop Ram"),
-                subassemblyService.getSubassemblyByName("Laptop Gpu")
-        ));
+        List<Subassembly> windowsLaptop = new ArrayList<>();
+        Arrays.asList("Laptop CPU", "Laptop Motherboard", "Laptop Ram", "Laptop Gpu").forEach(name -> {
+            subassemblyService.getSubassemblyByName(name).ifPresent(windowsLaptop::add);
+        });
 
         machineService.createMachine(new Machine("Windows Laptop", windowsLaptop));
 
-        List<Subassembly> macbook = new ArrayList<>(Arrays.asList(
-                subassemblyService.getSubassemblyByName("Macbook CPU"),
-                subassemblyService.getSubassemblyByName("Macbook Motherboard"),
-                subassemblyService.getSubassemblyByName("Macbook Ram"),
-                subassemblyService.getSubassemblyByName("Macbook Gpu")
-        ));
+        List<Subassembly> macbook = new ArrayList<>();
+        Arrays.asList("Macbook CPU", "Macbook Motherboard", "Macbook Ram", "Macbook Gpu").forEach(name -> {
+            subassemblyService.getSubassemblyByName(name).ifPresent(macbook::add);
+        });
 
         machineService.createMachine(new Machine("MacBook", macbook));
 
-        List<Subassembly> Imac = new ArrayList<>(Arrays.asList(
-                subassemblyService.getSubassemblyByName("Mac CPU"),
-                subassemblyService.getSubassemblyByName("Mac Motherboard"),
-                subassemblyService.getSubassemblyByName("Mac Ram"),
-                subassemblyService.getSubassemblyByName("Mac Gpu")
-        ));
+        List<Subassembly> Imac = new ArrayList<>();
+        Arrays.asList("Mac CPU", "Mac Motherboard", "Mac Ram", "Mac Gpu").forEach(name -> {
+            subassemblyService.getSubassemblyByName(name).ifPresent(Imac::add);
+        });
 
         machineService.createMachine(new Machine("iMac", Imac));
 
-        List<Subassembly> gamingDesktop = new ArrayList<>(Arrays.asList(
-                subassemblyService.getSubassemblyByName("Gaming CPU"),
-                subassemblyService.getSubassemblyByName("Gaming Motherboard"),
-                subassemblyService.getSubassemblyByName("Gaming Ram"),
-                subassemblyService.getSubassemblyByName("Gaming Gpu")
-        ));
+        List<Subassembly> gamingDesktop = new ArrayList<>();
+        Arrays.asList("Gaming CPU", "Gaming Motherboard", "Gaming Ram", "Gaming Gpu").forEach(name -> {
+            subassemblyService.getSubassemblyByName(name).ifPresent(gamingDesktop::add);
+        });
 
         machineService.createMachine(new Machine("Gaming Desktop", gamingDesktop));
 
