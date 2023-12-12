@@ -1,6 +1,7 @@
-/*
+
 package com.example.examinbackend.SubassemblyTests;
 
+import com.example.examinbackend.model.Part;
 import com.example.examinbackend.model.Subassembly;
 import com.example.examinbackend.repository.SubassemblyRepository;
 import com.example.examinbackend.service.SubassemblyService;
@@ -23,23 +24,26 @@ public class SubassemblyServiceUnitTest {
 
     @Test
     void shouldGetSubassemblyById() {
-        Subassembly subassemblyOne = new Subassembly("Subassembly 1");
-        Subassembly subassemblyTwo = new Subassembly("Subassembly 2");
+        List<Part> parts = List.of(new Part(), new Part());
+        Subassembly subassemblyOne = new Subassembly("Subassembly 1", parts);
+        Subassembly subassemblyTwo = new Subassembly("Subassembly 2", parts);
         when(subassemblyRepository.findById(2L)).thenReturn(java.util.Optional.of(subassemblyTwo));
-        var subassemblyById = subassemblyService.getSubassemblyById(2L);
-        assert subassemblyById.getSubassemblyName().equals("Subassembly 2");
+        var foundSubassembly = subassemblyService.getSubassemblyById(2L);
+        assert foundSubassembly.getSubassemblyName().equals("Subassembly 2");
     }
 
     @Test
     void shouldCreateANewSubassembly() {
-        Subassembly subassembly = new Subassembly("Subassembly 1");
+        List<Part> parts = List.of(new Part(), new Part());
+        Subassembly subassembly = new Subassembly("Subassembly 1", parts);
         when(subassemblyRepository.save(subassembly)).thenReturn(subassembly);
         var createdSubassembly = subassemblyService.createSubassembly(subassembly);
         assert createdSubassembly.getSubassemblyName().equals("Subassembly 1");
     }
     @Test
     void shouldDeleteANewSubassemblyById() {
-        Subassembly subassembly = new Subassembly("Subassembly 1");
+        List<Part> parts = List.of(new Part(), new Part());
+        Subassembly subassembly = new Subassembly("Subassembly 1", parts);
         subassemblyService.deleteSubassembly(1L);
         assert subassemblyService.getAllSubassemblies().size() == 0;
     }
