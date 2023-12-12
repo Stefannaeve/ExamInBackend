@@ -24,8 +24,8 @@ public class CustomerServiceUnitTest {
         Customer customerOne = new Customer("Customer 1", "Address 1", "Phone 1");
         Customer customerTwo = new Customer("Customer 2", "Address 2", "Phone 2");
         when(customerRepository.findById(2L)).thenReturn(java.util.Optional.of(customerTwo));
-        var customerById = customerService.getCustomerById(2L);
-        assert customerById.getCustomerName().equals("Customer 2");
+        var foundCustomer = customerService.getCustomerById(2L);
+        assert foundCustomer.get().getCustomerName().equals("Customer 2");
     }
 
     @Test
@@ -37,7 +37,7 @@ public class CustomerServiceUnitTest {
     }
 
     @Test
-    void shouldDeleteANewCustomer() {
+    void shouldDeleteANewCustomerById() {
         Customer customer = new Customer("Customer 1", "Address 1", "Phone 1");
         customerService.deleteCustomer(1L);
         assert customerService.getAllCustomers().size() == 0;
