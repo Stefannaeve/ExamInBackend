@@ -1,5 +1,6 @@
 package com.example.examinbackend.service;
 
+import com.example.examinbackend.model.Part;
 import com.example.examinbackend.model.Subassembly;
 import com.example.examinbackend.repository.SubassemblyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,11 @@ public class SubassemblyService {
     }
 
     public Subassembly createSubassembly(Subassembly subassembly) {
+        long subassemblyPrice = 0;
+        for (Part part : subassembly.getParts()) {
+            subassemblyPrice += part.getPartPrice();
+        }
+        subassembly.setSubassemblyPrice(subassemblyPrice);
         return subassemblyRepository.save(subassembly);
     }
 
@@ -53,7 +59,12 @@ public class SubassemblyService {
         return Optional.of(subassemblyRepository.save(existingSubassembly.get()));
     }
 
-    public Subassembly getSubassemblyByName(String name) {
-        return subassemblyRepository.findBySubassemblyName(name);
+    public Optional<Subassembly> getSubassemblyByName(String name) {
+        Optional<Subassembly> optionalSubassembly = subassemblyRepository.findBySubassemblyName(name);
+        if (optionalSubassembly.isEmpty()) {
+            return Optional.empty();
+        }else {
+            return optionalSubassembly;
+        }
     }
 }
