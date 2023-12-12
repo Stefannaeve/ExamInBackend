@@ -1,6 +1,7 @@
 package com.example.examinbackend.service;
 
 import com.example.examinbackend.model.Address;
+import com.example.examinbackend.model.Customer;
 import com.example.examinbackend.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -22,7 +23,8 @@ public class AddressService {
         return addressRepository.findById(addressId);
     }
 
-    public Address addAddress(Address address) {
+    public Address addAddress(Address address, Customer customer) {
+
         return addressRepository.save(address);
     }
 
