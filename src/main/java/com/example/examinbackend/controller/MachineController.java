@@ -38,11 +38,21 @@ public class MachineController {
         return machineService.createMachine(machine);
     }
     @PutMapping("/update/{id}")
-    public Machine updateMachineName(@PathVariable Long id, @RequestBody Machine machine) {
-        return machineService.updateMachineName(id, machine);
+    public ResponseEntity<Machine> updateMachineName(@PathVariable Long id, @RequestBody Machine machine) {
+        Optional<Machine> optionalMachine = machineService.updateMachineName(id, machine);
+        if (optionalMachine.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }else {
+            return ResponseEntity.status(HttpStatus.OK).body(optionalMachine.get());
+        }
     }
     @DeleteMapping("/delete/{id}")
-    public void deleteMachine(@PathVariable Long id) {
-        machineService.deleteMachine(id);
+    public ResponseEntity<Machine> deleteMachine(@PathVariable Long id) {
+        Optional<Machine> optionalMachine = machineService.deleteMachine(id);
+        if (optionalMachine.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }else {
+            return ResponseEntity.status(HttpStatus.OK).body(optionalMachine.get());
+        }
     }
 }

@@ -18,7 +18,8 @@ public class MachineService {
         this.machineRepository = machineRepository;
     }
     public Optional<Machine> getMachineById(Long id) {
-        return machineRepository.findById(id);
+        Optional<Machine> optionalMachine = machineRepository.findById(id);
+        return optionalMachine;
     }
     public Machine createMachine(Machine machine) {
         return machineRepository.save(machine);
@@ -26,12 +27,20 @@ public class MachineService {
     public List<Machine> getAllMachines() {
         return machineRepository.findAll();
     }
-    public void deleteMachine(Long id) {
+    public Optional<Machine> deleteMachine(Long id) {
+        Optional<Machine> optionalMachine = getMachineById(id);
+        if (optionalMachine.isEmpty()) {
+            return Optional.empty();
+        }
         machineRepository.deleteById(id);
+        return optionalMachine;
     }
-    public Machine updateMachineName(Long id, Machine machine) {
-        Machine existingMachine = getMachineById(id);
-        existingMachine.setMachineName(machine.getMachineName());
-        return machineRepository.save(existingMachine);
+    public Optional<Machine> updateMachineName(Long id, Machine machine) {
+        Optional<Machine> optionalMachine = getMachineById(id);
+        if (optionalMachine.isEmpty()) {
+            return Optional.empty();
+        }
+        optionalMachine.get().setMachineName(machine.getMachineName());
+        return Optional.of(machineRepository.save(optionalMachine.get()));
     }
 }
