@@ -27,6 +27,9 @@ public class Machine {
     @Column(name = "machine_name")
     private String machineName;
 
+    @Column(name = "machine_price")
+    private Long machinePrice;
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "machine_id")
     private List<Subassembly> subassemblies = new ArrayList<>();
