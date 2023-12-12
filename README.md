@@ -71,12 +71,12 @@
 - [ ] Tested the application for obvious errors
 
 ## Information about the project
+
+#### --- Reasoning behind the design of the domain models ---
 We've chosen to design the parts with an understanding of their corresponding subassemblies. This approach simplifies the 
 process of connecting a single part to various subassemblies. Initially, we were concerned this might not be in line with 
 the exam guidelines. However, after a closer look, we're confident it meets the exam's criteria. The subassembly has been 
 designed independently of the machines, following the instructions outlined in the exam.
-
-
 
 #### --- Reasoning behind removing the address controller ---
 While we were creating our controllers and services, we started discussing whether we should implement a controller for Address. Our reasoning for not including it was that it seemed counterproductive to have two controllers which can accomplish the same task. According to the exam, under the additional functionality segment it read:
