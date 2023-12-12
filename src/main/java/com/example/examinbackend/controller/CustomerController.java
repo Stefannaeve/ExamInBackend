@@ -88,8 +88,13 @@ public class CustomerController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteCustomer(@PathVariable Long id) {
-        customerService.deleteCustomer(id);
+    public ResponseEntity<Customer> deleteCustomer(@PathVariable Long id) {
+        Optional<Customer> optionalCustomer = customerService.deleteCustomer(id);
+        if (optionalCustomer.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }else {
+            return ResponseEntity.status(HttpStatus.OK).body(optionalCustomer.get());
+        }
     }
 
 

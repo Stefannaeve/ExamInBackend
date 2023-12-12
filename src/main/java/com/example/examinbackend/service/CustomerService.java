@@ -4,6 +4,7 @@ import com.example.examinbackend.model.Address;
 import com.example.examinbackend.model.Customer;
 import com.example.examinbackend.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,8 +37,13 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
-    public void deleteCustomer(Long id) {
+    public Optional<Customer> deleteCustomer(Long id) {
+        Optional<Customer> optionalCustomer = getCustomerById(id);
+        if (optionalCustomer.isEmpty()) {
+            return Optional.empty();
+        }
         customerRepository.deleteById(id);
+        return optionalCustomer;
     }
 
     public Optional<Customer> updateCustomerName(Long id, Customer customer) {
