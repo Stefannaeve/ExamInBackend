@@ -1,6 +1,7 @@
 package com.example.examinbackend.service;
 
 import com.example.examinbackend.model.Address;
+import com.example.examinbackend.model.Customer;
 import com.example.examinbackend.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,10 +21,6 @@ public class AddressService {
 
     public Optional<Address> getAddressById(Long addressId) {
         return addressRepository.findById(addressId);
-    }
-
-    public Address addAddress(Address address) {
-        return addressRepository.save(address);
     }
 
     public Optional<Address> updateAddressById(Long id, Address address) {

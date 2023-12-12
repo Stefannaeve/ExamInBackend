@@ -19,11 +19,6 @@ public class AddressController {
         this.addressService = addressService;
     }
 
-    @PostMapping("/add")
-    public Address addAddress(@RequestBody Address address) {
-        return addressService.addAddress(address);
-    }
-
     @PutMapping("/update/{id}")
     public ResponseEntity<Address> updateAddress(@PathVariable Long id, @RequestBody Address address) {
         Optional<Address> optionalAddress = addressService.updateAddressById(id, address);

@@ -79,12 +79,15 @@ the exam guidelines. However, after a closer look, we're confident it meets the 
 designed independently of the machines, following the instructions outlined in the exam.
 
 #### --- Reasoning behind removing the address controller ---
-While we were creating our controllers and services, we started discussing whether we should implement a controller for Address. Our reasoning for not including it was that it seemed counterproductive to have two controllers which can accomplish the same task. According to the exam, under the additional functionality segment it read:
+While we were creating our controllers and services, we started discussing whether we should implement a controller for 
+Address. Our reasoning for not including it was that it seemed counterproductive to have two controllers which can 
+accomplish the same task. According to the exam, under the additional functionality segment it read:
 1.    Create a customer and add an address to it.
 2.    Create an address and add it to a customer.
 3.    Add an address to a customer.
 
-We concluded that it seemed more reasonable to let a customer controller handle this type of functionality, as the address is tied to a customer.
+We concluded that it seemed more reasonable to let a customer controller handle this type of functionality, as the 
+address is tied to a customer.
 
 ## Plagiarism
 
