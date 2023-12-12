@@ -16,25 +16,21 @@ import java.util.List;
 
 @Component
 public class DatabaseInitializer implements CommandLineRunner {
-    private final PartService partService;
     private final SubassemblyService subassemblyService;
 
     private final MachineService machineService;
+    private final PartService partService;
 
     @Autowired
-    public DatabaseInitializer(PartService partService, SubassemblyService subassemblyService, MachineService machineService) {
-        this.partService = partService;
+    public DatabaseInitializer(SubassemblyService subassemblyService, MachineService machineService, PartService partService) {
         this.subassemblyService = subassemblyService;
         this.machineService = machineService;
+        this.partService = partService;
     }
 
     public void run(String... args) {
 
-        //Desktop PC (Windows)
-        //Laptop (Windows)
-        //MacBook (MacOS)
-        //iMac (MacOS)
-        //Gaming Desktop (Windows)
+        //region Parts
 
         //CPU
         partService.createPart(new Part("CPU"));
@@ -60,6 +56,10 @@ public class DatabaseInitializer implements CommandLineRunner {
         partService.createPart(new Part("GPU"));
         partService.createPart(new Part("Gaming GPU"));
         partService.createPart(new Part("GPU Cooling System"));
+
+        //endregion
+
+        //region Subassemblies
 
         List<Part> windowsCPU = new ArrayList<>(Arrays.asList(
                 partService.getPartByName("CPU"),
@@ -144,13 +144,9 @@ public class DatabaseInitializer implements CommandLineRunner {
 
         subassemblyService.createSubassembly(new Subassembly("Gaming Gpu", gamingGpu));
 
+        //endregion
 
-        //Desktop PC (Windows)
-        //Laptop (Windows)
-        //MacBook (MacOS)
-        //iMac (MacOS)
-        //Gaming Desktop (Windows)
-
+        //region Machines
 
         List<Subassembly> windowsDesktop = new ArrayList<>(Arrays.asList(
                 subassemblyService.getSubassemblyByName("Windows CPU"),
@@ -197,7 +193,7 @@ public class DatabaseInitializer implements CommandLineRunner {
 
         machineService.createMachine(new Machine("Gaming Desktop", gamingDesktop));
 
-
+        //endregion
 
     }
 }
