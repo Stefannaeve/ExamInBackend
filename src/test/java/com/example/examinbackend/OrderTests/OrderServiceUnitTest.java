@@ -1,9 +1,10 @@
 package com.example.examinbackend.OrderTests;
 
 import com.example.examinbackend.model.Customer;
-import com.example.examinbackend.model.Machine;
 import com.example.examinbackend.model.Order;
+import com.example.examinbackend.repository.CustomerRepository;
 import com.example.examinbackend.repository.OrderRepository;
+import com.example.examinbackend.service.CustomerService;
 import com.example.examinbackend.service.OrderService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,18 +39,9 @@ public class OrderServiceUnitTest {
         Customer customer = new Customer();
         Order order = new Order(customer);
         when(orderRepository.save(order)).thenReturn(order);
-        var createdOrder = orderService.createOrder(order);
-        assert createdOrder.getCustomer().equals(customer);
+        var newOrder = orderService.createOrder(1L);
+        assert newOrder.getCustomer().equals(customer);
     }
-
-    @Test
-    void shouldDeleteANewOrder() {
-        Customer customer = new Customer();
-        Order order = new Order(customer);
-        orderService.deleteOrder(1L);
-        assert orderService.getAllOrders().size() == 0;
-    }
-
     @Test
     void shouldGetAllOrders() {
         Customer customer = new Customer();
@@ -57,6 +49,20 @@ public class OrderServiceUnitTest {
         when(orderRepository.findAll()).thenReturn(List.of(order));
         var orders = orderService.getAllOrders();
         assert orders.size() == 1;
+    }
+    @Test
+    void shouldDeleteANewOrder() {
+        Customer customer = new Customer();
+        Order order = new Order(customer);
+        orderService.deleteOrder(1L);
+        assert orderService.getAllOrders().size() == 0;
+    }
+    @Test
+    void shouldUpdateOrderMachines() {
+        Customer customer = new Customer();
+        Order order = new Order(customer);
+        orderService.updateOrderMachines(List.of(), 1L);
+        assert order.getMachines().size() == 0;
     }
 
 }
