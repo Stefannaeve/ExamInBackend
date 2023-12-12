@@ -32,8 +32,8 @@ public class SubassemblyController {
         return subassemblyService.getAllSubassemblies();
     }
     @PostMapping("/add")
-    public void createSubassembly(@RequestBody Subassembly subassembly) {
-        subassemblyService.createSubassembly(subassembly);
+    public Subassembly createSubassembly(@RequestBody Subassembly subassembly) {
+        return subassemblyService.createSubassembly(subassembly);
     }
     @PutMapping("/update/{id}")
     public ResponseEntity<Subassembly> updateSubassemblyName(@PathVariable Long id, @RequestBody Subassembly subassembly) {
