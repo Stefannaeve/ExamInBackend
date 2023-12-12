@@ -23,11 +23,6 @@ public class AddressService {
         return addressRepository.findById(addressId);
     }
 
-    public Address addAddress(Address address, Customer customer) {
-
-        return addressRepository.save(address);
-    }
-
     public Optional<Address> updateAddressById(Long id, Address address) {
         Optional<Address> existingAddress = getAddressById(id);
         if (existingAddress.isEmpty()) {
