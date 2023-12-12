@@ -70,6 +70,13 @@
 - [ ] Format
 - [ ] Tested the application for obvious errors
 
+## Information about the project
+We've chosen to design the parts with an understanding of their corresponding subassemblies. This approach simplifies the 
+process of connecting a single part to various subassemblies. Initially, we were concerned this might not be in line with 
+the exam guidelines. However, after a closer look, we're confident it meets the exam's criteria. The subassembly has been 
+designed independently of the machines, following the instructions outlined in the exam.
+
+
 ## Plagiarism
 
 ## Necessary links

@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SubassemblyRepository extends JpaRepository<Subassembly, Long>{
+    Subassembly findBySubassemblyName(String name);
 }

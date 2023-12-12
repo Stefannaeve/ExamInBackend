@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @ToString
@@ -21,6 +24,9 @@ public class Part {
 
     @Column(name = "part_name")
     private String partName;
+
+    @ManyToMany(mappedBy = "parts")
+    private List<Subassembly> subassemblies = new ArrayList<>();
 
     public Part(String partName) {
         this.partName = partName;

@@ -21,8 +21,8 @@ public class SubassemblyService {
         return subassemblyRepository.findById(id).orElse(null);
     }
 
-    public Subassembly createSubassembly(Subassembly subassembly) {
-        return subassemblyRepository.save(subassembly);
+    public void createSubassembly(Subassembly subassembly) {
+        subassemblyRepository.save(subassembly);
     }
 
     public List<Subassembly> getAllSubassemblies() {
@@ -36,5 +36,9 @@ public class SubassemblyService {
         Subassembly existingSubassembly = getSubassemblyById(id);
         existingSubassembly.setSubassemblyName(subassembly.getSubassemblyName());
         return subassemblyRepository.save(existingSubassembly);
+    }
+
+    public Subassembly getSubassemblyByName(String name) {
+        return subassemblyRepository.findBySubassemblyName(name);
     }
 }

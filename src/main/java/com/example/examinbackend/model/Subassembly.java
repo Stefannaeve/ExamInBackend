@@ -21,16 +21,18 @@ public class Subassembly {
     @GeneratedValue(generator = "subassembly_generator")
     @SequenceGenerator(name = "subassembly_generator", sequenceName = "subassembly_seq", initialValue = 1, allocationSize = 1)
     @Column(name = "subassembly_id")
-    private Long id;
+    private Long id = 0L;
 
     @Column(name = "subassembly_name")
     private String subassemblyName;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "subassembly_id")
-    private List<Part> parts;
+    @JsonIgnoreProperties("subassemblies")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "subassembly_part", joinColumns = {@JoinColumn(name = "subassembly_id")})
+    private List<Part> parts = new ArrayList<>();
 
-    public Subassembly(String subassemblyName) {
+    public Subassembly(String subassemblyName, List<Part> parts) {
         this.subassemblyName = subassemblyName;
+        this.parts = parts;
     }
 }

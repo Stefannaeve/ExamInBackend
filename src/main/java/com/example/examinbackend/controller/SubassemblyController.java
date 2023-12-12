@@ -15,7 +15,7 @@ public class SubassemblyController {
     public SubassemblyController(SubassemblyService subassemblyService) {
         this.subassemblyService = subassemblyService;
     }
-    @GetMapping("/id")
+    @GetMapping("/{id}")
     public Subassembly getSubassembly(@PathVariable Long id) {
         return subassemblyService.getSubassemblyById(id);
     }
@@ -24,8 +24,8 @@ public class SubassemblyController {
         return subassemblyService.getAllSubassemblies();
     }
     @PostMapping("/add")
-    public Subassembly createSubassembly(@RequestBody Subassembly subassembly) {
-        return subassemblyService.createSubassembly(subassembly);
+    public void createSubassembly(@RequestBody Subassembly subassembly) {
+        subassemblyService.createSubassembly(subassembly);
     }
     @PutMapping("/update/{id}")
     public Subassembly updateSubassemblyName(@PathVariable Long id, @RequestBody Subassembly subassembly) {
