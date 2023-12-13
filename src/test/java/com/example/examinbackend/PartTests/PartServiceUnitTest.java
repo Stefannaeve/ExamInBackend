@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 
@@ -23,23 +24,22 @@ public class PartServiceUnitTest {
 
     @Test
     void shouldGetPartById() {
-        Part partOne = new Part("Part 1");
-        Part partTwo = new Part("Part 2");
-        when(partRepository.findById(2L)).thenReturn(java.util.Optional.of(partTwo));
-        var partById = partService.getPartById(2L);
-        assert partById.get().getPartName().equals("Part 2");
+        Part partOne = new Part("Part 1", 200L);
+        when(partRepository.findById(1L)).thenReturn((Optional.of(partOne)));
+        var partById = partService.getPartById(1L);
+        assert partById.get().getPartName().equals("Part 1");
     }
     @Test
     void shouldGetPartByName() {
         Part partOne = new Part("Part 1");
         Part partTwo = new Part("Part 2");
-        when(partRepository.findByPartName("Part 2")).thenReturn(java.util.Optional.of(partTwo));
+        when(partRepository.findByPartName("Part 2")).thenReturn(Optional.of(partTwo));
         var partByName = partService.getPartByName("Part 2");
         assert partByName.getPartName().equals("Part 2");
     }
     @Test
     void shouldCreateANewPart() {
-        Part part = new Part("Part 1");
+        Part part = new Part("Part 1", 100L);
         when(partRepository.save(part)).thenReturn(part);
         var createdPart = partService.createPart(part);
         assert createdPart.getPartName().equals("Part 1");
