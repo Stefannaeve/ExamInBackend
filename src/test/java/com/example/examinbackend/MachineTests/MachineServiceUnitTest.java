@@ -38,6 +38,13 @@ public class MachineServiceUnitTest {
         assert createdMachine.getMachineName().equals("Machine 1");
     }
     @Test
+    void shouldGetAllMachines() {
+        List<Machine> listOfMachines = List.of(new Machine(), new Machine(), new Machine());
+        when(machineRepository.findAll()).thenReturn(listOfMachines);
+        var machines = machineService.getAllMachines();
+        assert machines.size() == 3;
+    }
+    @Test
     void shouldDeleteANewMachineById() {
         List<Subassembly> subassemblies =  List.of(new Subassembly(), new Subassembly());
         Machine machine = new Machine("Machine 1", subassemblies);
@@ -45,10 +52,14 @@ public class MachineServiceUnitTest {
         assert machineService.getAllMachines().size() == 0;
     }
     @Test
-    void shouldGetAllMachines() {
-        List<Machine> listOfMachines = List.of(new Machine(), new Machine(), new Machine());
-        when(machineRepository.findAll()).thenReturn(listOfMachines);
-        var machines = machineService.getAllMachines();
-        assert machines.size() == 3;
+    void shouldUpdateMachineName(){
+        List<Subassembly> subassemblies =  List.of(new Subassembly(), new Subassembly());
+        Machine machine = new Machine("Machine 1", subassemblies);
+        when(machineRepository.save(machine)).thenReturn(machine);
+        when(machineRepository.findById(1L)).thenReturn(java.util.Optional.of(machine));
+        var machineById = machineService.getMachineById(1L);
+        machineById.get().setMachineName("Machine 2");
+        assert machineService.getMachineById(1L).get().getMachineName().equals("Machine 2");
     }
+
 }
