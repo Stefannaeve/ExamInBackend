@@ -40,18 +40,38 @@ public class SubassemblyServiceUnitTest {
         var createdSubassembly = subassemblyService.createSubassembly(subassembly);
         assert createdSubassembly.getSubassemblyName().equals("Subassembly 1");
     }
-    @Test
-    void shouldDeleteANewSubassemblyById() {
-        List<Part> parts = List.of(new Part(), new Part());
-        Subassembly subassembly = new Subassembly("Subassembly 1", parts);
-        subassemblyService.deleteSubassembly(1L);
-        assert subassemblyService.getAllSubassemblies().size() == 0;
-    }
+
     @Test
     void shouldGetAllSubassemblies(){
         List<Subassembly> listOfSubassemblies = List.of(new Subassembly(), new Subassembly(), new Subassembly());
         when(subassemblyRepository.findAll()).thenReturn(listOfSubassemblies);
         var subassemblies = subassemblyService.getAllSubassemblies();
         assert subassemblies.size() == 3;
+    }
+    @Test
+    void shouldDeleteANewSubassemblyById() {
+        List<Part> parts = List.of(new Part(), new Part());
+        Subassembly subassembly = new Subassembly("Subassembly 1", parts);
+
+        subassemblyService.deleteSubassembly(1L);
+        assert subassemblyService.getAllSubassemblies().size() == 0;
+    }
+    @Test
+    void shouldUpdateSubassemblyName() {
+        List<Part> parts = List.of(new Part(), new Part());
+        Subassembly subassembly = new Subassembly("Subassembly 1", parts);
+        when(subassemblyRepository.save(subassembly)).thenReturn(subassembly);
+        when(subassemblyRepository.findById(1L)).thenReturn(java.util.Optional.of(subassembly));
+        var subassemblyById = subassemblyService.getSubassemblyById(1L);
+        subassemblyById.get().setSubassemblyName("Subassembly 2");
+        assert subassemblyService.getSubassemblyById(1L).get().getSubassemblyName().equals("Subassembly 2");
+    }
+    @Test
+    void shouldGetSubassemblyByName() {
+        List<Part> parts = List.of(new Part(), new Part());
+        Subassembly subassembly = new Subassembly("Subassembly 1", parts);
+        when(subassemblyRepository.findBySubassemblyName("Subassembly 1")).thenReturn(subassembly);
+        var foundSubassembly = subassemblyService.getSubassemblyByName("Subassembly 1");
+        assert foundSubassembly.getSubassemblyName().equals("Subassembly 1");
     }
 }
