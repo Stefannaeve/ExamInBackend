@@ -70,8 +70,9 @@ public class SubassemblyServiceUnitTest {
     void shouldGetSubassemblyByName() {
         List<Part> parts = List.of(new Part(), new Part());
         Subassembly subassembly = new Subassembly("Subassembly 1", parts);
-        when(subassemblyRepository.findBySubassemblyName("Subassembly 1")).thenReturn(subassembly);
-        var foundSubassembly = subassemblyService.getSubassemblyByName("Subassembly 1");
-        assert foundSubassembly.getSubassemblyName().equals("Subassembly 1");
+        when(subassemblyRepository.save(subassembly)).thenReturn(subassembly);
+        when(subassemblyRepository.findBySubassemblyName("Subassembly 1")).thenReturn(java.util.Optional.of(subassembly));
+        var subassemblyByName = subassemblyService.getSubassemblyByName("Subassembly 1");
+        assert subassemblyByName.get().getSubassemblyName().equals("Subassembly 1");
     }
 }
