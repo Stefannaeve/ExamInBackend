@@ -1,4 +1,4 @@
-/*package com.example.examinbackend.AddressTests;
+package com.example.examinbackend.AddressTests;
 
 import com.example.examinbackend.model.Address;
 import com.example.examinbackend.repository.AddressRepository;
@@ -25,27 +25,23 @@ public class AddressServiceUnitTest {
         Address addressTwo = new Address("Address 2");
         when(addressRepository.findById(2L)).thenReturn(java.util.Optional.of(addressTwo));
         var addressById = addressService.getAddressById(2L);
-        assert addressById.getAddress().equals("Address 2");
+        assert addressById.get().getAddress().equals("Address 2");
     }
     @Test
-    void shouldCreateANewAddress() {
-        Address address = new Address("Address 1");
-        when(addressRepository.save(address)).thenReturn(address);
-        var createdAddress = addressService.addAddress(address);
-        assert createdAddress.getAddress().equals("Address 1");
+    void shouldUpdateAddressById() {
+        Address addressOne = new Address("Address 1");
+        when(addressRepository.findById(1L)).thenReturn(java.util.Optional.of(addressOne));
+        var addressById = addressService.getAddressById(1L);
+        addressById.get().setAddress("New address");
+        assert addressById.get().getAddress().equals("New address");
     }
-   @Test
+
+    @Test
     void shouldGetAllAddresses() {
-        List<Address> listOfAddresses = List.of(new Address(), new Address(), new Address());
-        when(addressRepository.findAll()).thenReturn(listOfAddresses);
-        var addresses = addressService.getAllAddresses();
-        assert addresses.size() == 3;
-    }
-    @Test
-    void shouldDeleteANewAddressById() {
-        Address address = new Address("Address 1");
-        addressService.deleteAddress(1L);
-        assert addressService.getAllAddresses().size() == 0;
+        Address addressOne = new Address("Address 1");
+        Address addressTwo = new Address("Address 2");
+        when(addressRepository.findAll()).thenReturn(List.of(addressOne, addressTwo));
+        var allAddresses = addressService.getAllAddresses();
+        assert allAddresses.size() == 2;
     }
 }
-*/
