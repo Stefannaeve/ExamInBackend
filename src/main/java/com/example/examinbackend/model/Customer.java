@@ -47,4 +47,9 @@ public class Customer {
         this.email = email;
         this.phone = phone;
     }
+
+    public Customer(Long id, String customerName) {
+        this.id = id;
+        this.customerName = customerName;
+    }
 }
