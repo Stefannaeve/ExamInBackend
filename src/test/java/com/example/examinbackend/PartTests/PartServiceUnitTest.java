@@ -37,6 +37,14 @@ public class PartServiceUnitTest {
         assert part.getPartName().equals("Part 2");
     }
     @Test
+    void shouldGetPartByName() {
+        Part partOne = new Part("Part 1", 200L);
+        Part partTwo = new Part("Part 2", 300L);
+        when(partRepository.findByPartName("Part 2")).thenReturn(Optional.of(partTwo));
+        var partByName = partService.getPartByName("Part 2");
+        assert partByName.getPartName().equals("Part 2");
+    }
+    @Test
     void shouldCreateANewPart() {
         Part part = new Part("Part 1", 200L);
         when(partRepository.save(part)).thenReturn(part);

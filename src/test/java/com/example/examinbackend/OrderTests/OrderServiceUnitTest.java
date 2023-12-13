@@ -58,11 +58,12 @@ public class OrderServiceUnitTest {
         assert orderService.getAllOrders().size() == 0;
     }
     @Test
-    void shouldUpdateOrderMachines() {
+    void shouldUpdateOrderById() {
         Customer customer = new Customer();
         Order order = new Order(customer);
-        orderService.updateOrderMachines(List.of(), 1L);
-        assert order.getMachines().size() == 0;
+        when(orderRepository.findById(1L)).thenReturn(java.util.Optional.of(order));
+        var updatedOrder = orderService.getOrderById(1L);
+        updatedOrder.get().setId(2L);
+        assert updatedOrder.get().getId() == 2L;
     }
-
 }

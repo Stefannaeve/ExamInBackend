@@ -35,4 +35,7 @@ public class Part {
         this.partName = partName;
         this.partPrice = partPrice;
     }
+    public Part(String partName) {
+        this.partName = partName;
+    }
 }
