@@ -1,0 +1,53 @@
+###
+POST localhost:8080/api/customer/add
+Content-type: application/json
+
+{
+    "customerName" : "William",
+    "email" : "123@hotmail.com",
+    "phone" : 234234,
+    "addresses" : [
+        "123Lane", "456Street"
+    ]
+}
+
+###
+GET localhost:8080/api/customer/1
+
+###
+GET localhost:8080/api/customer/all
+
+###
+POST localhost:8080/api/customer/add/1/address
+Content-Type: application/json
+
+{
+    "address" : "SickSkateboardLane"
+}
+
+###
+PUT localhost:8080/api/customer/update/1/name
+Content-Type: application/json
+
+{
+  "customerName" : "Gængsta"
+}
+
+###
+PUT localhost:8080/api/customer/update/1/email
+Content-Type: application/json
+
+{
+  "email" : "jswlr@email.com"
+}
+
+###
+PUT localhost:8080/api/customer/update/1/phone
+Content-Type: application/json
+
+{
+  "phone" : 123123
+}
+
+###
+DELETE localhost:8080/api/customer/delete/1
