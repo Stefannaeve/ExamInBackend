@@ -35,7 +35,7 @@ public class SubassemblyServiceUnitTest {
 
     @Test
     void shouldCreateANewSubassembly() {
-        List<Part> parts = List.of(new Part(), new Part());
+        List<Part> parts = List.of(new Part("sdfseda", 200L), new Part("dfgd", 300L));
         Subassembly subassembly = new Subassembly("Subassembly 1", parts);
         when(subassemblyRepository.save(subassembly)).thenReturn(subassembly);
         var createdSubassembly = subassemblyService.createSubassembly(subassembly);
