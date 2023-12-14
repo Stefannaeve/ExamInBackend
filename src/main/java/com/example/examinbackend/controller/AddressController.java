@@ -19,6 +19,16 @@ public class AddressController {
         this.addressService = addressService;
     }
 
+    @PostMapping("/create")
+    public ResponseEntity<Address> createAddress(@RequestBody Address address) {
+        Optional<Address> optionalAddress = addressService.createAddress(address);
+        if (optionalAddress.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }else {
+            return ResponseEntity.status(HttpStatus.CREATED).body(optionalAddress.get());
+        }
+    }
+
     @PutMapping("/update/{id}")
     public ResponseEntity<Address> updateAddress(@PathVariable Long id, @RequestBody Address address) {
         Optional<Address> optionalAddress = addressService.updateAddressById(id, address);
