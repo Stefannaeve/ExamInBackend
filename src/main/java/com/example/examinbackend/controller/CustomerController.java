@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/customer")
+@RequestMapping(value = "/api/customer", consumes = "application/json", produces = "application/json")
 public class CustomerController {
     private final CustomerService customerService;
     private final AddressService addressService;
@@ -52,7 +52,7 @@ public class CustomerController {
 
     @PostMapping("/add/{customerId}/address")
     public ResponseEntity<Customer> addCustomerAddress(@PathVariable Long customerId, @RequestBody Address address) {
-        Optional<Customer> optionalCustomer = customerService.getCustomerById(customerId);
+        Optional<Customer> optionalCustomer = customerService.addCustomerAddress(customerId, address);
         if (optionalCustomer.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
