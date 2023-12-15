@@ -73,6 +73,7 @@ public class CustomerEndToEndTest {
                 .andExpect(jsonPath("$.email").value(email))
                 .andExpect(jsonPath("$.phone").value(phone))
                 .andExpect(jsonPath("$.addresses[0].address").value(addresses.get(0).getAddress()))
+                .andExpect(jsonPath("$.addresses[1].address").value(addresses.get(1).getAddress()))
                 .andReturn();
 
         String jsonString = result.getResponse().getContentAsString();
@@ -86,6 +87,7 @@ public class CustomerEndToEndTest {
         assertEquals(email, customerEntity.getEmail());
         assertEquals(phone, customerEntity.getPhone());
         assertEquals(addresses.get(0).getAddress(), customerEntity.getAddresses().get(0).getAddress());
+        assertEquals(addresses.get(1).getAddress(), customerEntity.getAddresses().get(1).getAddress());
     }
 
     @Test
@@ -95,6 +97,19 @@ public class CustomerEndToEndTest {
         when(customerRepository.findById(1L)).thenReturn(java.util.Optional.of(customer));
 
         mockMvc.perform(get("/api/customer/1" + customer.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.customerName").value(customer.getCustomerName()))
+                .andExpect(jsonPath("$.email").value(customer.getEmail()))
+                .andExpect(jsonPath("$.phone").value(customer.getPhone()));
+    }
+
+    @Test
+    @Transactional
+    public void shouldGetCustomerById() throws Exception {
+        Customer customer = new Customer("TestCustomer", "TestEmail", "012345");
+        customerRepository.save(customer);
+
+        mockMvc.perform(get("/api/customer/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.customerName").value(customer.getCustomerName()))
                 .andExpect(jsonPath("$.email").value(customer.getEmail()))
@@ -124,18 +139,14 @@ public class CustomerEndToEndTest {
     public void shouldUpdateAddressInCustomer() throws Exception {
         Customer customer = new Customer("TestCustomer", "TestEmail", "012345");
         customer.setAddresses(Arrays.asList(new Address("TestAddress"), new Address("TestAddress2")));
-        when(customerRepository.findById(1L)).thenReturn(java.util.Optional.of(customer));
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        ObjectNode jsonNode = objectMapper.createObjectNode();
-        jsonNode.put("address", "TestAddress3");
+        customerService.createCustomer(customer);
 
         mockMvc.perform(put("/api/customer/address/update/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(jsonNode.toString())
+                        .content("{\"address\":\"FrognerParken\"}")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.addresses[0].address").value("TestAddress3"));
+                .andExpect(jsonPath("$.address").value("FrognerParken"));
         System.out.println(customer.getAddresses().get(0).getAddress());
     }
 

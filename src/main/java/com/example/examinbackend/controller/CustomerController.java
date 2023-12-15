@@ -27,7 +27,7 @@ public class CustomerController {
     }
 
     //region GET
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<Customer> getCustomer(@PathVariable Long id) {
         Optional<Customer> optionalCustomer = customerService.getCustomerById(id);
         if (optionalCustomer.isEmpty()) {
@@ -45,12 +45,12 @@ public class CustomerController {
     //endregion
 
     //region POST
-    @PostMapping("/add")
+    @PostMapping(value = "/add", consumes = "application/json", produces = "application/json")
     public Customer createCustomer(@RequestBody Customer customer) {
         return customerService.createCustomer(customer);
     }
 
-    @PostMapping("/add/{customerId}/address")
+    @PostMapping(value = "/add/{customerId}/address", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Customer> addCustomerAddress(@PathVariable Long customerId, @RequestBody Address address) {
         Optional<Customer> optionalCustomer = customerService.addCustomerAddress(customerId, address);
         if (optionalCustomer.isEmpty()) {
@@ -63,7 +63,7 @@ public class CustomerController {
     //endregion
 
     //region PUT
-    @PutMapping("/update/{id}/name")
+    @PutMapping(value = "/update/{id}/name", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Customer> updateCustomerName(@PathVariable Long id, @RequestBody Customer customer) {
         Optional<Customer> optionalCustomer = customerService.updateCustomerName(id, customer);
         if (optionalCustomer.isEmpty()) {
@@ -73,7 +73,7 @@ public class CustomerController {
         }
     }
 
-    @PutMapping("/update/{id}/email")
+    @PutMapping(value = "/update/{id}/email", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Customer> updateCustomerEmail(@PathVariable Long id, @RequestBody Customer customer) {
         Optional<Customer> optionalCustomer = customerService.updateCustomerEmail(id, customer);
         if (optionalCustomer.isEmpty()) {
@@ -83,7 +83,7 @@ public class CustomerController {
         }
     }
 
-    @PutMapping("/update/{id}/phone")
+    @PutMapping(value = "/update/{id}/phone", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Customer> updateCustomerPhone(@PathVariable Long id, @RequestBody Customer customer) {
         Optional<Customer> optionalCustomer = customerService.updateCustomerPhone(id, customer);
         if (optionalCustomer.isEmpty()) {
@@ -95,7 +95,7 @@ public class CustomerController {
     //endregion
 
     //region DELETE
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping(value = "/delete/{id}", produces = "application/json")
     public ResponseEntity<Customer> deleteCustomer(@PathVariable Long id) {
         Optional<Customer> optionalCustomer = customerService.deleteCustomer(id);
         if (optionalCustomer.isEmpty()) {
