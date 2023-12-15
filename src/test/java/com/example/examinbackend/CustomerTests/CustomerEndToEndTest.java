@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import static org.mockito.Mockito.mock;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
@@ -140,12 +141,70 @@ public class CustomerEndToEndTest {
         Customer customer = new Customer("TestCustomer", "TestEmail", "012345");
         customerService.createCustomer(customer);
 
-        mockMvc.perform(put("/api/customer/update/1/name")
+        MvcResult result = mockMvc.perform(put("/api/customer/update/1/name")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"customerName\":\"Bob Marley\"}")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.customerName").value("Bob Marley"));
+                .andExpect(jsonPath("$.customerName").value("Bob Marley"))
+                .andReturn();
+
+        String jsonString = result.getResponse().getContentAsString();
+        JsonNode customerJson = new ObjectMapper().readTree(jsonString);
+        Long id = customerJson.path("id").asLong();
+        Optional<Customer> entity = customerRepository.findById(id);
+        assertTrue(entity.isPresent());
+
+        Customer customerEntity = entity.get();
+        assertEquals("Bob Marley", customerEntity.getCustomerName());
+    }
+
+    @Test
+    @Transactional
+    public void shouldUpdateCustomerEmail() throws Exception {
+        Customer customer = new Customer("Harald Haraldson", "Harald@Haraldson.Harald", "20842048");
+        customerRepository.save(customer);
+
+        MvcResult result = mockMvc.perform(put("/api/customer/update/1/email")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"email\":\"Harald@BobbyBigBoi.com\"}")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.email").value("Harald@BobbyBigBoi.com"))
+                .andReturn();
+
+        String jsonString = result.getResponse().getContentAsString();
+        JsonNode customerJson = new ObjectMapper().readTree(jsonString);
+        Long id = customerJson.path("id").asLong();
+        Optional<Customer> entity = customerRepository.findById(id);
+        assertTrue(entity.isPresent());
+
+        Customer customerEntity = entity.get();
+        assertEquals("Harald@BobbyBigBoi.com", customerEntity.getEmail());
+    }
+
+    @Test
+    @Transactional
+    public void shouldUpdateCustomerPhone() throws Exception {
+        Customer customer = new Customer("Biggibigboi", "Biggest@Gmail.big", "787382768");
+        customerRepository.save(customer);
+
+        MvcResult result = mockMvc.perform(put("/api/customer/update/1/phone")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"phone\":\"536457845\"}")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.phone").value("536457845"))
+                .andReturn();
+
+        String jsonString = result.getResponse().getContentAsString();
+        JsonNode customerJson = new ObjectMapper().readTree(jsonString);
+        Long id = customerJson.path("id").asLong();
+        Optional<Customer> entity = customerRepository.findById(id);
+        assertTrue(entity.isPresent());
+
+        Customer customerEntity = entity.get();
+        assertEquals("536457845", customerEntity.getPhone());
     }
 
     @Test
