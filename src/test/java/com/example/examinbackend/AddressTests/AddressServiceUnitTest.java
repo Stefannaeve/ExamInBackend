@@ -7,12 +7,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class AddressServiceUnitTest {
     @MockBean
     private AddressRepository addressRepository;
@@ -23,14 +26,14 @@ public class AddressServiceUnitTest {
     void shouldGetAddressById() {
         Address addressOne = new Address("Address 1");
         Address addressTwo = new Address("Address 2");
-        when(addressRepository.findById(2L)).thenReturn(java.util.Optional.of(addressTwo));
+        when(addressRepository.findById(2L)).thenReturn(Optional.of(addressTwo));
         var addressById = addressService.getAddressById(2L);
         assert addressById.get().getAddress().equals("Address 2");
     }
     @Test
     void shouldUpdateAddressById() {
         Address addressOne = new Address("Address 1");
-        when(addressRepository.findById(1L)).thenReturn(java.util.Optional.of(addressOne));
+        when(addressRepository.findById(1L)).thenReturn(Optional.of(addressOne));
         var addressById = addressService.getAddressById(1L);
         addressById.get().setAddress("New address");
         assert addressById.get().getAddress().equals("New address");
