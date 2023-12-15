@@ -125,9 +125,9 @@ public class CustomerEndToEndTest {
         Customer customer2 = customerService.createCustomer(new Customer("TestCustomer2", "TestEmail2", "0123452"));
 
         mockMvc.perform(get("/api/customer/all")
-                        .accept(MediaType.APPLICATION_JSON)) // Specify the expected response type
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON)) // Validate response content type
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$[0].customerName").value(customer.getCustomerName()))
                 .andExpect(jsonPath("$[0].email").value(customer.getEmail()))
                 .andExpect(jsonPath("$[0].phone").value(customer.getPhone()))
