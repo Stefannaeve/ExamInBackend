@@ -234,12 +234,26 @@ public class CustomerEndToEndTest {
         Customer customer = new Customer("TestCustomer", "TestEmail", "012345");
         Long customerId = customerService.createCustomer(customer).getId();
 
-        mockMvc.perform(post("/api/customer/add/" + customerId + "/address")
+        mockMvc.perform(post("/api/customer/" + customerId + "/address/add")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"address\":\"TestAddress\"}")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.addresses[0].address").value("TestAddress"));
+    }
+
+    @Test
+    @Transactional
+    public void shouldGetAllAddressesFromCustomer() throws Exception {
+        Customer customer = new Customer("TestCustomer", "TestEmail", "012345");
+        customer.setAddresses(Arrays.asList(new Address("TestAddress"), new Address("TestAddress2")));
+        Long customerId = customerService.createCustomer(customer).getId();
+
+        mockMvc.perform(get("/api/customer/" + customerId + "/address/all")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].address").value("TestAddress"))
+                .andExpect(jsonPath("$[1].address").value("TestAddress2"));
     }
 
     @Test
