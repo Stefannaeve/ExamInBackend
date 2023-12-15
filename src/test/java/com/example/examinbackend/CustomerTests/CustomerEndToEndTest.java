@@ -136,6 +136,20 @@ public class CustomerEndToEndTest {
 
     @Test
     @Transactional
+    public void shouldUpdateCustomerName() throws Exception {
+        Customer customer = new Customer("TestCustomer", "TestEmail", "012345");
+        customerService.createCustomer(customer);
+
+        mockMvc.perform(put("/api/customer/update/1/name")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"customerName\":\"Bob Marley\"}")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.customerName").value("Bob Marley"));
+    }
+
+    @Test
+    @Transactional
     public void shouldAddAddressToCustomer() throws Exception {
         Customer customer = new Customer("TestCustomer", "TestEmail", "012345");
         customerService.createCustomer(customer);
