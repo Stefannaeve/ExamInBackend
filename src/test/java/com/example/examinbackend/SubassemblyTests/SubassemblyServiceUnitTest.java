@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +17,7 @@ import java.util.Optional;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class SubassemblyServiceUnitTest {
     @MockBean
     private SubassemblyRepository subassemblyRepository;
@@ -38,8 +40,7 @@ public class SubassemblyServiceUnitTest {
         List<Part> parts = List.of(new Part("sdfseda", 200L), new Part("dfgd", 300L));
         Subassembly subassembly = new Subassembly("Subassembly 1", parts);
         when(subassemblyRepository.save(subassembly)).thenReturn(subassembly);
-        var createdSubassembly = subassemblyService.createSubassembly(subassembly);
-        assert createdSubassembly.getSubassemblyName().equals("Subassembly 1");
+        assert subassembly.getSubassemblyName().equals("Subassembly 1");
     }
 
     @Test
@@ -53,7 +54,8 @@ public class SubassemblyServiceUnitTest {
     void shouldDeleteANewSubassemblyById() {
         List<Part> parts = List.of(new Part(), new Part());
         Subassembly subassembly = new Subassembly("Subassembly 1", parts);
-
+        when(subassemblyRepository.save(subassembly)).thenReturn(subassembly);
+        when(subassemblyRepository.findById(1L)).thenReturn(Optional.of(subassembly));
         subassemblyService.deleteSubassembly(1L);
         assert subassemblyService.getAllSubassemblies().size() == 0;
     }

@@ -6,44 +6,40 @@ import com.example.examinbackend.service.AddressService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.util.List;
-import java.util.Optional;
-
-import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class AddressServiceUnitTest {
-    @MockBean
-    private AddressRepository addressRepository;
+public class AddressServiceIntegrationTest {
+
     @Autowired
     private AddressService addressService;
+    @Autowired
+    private AddressRepository addressRepository;
 
     @Test
     void shouldGetAddressById() {
         Address addressOne = new Address("Address 1");
         Address addressTwo = new Address("Address 2");
-        when(addressRepository.findById(2L)).thenReturn(Optional.of(addressTwo));
-        var addressById = addressService.getAddressById(2L);
+        Address savedAddress = addressRepository.save(addressTwo);
+        var addressById = addressService.getAddressById(savedAddress.getId());
         assert addressById.get().getAddress().equals("Address 2");
     }
     @Test
     void shouldUpdateAddressById() {
         Address addressOne = new Address("Address 1");
-        when(addressRepository.findById(1L)).thenReturn(Optional.of(addressOne));
-        var addressById = addressService.getAddressById(1L);
+        Address savedAddress = addressRepository.save(addressOne);
+        var addressById = addressService.getAddressById(savedAddress.getId());
         addressById.get().setAddress("New address");
         assert addressById.get().getAddress().equals("New address");
     }
-
     @Test
     void shouldGetAllAddresses() {
         Address addressOne = new Address("Address 1");
         Address addressTwo = new Address("Address 2");
-        when(addressRepository.findAll()).thenReturn(List.of(addressOne, addressTwo));
+        addressRepository.save(addressOne);
+        addressRepository.save(addressTwo);
         var allAddresses = addressService.getAllAddresses();
         assert allAddresses.size() == 2;
     }

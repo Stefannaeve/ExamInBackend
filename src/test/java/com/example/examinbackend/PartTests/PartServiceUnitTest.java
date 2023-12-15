@@ -27,13 +27,9 @@ public class PartServiceUnitTest {
     @Test
     void shouldGetPartById() {
         List<Part> listOfParts = List.of(new Part("Part 1", 200L), new Part("Part 2", 300L));
-
         when(partRepository.findById(2L)).thenReturn(Optional.of(listOfParts.get(1)));
-
         Optional<Part> partById = partService.getPartById(2L);
-
         Part part = partById.get();
-
         assert part.getPartName().equals("Part 2");
     }
     @Test
@@ -54,6 +50,8 @@ public class PartServiceUnitTest {
     @Test
     void shouldDeleteANewPart() {
         Part part = new Part("Part 1", 200L);
+        when(partRepository.save(part)).thenReturn(part);
+        when(partRepository.findById(1L)).thenReturn(Optional.of(part));
         partService.deletePart(1L);
         assert partService.getAllParts().size() == 0;
     }

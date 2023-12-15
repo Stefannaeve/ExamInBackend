@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +16,7 @@ import java.util.Optional;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class CustomerServiceUnitTest {
     @MockBean
     private CustomerRepository customerRepository;
@@ -48,8 +50,8 @@ public class CustomerServiceUnitTest {
         Customer customer = new Customer(1L,"Customer 1");
         when(customerRepository.save(customer)).thenReturn(customer);
         when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
-        var customerById = customerService.getCustomerById(1L);
-
+        customerService.deleteCustomer(1L);
+        assert customerService.getAllCustomers().size() == 0;
     }
     @Test
     void shouldUpdateCustomerName() {
