@@ -8,13 +8,16 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class MachineServiceUnitTest {
     @MockBean
     private MachineRepository machineRepository;
@@ -50,7 +53,8 @@ public class MachineServiceUnitTest {
         Machine machine = new Machine("Machine 1", subassemblies);
         when(machineRepository.save(machine)).thenReturn(machine);
         when(machineRepository.findById(1L)).thenReturn(Optional.of(machine));
-        assert machineService.getAllMachines().size() == 1;
+        machineService.deleteMachine(1l);
+        assert machineService.getAllMachines().size() == 0;
     }
     @Test
     void shouldUpdateMachineName(){
