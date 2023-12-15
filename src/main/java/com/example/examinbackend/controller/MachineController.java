@@ -37,7 +37,7 @@ public class MachineController {
     public Machine createMachine(@RequestBody Machine machine) {
         return machineService.createMachine(machine);
     }
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}/update/name")
     public ResponseEntity<Machine> updateMachineName(@PathVariable Long id, @RequestBody Machine machine) {
         Optional<Machine> optionalMachine = machineService.updateMachineName(id, machine);
         if (optionalMachine.isEmpty()) {
