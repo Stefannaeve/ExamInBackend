@@ -16,6 +16,7 @@ GET localhost:8080/api/customer/1
 
 ###
 GET localhost:8080/api/customer/all
+Content-Type: application/json
 
 ###
 POST localhost:8080/api/customer/add/1/address
