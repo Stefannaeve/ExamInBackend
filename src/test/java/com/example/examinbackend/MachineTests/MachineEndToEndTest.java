@@ -12,6 +12,7 @@ import com.example.examinbackend.service.MachineService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,13 @@ public class MachineEndToEndTest {
         List<Subassembly> subassemblies = Arrays.asList(cpuSubassembly);
 
         machineIds = machineRepository.save(new Machine("Windows Desktop", subassemblies)).getId();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        machineRepository.deleteAll();
+        subassemblyRepository.deleteAll();
+        partRepository.deleteAll();
     }
 
     @Test
