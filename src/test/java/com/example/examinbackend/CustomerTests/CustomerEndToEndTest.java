@@ -103,19 +103,6 @@ public class CustomerEndToEndTest {
 
     @Test
     @Transactional
-    public void shouldGetCustomer() throws Exception {
-        Customer customer = new Customer("TestCustomer", "TestEmail", "012345");
-        Long Id = customerRepository.save(customer).getId();
-
-        mockMvc.perform(get("/api/customer/" + customer.getId()))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.customerName").value(customer.getCustomerName()))
-                .andExpect(jsonPath("$.email").value(customer.getEmail()))
-                .andExpect(jsonPath("$.phone").value(customer.getPhone()));
-    }
-
-    @Test
-    @Transactional
     public void shouldGetCustomerById() throws Exception {
         customerRepository.deleteAll();
         Customer customer = new Customer("TestCustomer", "TestEmail", "012345");
@@ -219,6 +206,26 @@ public class CustomerEndToEndTest {
 
         Customer customerEntity = entity.get();
         assertEquals("536457845", customerEntity.getPhone());
+    }
+
+    @Test
+    @Transactional
+    public void shouldDeleteCustomer() throws Exception {
+        Customer customer = new Customer("TestCustomer", "TestEmail", "012345");
+        Long customerId = customerService.createCustomer(customer).getId();
+
+        MvcResult result = mockMvc.perform(delete("/api/customer/delete/" + customerId)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.customerName").value(customer.getCustomerName()))
+                .andExpect(jsonPath("$.email").value(customer.getEmail()))
+                .andExpect(jsonPath("$.phone").value(customer.getPhone()))
+                .andReturn();
+
+        String jsonString = result.getResponse().getContentAsString();
+        JsonNode customerJson = new ObjectMapper().readTree(jsonString);
+        Long id = customerJson.path("id").asLong();
+        assertTrue(customerRepository.findById(id).isEmpty());
     }
 
     @Test
