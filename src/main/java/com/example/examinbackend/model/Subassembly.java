@@ -39,4 +39,8 @@ public class Subassembly {
         this.subassemblyName = subassemblyName;
         this.parts = parts;
     }
+    public Subassembly(String subassemblyName, Long subassemblyPrice) {
+        this.subassemblyName = subassemblyName;
+        this.subassemblyPrice = subassemblyPrice;
+    }
 }
