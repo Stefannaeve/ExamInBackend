@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/api/customer", consumes = "application/json", produces = "application/json")
+@RequestMapping("/api/customer")
 public class CustomerController {
     private final CustomerService customerService;
     private final AddressService addressService;
@@ -37,7 +37,7 @@ public class CustomerController {
         }
     }
 
-    @GetMapping("/all")
+    @GetMapping(value = "/all", produces = "application/json")
     public List<Customer> getAllCustomers() {
         return customerService.getAllCustomers();
     }
