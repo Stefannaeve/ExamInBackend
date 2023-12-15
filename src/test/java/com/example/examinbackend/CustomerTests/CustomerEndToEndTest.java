@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.transaction.Transactional;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -46,6 +47,13 @@ public class CustomerEndToEndTest {
     @Autowired
     private CustomerRepository customerRepository;
 
+    private List<Long> customerIds = new ArrayList<>();
+
+    @AfterEach
+    public void tearDown() {
+        customerRepository.deleteAll();
+    }
+
     @Test
     @Transactional
     public void shouldMakeCustomer() throws Exception {
@@ -83,6 +91,8 @@ public class CustomerEndToEndTest {
         Optional<Customer> entity = customerRepository.findById(customerId);
         assertTrue(entity.isPresent());
 
+        customerIds.add(customerId);
+
         Customer customerEntity = entity.get();
         assertEquals(customerName, customerEntity.getCustomerName());
         assertEquals(email, customerEntity.getEmail());
@@ -95,9 +105,9 @@ public class CustomerEndToEndTest {
     @Transactional
     public void shouldGetCustomer() throws Exception {
         Customer customer = new Customer("TestCustomer", "TestEmail", "012345");
-        when(customerRepository.findById(1L)).thenReturn(java.util.Optional.of(customer));
+        Long Id = customerRepository.save(customer).getId();
 
-        mockMvc.perform(get("/api/customer/1" + customer.getId()))
+        mockMvc.perform(get("/api/customer/" + customer.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.customerName").value(customer.getCustomerName()))
                 .andExpect(jsonPath("$.email").value(customer.getEmail()))
@@ -107,14 +117,16 @@ public class CustomerEndToEndTest {
     @Test
     @Transactional
     public void shouldGetCustomerById() throws Exception {
+        customerRepository.deleteAll();
         Customer customer = new Customer("TestCustomer", "TestEmail", "012345");
-        customerRepository.save(customer);
+        Long customerId = customerRepository.save(customer).getId();
 
-        mockMvc.perform(get("/api/customer/1"))
+        mockMvc.perform(get("/api/customer/" + customerId))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.customerName").value(customer.getCustomerName()))
                 .andExpect(jsonPath("$.email").value(customer.getEmail()))
                 .andExpect(jsonPath("$.phone").value(customer.getPhone()));
+        System.out.println("Willy Billy");
     }
 
     @Test
@@ -139,9 +151,10 @@ public class CustomerEndToEndTest {
     @Transactional
     public void shouldUpdateCustomerName() throws Exception {
         Customer customer = new Customer("TestCustomer", "TestEmail", "012345");
-        customerService.createCustomer(customer);
+        Long customerId = customerService.createCustomer(customer).getId();
+        System.out.println(customerService.getAllCustomers());
 
-        MvcResult result = mockMvc.perform(put("/api/customer/update/1/name")
+        MvcResult result = mockMvc.perform(put("/api/customer/update/" + customerId + "/name")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"customerName\":\"Bob Marley\"}")
                         .accept(MediaType.APPLICATION_JSON))
@@ -163,9 +176,9 @@ public class CustomerEndToEndTest {
     @Transactional
     public void shouldUpdateCustomerEmail() throws Exception {
         Customer customer = new Customer("Harald Haraldson", "Harald@Haraldson.Harald", "20842048");
-        customerRepository.save(customer);
+        Long customerId = customerRepository.save(customer).getId();
 
-        MvcResult result = mockMvc.perform(put("/api/customer/update/1/email")
+        MvcResult result = mockMvc.perform(put("/api/customer/update/" + customerId + "/email")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"email\":\"Harald@BobbyBigBoi.com\"}")
                         .accept(MediaType.APPLICATION_JSON))
@@ -187,9 +200,10 @@ public class CustomerEndToEndTest {
     @Transactional
     public void shouldUpdateCustomerPhone() throws Exception {
         Customer customer = new Customer("Biggibigboi", "Biggest@Gmail.big", "787382768");
-        customerRepository.save(customer);
+        Long customerId = customerRepository.save(customer).getId();
+        System.out.println(customerId);
 
-        MvcResult result = mockMvc.perform(put("/api/customer/update/1/phone")
+        MvcResult result = mockMvc.perform(put("/api/customer/update/" + customerId + "/phone")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"phone\":\"536457845\"}")
                         .accept(MediaType.APPLICATION_JSON))
@@ -211,9 +225,9 @@ public class CustomerEndToEndTest {
     @Transactional
     public void shouldAddAddressToCustomer() throws Exception {
         Customer customer = new Customer("TestCustomer", "TestEmail", "012345");
-        customerService.createCustomer(customer);
+        Long customerId = customerService.createCustomer(customer).getId();
 
-        mockMvc.perform(post("/api/customer/add/1/address")
+        mockMvc.perform(post("/api/customer/add/" + customerId + "/address")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"address\":\"TestAddress\"}")
                         .accept(MediaType.APPLICATION_JSON))
@@ -225,10 +239,10 @@ public class CustomerEndToEndTest {
     @Transactional
     public void shouldUpdateAddressInCustomer() throws Exception {
         Customer customer = new Customer("TestCustomer", "TestEmail", "012345");
-        customer.setAddresses(Arrays.asList(new Address("TestAddress"), new Address("TestAddress2")));
-        customerService.createCustomer(customer);
+        customer.setAddresses(Arrays.asList(new Address("TestAddress")));
+        Address address = customerService.createCustomer(customer).getAddresses().get(0);
 
-        mockMvc.perform(put("/api/customer/address/update/1")
+        mockMvc.perform(put("/api/customer/address/update/" + address.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"address\":\"FrognerParken\"}")
                         .accept(MediaType.APPLICATION_JSON))
