@@ -39,9 +39,6 @@ public class MachineEndToEndTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private MachineService machineService;
-
-    @Autowired
     private MachineRepository machineRepository;
 
     @Autowired
@@ -99,7 +96,6 @@ public class MachineEndToEndTest {
         List<Subassembly> subassemblies = Arrays.asList(cpuSubassembly);
 
         machineIds = machineRepository.save(new Machine("Windows Desktop2", subassemblies)).getId();
-
 
         mockMvc.perform(get("/api/machine/all"))
                 .andExpect(status().isOk())
