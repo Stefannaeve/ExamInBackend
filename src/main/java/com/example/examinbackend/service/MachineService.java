@@ -1,7 +1,6 @@
 package com.example.examinbackend.service;
 
 import com.example.examinbackend.model.Machine;
-import com.example.examinbackend.model.Part;
 import com.example.examinbackend.model.Subassembly;
 import com.example.examinbackend.repository.MachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
