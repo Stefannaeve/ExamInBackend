@@ -48,7 +48,7 @@ public class CustomerServiceIntegrationTest {
     @Test
     @Transactional
     void shouldDeleteCustomerById(){
-        Customer customer = new Customer(1L, "Customer 1");
+        Customer customer = new Customer("Customer 1");
         customerRepository.save(customer);
         customerService.deleteCustomer(customer.getId());
         assert customerService.getAllCustomers().size() == 0;
@@ -56,7 +56,7 @@ public class CustomerServiceIntegrationTest {
     @Test
     @Transactional
     void shouldUpdateCustomerName() {
-        Customer customer = new Customer(1L,"Customer 1");
+        Customer customer = new Customer("Customer 1");
         Customer savedCustomer = customerRepository.save(customer);
         var customerById = customerService.getCustomerById(savedCustomer.getId());
         customerById.get().setCustomerName("New name");
@@ -65,7 +65,7 @@ public class CustomerServiceIntegrationTest {
     @Test
     @Transactional
     void shouldUpdateCustomerEmail(){
-        Customer customer = new Customer(1L,"Customer 1");
+        Customer customer = new Customer("Customer 1");
         Customer savedCustomer = customerRepository.save(customer);
         var customerById = customerService.getCustomerById(savedCustomer.getId());
         customerById.get().setEmail("New email");
@@ -74,7 +74,7 @@ public class CustomerServiceIntegrationTest {
     @Test
     @Transactional
     void shouldUpdateCustomerPhone(){
-        Customer customer = new Customer(1L,"Customer 1");
+        Customer customer = new Customer("Customer 1");
         Customer savedCustomer = customerRepository.save(customer);
         var customerById = customerService.getCustomerById(savedCustomer.getId());
         customerById.get().setPhone("New phone");
@@ -83,7 +83,7 @@ public class CustomerServiceIntegrationTest {
     @Test
     @Transactional
     void shouldAddCustomerAddress(){
-        Customer customer = new Customer(1L,"Customer 1");
+        Customer customer = new Customer("Customer 1");
         Customer savedCustomer = customerRepository.save(customer);
         var customerById = customerService.getCustomerById(savedCustomer.getId());
         Address address = new Address("Address 1");
@@ -95,7 +95,7 @@ public class CustomerServiceIntegrationTest {
     @Test
     @Transactional
     void shouldGetAllCustomerAddresses(){
-        Customer customer = new Customer(1L,"Customer 1");
+        Customer customer = new Customer("Customer 1");
         Customer savedCustomer = customerRepository.save(customer);
         var customerById = customerService.getCustomerById(savedCustomer.getId());
         Address address = new Address("Address 1");
