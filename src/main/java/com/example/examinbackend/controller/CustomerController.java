@@ -4,8 +4,6 @@ import com.example.examinbackend.model.Address;
 import com.example.examinbackend.model.Customer;
 import com.example.examinbackend.service.AddressService;
 import com.example.examinbackend.service.CustomerService;
-import jakarta.servlet.http.HttpServletRequest;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +24,7 @@ public class CustomerController {
         this.addressService = addressService;
     }
 
-    //region GET
+    // region GET
     @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<Customer> getCustomer(@PathVariable Long id) {
         Optional<Customer> optionalCustomer = customerService.getCustomerById(id);
