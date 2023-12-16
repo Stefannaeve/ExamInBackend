@@ -4,7 +4,6 @@ import com.example.examinbackend.model.Address;
 import com.example.examinbackend.model.Customer;
 import com.example.examinbackend.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -70,14 +69,6 @@ public class CustomerService {
             return Optional.empty();
         }
         existingCustomer.get().setPhone(customer.getPhone());
-        return Optional.of(customerRepository.save(existingCustomer.get()));
-    }
-    public Optional<Customer> addCustomerAddress(Long id, Address address) {
-        Optional<Customer> existingCustomer = getCustomerById(id);
-        if (existingCustomer.isEmpty()) {
-            return Optional.empty();
-        }
-        existingCustomer.get().getAddresses().add(address);
         return Optional.of(customerRepository.save(existingCustomer.get()));
     }
 
