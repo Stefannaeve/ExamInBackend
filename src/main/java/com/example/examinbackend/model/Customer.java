@@ -48,8 +48,7 @@ public class Customer {
         this.phone = phone;
     }
 
-    public Customer(Long id, String customerName) {
-        this.id = id;
+    public Customer(String customerName) {
         this.customerName = customerName;
     }
 }
