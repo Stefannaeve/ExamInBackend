@@ -47,7 +47,7 @@ public class CustomerServiceUnitTest {
     }
     @Test
     void shouldDeleteANewCustomerById() {
-        Customer customer = new Customer(1L,"Customer 1");
+        Customer customer = new Customer("Customer 1");
         when(customerRepository.save(customer)).thenReturn(customer);
         when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
         customerService.deleteCustomer(1L);
@@ -55,7 +55,7 @@ public class CustomerServiceUnitTest {
     }
     @Test
     void shouldUpdateCustomerName() {
-        Customer customer = new Customer(1L,"Customer 1");
+        Customer customer = new Customer("Customer 1");
         when(customerRepository.save(customer)).thenReturn(customer);
         when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
         var customerById = customerService.getCustomerById(1L);
