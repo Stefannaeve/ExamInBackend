@@ -32,6 +32,8 @@ public class DatabaseInitializer implements CommandLineRunner {
 
     public void run(String... args) {
 
+        System.out.println("Initializing database...");
+
         //region Parts
 
         //CPU
@@ -263,6 +265,8 @@ public class DatabaseInitializer implements CommandLineRunner {
         machineService.createMachine(new Machine("Gaming Desktop", gamingDesktop));
 
         //endregion
+
+        System.out.println("Initialized database");
 
     }
 }

@@ -24,7 +24,7 @@ public class Order {
     @Column(name = "order_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")
     @JsonIgnoreProperties("orders")
     private Customer customer;

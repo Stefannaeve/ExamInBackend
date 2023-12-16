@@ -19,7 +19,7 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @GetMapping("/id")
+    @GetMapping("/{id}")
     public ResponseEntity<Order> getOrder(@PathVariable Long id) {
         Optional<Order> optionalOrder = orderService.getOrderById(id);
         if (optionalOrder.isEmpty()) {
@@ -44,7 +44,7 @@ public class OrderController {
         }
     }
 
-    @PostMapping("/update/{orderId}")
+    @PutMapping("/update/{orderId}")
     public ResponseEntity<Order> updateOrderMachines(@PathVariable Long orderId, @RequestBody List<Machine> machines) {
         Optional<Order> optionalOrder = orderService.updateOrderMachines(machines, orderId);
         if (optionalOrder.isEmpty()) {
