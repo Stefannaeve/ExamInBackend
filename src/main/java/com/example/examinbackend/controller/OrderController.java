@@ -3,7 +3,6 @@ package com.example.examinbackend.controller;
 import com.example.examinbackend.model.Machine;
 import com.example.examinbackend.model.Order;
 import com.example.examinbackend.service.OrderService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +12,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/order")
-@Slf4j
 public class OrderController {
     private final OrderService orderService;
 
