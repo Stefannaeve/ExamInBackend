@@ -33,6 +33,10 @@ public class OrderController {
     public List<Order> getAllOrders() {
         return orderService.getAllOrders();
     }
+    @GetMapping("/all/{pageNumber}/{pageSize}")
+    public List<Order> getAllOrdersPageable(@PathVariable int pageNumber, @PathVariable int pageSize) {
+        return orderService.getAllOrdersPageable(pageNumber, pageSize);
+    }
 
     @PostMapping("/add/customer/{customerId}")
     public ResponseEntity<Order> createOrder(@PathVariable Long customerId) {

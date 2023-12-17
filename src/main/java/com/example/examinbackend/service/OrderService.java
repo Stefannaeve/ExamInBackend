@@ -41,6 +41,9 @@ public class OrderService {
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
     }
+    public List<Order> getAllOrdersPageable(int pageNumber, int pageSize) {
+        return orderRepository.findAll().subList(pageNumber, pageSize);
+    }
 
     public Optional<Order> deleteOrder(Long id) {
         Optional<Order> optionalOrder = getOrderById(id);
