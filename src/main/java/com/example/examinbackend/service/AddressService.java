@@ -3,6 +3,7 @@ package com.example.examinbackend.service;
 import com.example.examinbackend.model.Address;
 import com.example.examinbackend.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,6 +34,10 @@ public class AddressService {
 
     public List<Address> getAllAddresses() {
         return addressRepository.findAll();
+    }
+
+    public List<Address> getAllAddressesPageable(int pageNumber, int pageSize) {
+        return addressRepository.findAll(PageRequest.of(pageNumber, pageSize)).stream().toList();
     }
 
     public Optional<Address> createAddress(Address address) {

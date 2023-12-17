@@ -42,4 +42,8 @@ public class AddressController {
     public List<Address> getAllAddresses() {
         return addressService.getAllAddresses();
     }
+    @GetMapping("/all/{pageNumber}/{pageSize}")
+    public List<Address> getAllAddressesPageable(@PathVariable int pageNumber, @PathVariable int pageSize) {
+        return addressService.getAllAddressesPageable(pageNumber, pageSize);
+    }
 }
