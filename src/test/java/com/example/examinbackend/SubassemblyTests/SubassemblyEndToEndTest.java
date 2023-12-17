@@ -97,6 +97,56 @@ public class SubassemblyEndToEndTest {
 
     @Test
     @Transactional
+    public void shouldGetAllSubassembliesPageable() throws Exception {
+        Part part5 = partRepository.save(new Part("Part 5", 100L));
+        Part part6 = partRepository.save(new Part("Part 6", 200L));
+        Part part7 = partRepository.save(new Part("Part 7", 300L));
+        List<Part> parts = List.of(part5, part6, part7);
+
+        subassemblyId = subassemblyRepository.save(new Subassembly("Subassembly 2", parts)).getId();
+
+        Part part8 = partRepository.save(new Part("Part 5", 100L));
+        Part part9 = partRepository.save(new Part("Part 6", 200L));
+        Part part10 = partRepository.save(new Part("Part 7", 300L));
+        List<Part> parts2 = List.of(part8, part9, part10);
+
+        subassemblyId = subassemblyRepository.save(new Subassembly("Subassembly 3", parts2)).getId();
+
+        Part part11 = partRepository.save(new Part("Part 5", 100L));
+        Part part12 = partRepository.save(new Part("Part 6", 200L));
+        Part part13 = partRepository.save(new Part("Part 7", 300L));
+        List<Part> parts3 = List.of(part11, part12, part13);
+
+        subassemblyId = subassemblyRepository.save(new Subassembly("Subassembly 3", parts3)).getId();
+
+        mockMvc.perform(get("/api/subassembly/all/0/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].subassemblyName").value("Subassembly 1"))
+                .andExpect(jsonPath("$[0].parts[0].partName").value("Part 1"))
+                .andExpect(jsonPath("$[0].parts[1].partName").value("Part 2"))
+                .andExpect(jsonPath("$[0].parts[2].partName").value("Part 3"));
+
+        mockMvc.perform(get("/api/subassembly/all/1/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].subassemblyName").value("Subassembly 2"))
+                .andExpect(jsonPath("$[0].parts[0].partName").value("Part 5"))
+                .andExpect(jsonPath("$[0].parts[1].partName").value("Part 6"))
+                .andExpect(jsonPath("$[0].parts[2].partName").value("Part 7"));
+
+        mockMvc.perform(get("/api/subassembly/all/0/2"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].subassemblyName").value("Subassembly 1"))
+                .andExpect(jsonPath("$[0].parts[0].partName").value("Part 1"))
+                .andExpect(jsonPath("$[0].parts[1].partName").value("Part 2"))
+                .andExpect(jsonPath("$[0].parts[2].partName").value("Part 3"))
+                .andExpect(jsonPath("$[1].subassemblyName").value("Subassembly 2"))
+                .andExpect(jsonPath("$[1].parts[0].partName").value("Part 5"))
+                .andExpect(jsonPath("$[1].parts[1].partName").value("Part 6"))
+                .andExpect(jsonPath("$[1].parts[2].partName").value("Part 7"));
+    }
+
+    @Test
+    @Transactional
     public void shouldCreateSubassembly() throws Exception {
         Part part5 = partRepository.save(new Part("Part 5", 100L));
         Part part6 = partRepository.save(new Part("Part 6", 200L));
