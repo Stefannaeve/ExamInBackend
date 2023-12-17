@@ -25,10 +25,9 @@ public class MachineServiceIntegrationTests {
     @Transactional
     void shouldGetMachineById() {
         List<Subassembly> subassemblies = List.of(new Subassembly(), new Subassembly());
-        Machine machineOne = new Machine("Machine 1", subassemblies);
-        Machine machineTwo = new Machine("Machine 2", subassemblies);
-        Machine savedMachine = machineRepository.save(machineTwo);
-        var foundMachine = machineService.getMachineById(savedMachine.getId());
+        machineRepository.save(new Machine("Machine 1", subassemblies));
+        Long machineId = machineRepository.save(new Machine("Machine 2", subassemblies)).getId();
+        var foundMachine = machineService.getMachineById(machineId);
         assert foundMachine.get().getMachineName().equals("Machine 2");
     }
 
