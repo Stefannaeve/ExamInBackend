@@ -5,6 +5,7 @@ import com.example.examinbackend.model.Machine;
 import com.example.examinbackend.model.Order;
 import com.example.examinbackend.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,7 +43,7 @@ public class OrderService {
         return orderRepository.findAll();
     }
     public List<Order> getAllOrdersPageable(int pageNumber, int pageSize) {
-        return orderRepository.findAll().subList(pageNumber, pageSize);
+        return orderRepository.findAll(PageRequest.of(pageNumber, pageSize)).stream().toList();
     }
 
     public Optional<Order> deleteOrder(Long id) {
