@@ -2,13 +2,11 @@ package com.example.examinbackend.OrderTests;
 
 import com.example.examinbackend.model.*;
 import com.example.examinbackend.repository.*;
-import com.example.examinbackend.service.CustomerService;
 import com.example.examinbackend.service.OrderService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.transaction.Transactional;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,12 +2,10 @@ package com.example.examinbackend.PartTests;
 
 import com.example.examinbackend.model.Part;
 import com.example.examinbackend.repository.PartRepository;
-import com.example.examinbackend.service.PartService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.transaction.Transactional;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +32,6 @@ public class PartEndToEndTest {
 
     @Autowired
     private PartRepository partRepository;
-
-    @Autowired
-    private PartService partService;
 
     private Long partId;
 

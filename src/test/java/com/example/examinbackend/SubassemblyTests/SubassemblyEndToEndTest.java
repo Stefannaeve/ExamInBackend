@@ -4,8 +4,6 @@ import com.example.examinbackend.model.Part;
 import com.example.examinbackend.model.Subassembly;
 import com.example.examinbackend.repository.PartRepository;
 import com.example.examinbackend.repository.SubassemblyRepository;
-import com.example.examinbackend.service.PartService;
-import com.example.examinbackend.service.SubassemblyService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -20,7 +18,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,12 +40,6 @@ public class SubassemblyEndToEndTest {
 
     @Autowired
     private PartRepository partRepository;
-
-    @Autowired
-    private SubassemblyService subassemblyService;
-
-    @Autowired
-    private PartService partService;
 
     private Long subassemblyId;
 
