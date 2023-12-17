@@ -21,7 +21,7 @@ public class OrderServiceIntegrationTest {
     @Test
     @Transactional
     void shouldGetOrderById(){
-        Order orderOne = new Order();
+        orderRepository.save(new Order());
         Order orderTwo = new Order();
         Order savedOrder = orderRepository.save(orderTwo);
         var foundOrder = orderService.getOrderById(savedOrder.getId());
