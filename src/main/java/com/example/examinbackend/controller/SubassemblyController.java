@@ -31,11 +31,11 @@ public class SubassemblyController {
     public List<Subassembly> getAllSubassemblies() {
         return subassemblyService.getAllSubassemblies();
     }
-    @PostMapping("/add")
+    @PostMapping(value = "/add", consumes = "application/json", produces = "application/json")
     public Subassembly createSubassembly(@RequestBody Subassembly subassembly) {
         return subassemblyService.createSubassembly(subassembly);
     }
-    @PutMapping("/update/{id}")
+    @PutMapping(value = "/update/{id}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Subassembly> updateSubassemblyName(@PathVariable Long id, @RequestBody Subassembly subassembly) {
         Optional<Subassembly> optionalSubassembly = subassemblyService.updateSubassemblyName(id, subassembly);
         if (optionalSubassembly.isEmpty()) {
@@ -44,7 +44,7 @@ public class SubassemblyController {
             return ResponseEntity.status(HttpStatus.OK).body(optionalSubassembly.get());
         }
     }
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping(value ="/delete/{id}", produces = "application/json")
     public ResponseEntity<Subassembly> deleteSubassembly(@PathVariable Long id) {
         Optional<Subassembly> optionalSubassembly = subassemblyService.deleteSubassembly(id);
         if (optionalSubassembly.isEmpty()) {
