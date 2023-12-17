@@ -74,6 +74,45 @@ public class PartEndToEndTest {
 
     @Test
     @Transactional
+    public void shouldReturnAllPartsPageable() throws Exception {
+
+        Part part2 = partRepository.save(new Part("Part 2", 200L));
+        Part part3 = partRepository.save(new Part("Part 3", 300L));
+        Part part4 = partRepository.save(new Part("Part 4", 400L));
+
+        mockMvc.perform(get("/api/part/all/0/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(partId))
+                .andExpect(jsonPath("$[0].partName").value("Part 1"))
+                .andExpect(jsonPath("$[0].partPrice").value(100L));
+
+        mockMvc.perform(get("/api/part/all/1/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(part2.getId()))
+                .andExpect(jsonPath("$[0].partName").value("Part 2"))
+                .andExpect(jsonPath("$[0].partPrice").value(200L));
+
+        mockMvc.perform(get("/api/part/all/0/2"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(partId))
+                .andExpect(jsonPath("$[0].partName").value("Part 1"))
+                .andExpect(jsonPath("$[0].partPrice").value(100L))
+                .andExpect(jsonPath("$[1].id").value(part2.getId()))
+                .andExpect(jsonPath("$[1].partName").value("Part 2"))
+                .andExpect(jsonPath("$[1].partPrice").value(200L));
+
+        mockMvc.perform(get("/api/part/all/1/2"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(part3.getId()))
+                .andExpect(jsonPath("$[0].partName").value("Part 3"))
+                .andExpect(jsonPath("$[0].partPrice").value(300L))
+                .andExpect(jsonPath("$[1].id").value(part4.getId()))
+                .andExpect(jsonPath("$[1].partName").value("Part 4"))
+                .andExpect(jsonPath("$[1].partPrice").value(400L));
+    }
+
+    @Test
+    @Transactional
     public void shouldAddPart() throws Exception {
         String partName = "Part 3";
         Long partPrice = 300L;
