@@ -40,6 +40,11 @@ public class CustomerController {
         return customerService.getAllCustomers();
     }
 
+    @GetMapping(value = "/all/{pageNumber}/{pageSize}", produces = "application/json")
+    public List<Customer> getAllCustomersPageable(@PathVariable int pageNumber, @PathVariable int pageSize) {
+        return customerService.getAllCustomersPageable(pageNumber, pageSize);
+    }
+
     //endregion
 
     //region POST

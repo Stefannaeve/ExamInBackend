@@ -4,6 +4,7 @@ import com.example.examinbackend.model.Address;
 import com.example.examinbackend.model.Customer;
 import com.example.examinbackend.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,6 +35,10 @@ public class CustomerService {
 
     public List<Customer> getAllCustomers() {
         return customerRepository.findAll();
+    }
+
+    public List<Customer> getAllCustomersPageable(int pageNumber, int pageSize) {
+        return customerRepository.findAll(PageRequest.of(pageNumber, pageSize)).stream().toList();
     }
 
     public Optional<Customer> deleteCustomer(Long id) {
