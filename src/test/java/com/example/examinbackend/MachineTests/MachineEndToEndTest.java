@@ -93,6 +93,13 @@ public class MachineEndToEndTest {
 
     @Test
     @Transactional
+    public void shouldGetBadReqById() throws Exception {
+        mockMvc.perform(get("/api/machine/" + machineIds + 1))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Transactional
     public void shouldGetAllMachines() throws Exception {
         Part cpu = partRepository.save(new Part("CPU2", 10002L));
         Part cpuCooler = partRepository.save(new Part("CPU Cooler2", 1002L));
