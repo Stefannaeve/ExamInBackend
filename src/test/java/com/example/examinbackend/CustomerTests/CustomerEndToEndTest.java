@@ -120,6 +120,17 @@ public class CustomerEndToEndTest {
 
     @Test
     @Transactional
+    public void shouldGetCustomerByIdBadReq() throws Exception {
+        customerRepository.deleteAll();
+        Customer customer = new Customer("TestCustomer", "TestEmail", "012345");
+        Long customerId = customerRepository.save(customer).getId();
+
+        mockMvc.perform(get("/api/customer/" + customerId + 1))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Transactional
     public void shouldGetAllCustomers() throws Exception {
         Customer customer = customerService.createCustomer(new Customer("TestCustomer", "TestEmail", "012345"));
         Customer customer2 = customerService.createCustomer(new Customer("TestCustomer2", "TestEmail2", "0123452"));
