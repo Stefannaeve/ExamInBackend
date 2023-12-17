@@ -134,6 +134,13 @@ public class OrderEndToEndTest {
 
     @Test
     @Transactional
+    public void shouldNotGetOrderByIdBecauseIdDoesNotExist() throws Exception {
+        mockMvc.perform(get("/api/order/" + orderId + 1))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Transactional
     public void ShouldAddCustomerToOrderAndCreateOrder() throws Exception {
 
         Customer customer = customerRepository.save(new Customer("James", "Small boie", "123"));
