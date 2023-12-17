@@ -4,6 +4,7 @@ import com.example.examinbackend.model.Machine;
 import com.example.examinbackend.model.Subassembly;
 import com.example.examinbackend.repository.MachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,6 +33,10 @@ public class MachineService {
     }
     public List<Machine> getAllMachines() {
         return machineRepository.findAll();
+    }
+
+    public List<Machine> getAllMachinesPageable(int pageNumber, int pageSize) {
+        return machineRepository.findAll(PageRequest.of(pageNumber, pageSize)).stream().toList();
     }
     public Optional<Machine> deleteMachine(Long id) {
         Optional<Machine> optionalMachine = getMachineById(id);
