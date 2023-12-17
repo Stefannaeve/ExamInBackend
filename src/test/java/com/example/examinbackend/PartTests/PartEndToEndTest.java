@@ -58,6 +58,13 @@ public class PartEndToEndTest {
 
     @Test
     @Transactional
+    public void shouldNotReturnPartById() throws Exception {
+        mockMvc.perform(get("/api/part/" + partId + 1))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Transactional
     public void shouldReturnAllParts() throws Exception {
 
         Part part2 = partRepository.save(new Part("Part 2", 200L));
