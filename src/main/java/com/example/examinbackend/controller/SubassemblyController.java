@@ -31,6 +31,11 @@ public class SubassemblyController {
     public List<Subassembly> getAllSubassemblies() {
         return subassemblyService.getAllSubassemblies();
     }
+
+    @GetMapping("/all/{pageNumber}/{pageSize}")
+    public List<Subassembly> getAllSubassembliesPageable(@PathVariable int pageNumber, @PathVariable int pageSize) {
+        return subassemblyService.getAllSubassembliesPageable(pageNumber, pageSize);
+    }
     @PostMapping(value = "/add", consumes = "application/json", produces = "application/json")
     public Subassembly createSubassembly(@RequestBody Subassembly subassembly) {
         return subassemblyService.createSubassembly(subassembly);
