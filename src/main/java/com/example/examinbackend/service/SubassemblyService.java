@@ -4,6 +4,7 @@ import com.example.examinbackend.model.Part;
 import com.example.examinbackend.model.Subassembly;
 import com.example.examinbackend.repository.SubassemblyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,6 +40,10 @@ public class SubassemblyService {
 
     public List<Subassembly> getAllSubassemblies() {
         return subassemblyRepository.findAll();
+    }
+
+    public List<Subassembly> getAllSubassembliesPageable(int pageNumber, int pageSize) {
+        return subassemblyRepository.findAll(PageRequest.of(pageNumber, pageSize)).stream().toList();
     }
 
     public Optional<Subassembly> deleteSubassembly(Long id) {
