@@ -146,7 +146,8 @@ public class MachineEndToEndTest {
                 .andExpect(jsonPath("$[0].subassemblies[0].parts[1].partName").value("CPU Cooler"))
                 .andExpect(jsonPath("$[0].subassemblies[0].parts[1].partPrice").value(100L))
                 .andExpect(jsonPath("$[0].subassemblies[0].parts[2].partName").value("Thermal Paste"))
-                .andExpect(jsonPath("$[0].subassemblies[0].parts[2].partPrice").value(10L));
+                .andExpect(jsonPath("$[0].subassemblies[0].parts[2].partPrice").value(10L))
+                .andExpect(jsonPath("$[1]").doesNotExist());
 
         mockMvc.perform(get("/api/machine/all/0/2"))
                 .andExpect(status().isOk())
@@ -165,7 +166,8 @@ public class MachineEndToEndTest {
                 .andExpect(jsonPath("$[1].subassemblies[0].parts[1].partName").value("CPU Cooler2"))
                 .andExpect(jsonPath("$[1].subassemblies[0].parts[1].partPrice").value(1002L))
                 .andExpect(jsonPath("$[1].subassemblies[0].parts[2].partName").value("Thermal Paste2"))
-                .andExpect(jsonPath("$[1].subassemblies[0].parts[2].partPrice").value(102L));
+                .andExpect(jsonPath("$[1].subassemblies[0].parts[2].partPrice").value(102L))
+                .andExpect(jsonPath("$[2]").doesNotExist());
     }
 
     @Test
