@@ -124,14 +124,16 @@ public class SubassemblyEndToEndTest {
                 .andExpect(jsonPath("$[0].subassemblyName").value("Subassembly 1"))
                 .andExpect(jsonPath("$[0].parts[0].partName").value("Part 1"))
                 .andExpect(jsonPath("$[0].parts[1].partName").value("Part 2"))
-                .andExpect(jsonPath("$[0].parts[2].partName").value("Part 3"));
+                .andExpect(jsonPath("$[0].parts[2].partName").value("Part 3"))
+                .andExpect(jsonPath("$[1].subassemblyName").doesNotExist());
 
         mockMvc.perform(get("/api/subassembly/all/1/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].subassemblyName").value("Subassembly 2"))
                 .andExpect(jsonPath("$[0].parts[0].partName").value("Part 5"))
                 .andExpect(jsonPath("$[0].parts[1].partName").value("Part 6"))
-                .andExpect(jsonPath("$[0].parts[2].partName").value("Part 7"));
+                .andExpect(jsonPath("$[0].parts[2].partName").value("Part 7"))
+                .andExpect(jsonPath("$[1].subassemblyName").doesNotExist());
 
         mockMvc.perform(get("/api/subassembly/all/0/2"))
                 .andExpect(status().isOk())
@@ -142,7 +144,8 @@ public class SubassemblyEndToEndTest {
                 .andExpect(jsonPath("$[1].subassemblyName").value("Subassembly 2"))
                 .andExpect(jsonPath("$[1].parts[0].partName").value("Part 5"))
                 .andExpect(jsonPath("$[1].parts[1].partName").value("Part 6"))
-                .andExpect(jsonPath("$[1].parts[2].partName").value("Part 7"));
+                .andExpect(jsonPath("$[1].parts[2].partName").value("Part 7"))
+                .andExpect(jsonPath("$[2].subassemblyName").doesNotExist());
     }
 
     @Test
