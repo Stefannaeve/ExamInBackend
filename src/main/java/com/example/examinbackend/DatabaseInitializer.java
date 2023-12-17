@@ -32,8 +32,6 @@ public class DatabaseInitializer implements CommandLineRunner {
 
     public void run(String... args) {
 
-        System.out.println("Initializing database...");
-
         //region Parts
 
         //CPU
