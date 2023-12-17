@@ -36,12 +36,12 @@ public class PartController {
         return partService.getAllParts();
     }
 
-    @PostMapping("/add")
+    @PostMapping(value = "/add", consumes = "application/json", produces = "application/json")
     public Part createPart(@RequestBody Part part) {
         return partService.createPart(part);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping(value = "/update/{id}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Part> updatePartName(@PathVariable Long id, @RequestBody Part part) {
         Optional<Part> optionalPart = partService.updatePartName(id, part);
         if (optionalPart.isEmpty()) {
@@ -51,7 +51,7 @@ public class PartController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping(value = "/delete/{id}", produces = "application/json")
     public ResponseEntity<Part> deletePart(@PathVariable Long id) {
         Optional<Part> optionalPart = partService.deletePart(id);
         if (optionalPart.isEmpty()) {
