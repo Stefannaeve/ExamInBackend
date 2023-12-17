@@ -1,0 +1,27 @@
+###
+POST localhost:8080/api/part/add
+Content-Type: application/json
+
+{
+  "partName" : "Test Part",
+  "partPrice" : 100
+}
+
+###
+GET localhost:8080/api/part/27
+
+###
+GET localhost:8080/api/part/all
+Content-Type: application/json
+
+###
+PUT localhost:8080/api/part/update/27
+Content-Type: application/json
+
+{
+    "partName" : "Test Updated Part",
+    "partPrice" : 100
+}
+
+###
+DELETE localhost:8080/api/part/delete/27
