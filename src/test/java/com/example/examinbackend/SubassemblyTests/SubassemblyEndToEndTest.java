@@ -75,6 +75,13 @@ public class SubassemblyEndToEndTest {
 
     @Test
     @Transactional
+    public void shouldNotGetSubassemblyById() throws Exception {
+        mockMvc.perform(get("/api/subassembly/" + subassemblyId + 1))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Transactional
     public void shouldGetAllSubassemblies() throws Exception {
         Part part5 = partRepository.save(new Part("Part 5", 100L));
         Part part6 = partRepository.save(new Part("Part 6", 200L));
