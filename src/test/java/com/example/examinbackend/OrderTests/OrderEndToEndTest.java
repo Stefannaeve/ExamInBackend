@@ -83,6 +83,46 @@ public class OrderEndToEndTest {
 
     @Test
     @Transactional
+    public void shouldGetAllOrdersPageable() throws Exception {
+        Customer customer = customerRepository.save(new Customer("customer2", "customer2@email.email", "123"));
+        Order order2 = orderService.createOrder(customer.getId()).get();
+        Customer customer2 = customerRepository.save(new Customer("customer3", "customer3@email.email", "1233"));
+        Order order3 = orderService.createOrder(customer2.getId()).get();
+        Customer customer3 = customerRepository.save(new Customer("customer4", "customer4@email.email", "12333"));
+        Order order4 = orderService.createOrder(customer3.getId()).get();
+
+        mockMvc.perform(get("/api/order/all/0/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(orderId))
+                .andExpect(jsonPath("$[0].customer.customerName").value("Johnn Doe"))
+                .andExpect(jsonPath("$[1].id").doesNotExist());
+
+        mockMvc.perform(get("/api/order/all/1/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(order2.getId()))
+                .andExpect(jsonPath("$[0].customer.customerName").value("customer2"))
+                .andExpect(jsonPath("$[1].id").doesNotExist());
+
+        mockMvc.perform(get("/api/order/all/0/3"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(orderId))
+                .andExpect(jsonPath("$[0].customer.customerName").value("Johnn Doe"))
+                .andExpect(jsonPath("$[1].id").value(order2.getId()))
+                .andExpect(jsonPath("$[1].customer.customerName").value("customer2"))
+                .andExpect(jsonPath("$[2].id").value(order3.getId()))
+                .andExpect(jsonPath("$[2].customer.customerName").value("customer3"))
+                .andExpect(jsonPath("$[3].id").doesNotExist());
+
+        mockMvc.perform(get("/api/order/all/1/3"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(order4.getId()))
+                .andExpect(jsonPath("$[0].customer.customerName").value("customer4"))
+                .andExpect(jsonPath("$[1].id").doesNotExist());
+
+    }
+
+    @Test
+    @Transactional
     public void shouldGetOrderById() throws Exception {
         mockMvc.perform(get("/api/order/" + orderId))
                 .andExpect(status().isOk())
