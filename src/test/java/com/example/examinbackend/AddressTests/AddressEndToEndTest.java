@@ -77,6 +77,15 @@ public class AddressEndToEndTest {
     }
 
     @Test
+    public void shouldNotCreateAddressBecauseEmptyBody() throws Exception {
+        mockMvc.perform(post("/api/address/create")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     public void getAllAddressesTest() throws Exception {
         mockMvc.perform(get("/api/address/all"))
                 .andExpect(status().isOk())
