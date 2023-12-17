@@ -84,6 +84,27 @@ public class AddressEndToEndTest {
                 .andExpect(jsonPath("$[1].address").value("TestAddress1"))
                 .andExpect(jsonPath("$[2].address").value("TestAddress2"));
     }
+
+    @Test
+public void getAllAddressesPageableTest() throws Exception {
+        mockMvc.perform(get("/api/address/all/0/2"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].address").value("TestAddress0"))
+                .andExpect(jsonPath("$[1].address").value("TestAddress1"))
+                .andExpect(jsonPath("$[2].address").doesNotExist());
+
+        mockMvc.perform(get("/api/address/all/1/2"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].address").value("TestAddress2"))
+                .andExpect(jsonPath("$[1].address").doesNotExist());
+
+        mockMvc.perform(get("/api/address/all/0/3"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].address").value("TestAddress0"))
+                .andExpect(jsonPath("$[1].address").value("TestAddress1"))
+                .andExpect(jsonPath("$[2].address").value("TestAddress2"));
+    }
+
     @Test
     public void updateAddressTest() throws Exception {
         List<Address> addresses = addressService.getAllAddresses();
