@@ -138,6 +138,35 @@ public class CustomerEndToEndTest {
 
     @Test
     @Transactional
+    public void shouldGetAllCustomerByPageable() throws Exception {
+        Customer customer = customerService.createCustomer(new Customer("TestCustomer", "TestEmail", "012345"));
+        Customer customer2 = customerService.createCustomer(new Customer("TestCustomer2", "TestEmail2", "0123452"));
+        Customer customer3 = customerService.createCustomer(new Customer("TestCustomer3", "TestEmail3", "0123453"));
+
+        mockMvc.perform(get("/api/customer/all/0/2")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$[0].customerName").value(customer.getCustomerName()))
+                .andExpect(jsonPath("$[0].email").value(customer.getEmail()))
+                .andExpect(jsonPath("$[0].phone").value(customer.getPhone()))
+                .andExpect(jsonPath("$[1].customerName").value(customer2.getCustomerName()))
+                .andExpect(jsonPath("$[1].email").value(customer2.getEmail()))
+                .andExpect(jsonPath("$[1].phone").value(customer2.getPhone()))
+                .andExpect(jsonPath("$[2].customerName").doesNotExist());
+
+        mockMvc.perform(get("/api/customer/all/1/2")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$[0].customerName").value(customer3.getCustomerName()))
+                .andExpect(jsonPath("$[0].email").value(customer3.getEmail()))
+                .andExpect(jsonPath("$[0].phone").value(customer3.getPhone()))
+                .andExpect(jsonPath("$[1].customerName").doesNotExist());
+    }
+
+    @Test
+    @Transactional
     public void shouldUpdateCustomerName() throws Exception {
         Customer customer = new Customer("TestCustomer", "TestEmail", "012345");
         Long customerId = customerService.createCustomer(customer).getId();
