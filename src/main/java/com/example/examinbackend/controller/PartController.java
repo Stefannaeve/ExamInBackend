@@ -36,6 +36,11 @@ public class PartController {
         return partService.getAllParts();
     }
 
+    @GetMapping("/all/{pageNumber}/{pageSize}")
+    public List<Part> getAllPartsPageable(@PathVariable int pageNumber, @PathVariable int pageSize) {
+        return partService.getAllPartsPageable(pageNumber, pageSize);
+    }
+
     @PostMapping("/add")
     public Part createPart(@RequestBody Part part) {
         return partService.createPart(part);
