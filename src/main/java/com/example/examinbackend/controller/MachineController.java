@@ -33,6 +33,12 @@ public class MachineController {
     public List<Machine> getAllMachines() {
         return machineService.getAllMachines();
     }
+
+    @GetMapping("/all/{pageNumber}/{pageSize}")
+    public List<Machine> getAllMachinesPageable(@PathVariable int pageNumber, @PathVariable int pageSize) {
+        return machineService.getAllMachinesPageable(pageNumber, pageSize);
+    }
+
     @PostMapping("/add")
     public Machine createMachine(@RequestBody Machine machine) {
         return machineService.createMachine(machine);
