@@ -3,7 +3,7 @@ POST localhost:8080/api/customer/add
 Content-type: application/json
 
 {
-    "customerName" : "William",
+    "customerName" : "customer",
     "email" : "123@hotmail.com",
     "phone" : 234234,
     "addresses" : [
@@ -23,7 +23,7 @@ POST localhost:8080/api/customer/add/1/address
 Content-Type: application/json
 
 {
-    "address" : "SickSkateboardLane"
+    "address" : "789Avenue"
 }
 
 ###
@@ -31,7 +31,7 @@ PUT localhost:8080/api/customer/update/1/name
 Content-Type: application/json
 
 {
-  "customerName" : "Gængsta"
+  "customerName" : "newCustomer"
 }
 
 ###
@@ -39,7 +39,7 @@ PUT localhost:8080/api/customer/update/1/email
 Content-Type: application/json
 
 {
-  "email" : "jswlr@email.com"
+  "email" : "customer@mail.com"
 }
 
 ###
