@@ -126,6 +126,50 @@ public class MachineEndToEndTest {
 
     @Test
     @Transactional
+    public void shouldGetAllMachinesPageable() throws Exception {
+        Part cpu = partRepository.save(new Part("CPU2", 10002L));
+        Part cpuCooler = partRepository.save(new Part("CPU Cooler2", 1002L));
+        Part thermalPaste = partRepository.save(new Part("Thermal Paste2", 102L));
+        List<Part> cpuParts = Arrays.asList(cpu, cpuCooler, thermalPaste);
+
+        Subassembly cpuSubassembly = subassemblyRepository.save(new Subassembly("CPU2", cpuParts));
+        List<Subassembly> subassemblies = Arrays.asList(cpuSubassembly);
+
+        machineRepository.save(new Machine("Windows Desktop2", subassemblies));
+
+        mockMvc.perform(get("/api/machine/all/0/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].machineName").value("Windows Desktop"))
+                .andExpect(jsonPath("$[0].subassemblies[0].subassemblyName").value("CPU"))
+                .andExpect(jsonPath("$[0].subassemblies[0].parts[0].partName").value("CPU"))
+                .andExpect(jsonPath("$[0].subassemblies[0].parts[0].partPrice").value(1000L))
+                .andExpect(jsonPath("$[0].subassemblies[0].parts[1].partName").value("CPU Cooler"))
+                .andExpect(jsonPath("$[0].subassemblies[0].parts[1].partPrice").value(100L))
+                .andExpect(jsonPath("$[0].subassemblies[0].parts[2].partName").value("Thermal Paste"))
+                .andExpect(jsonPath("$[0].subassemblies[0].parts[2].partPrice").value(10L));
+
+        mockMvc.perform(get("/api/machine/all/0/2"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].machineName").value("Windows Desktop"))
+                .andExpect(jsonPath("$[0].subassemblies[0].subassemblyName").value("CPU"))
+                .andExpect(jsonPath("$[0].subassemblies[0].parts[0].partName").value("CPU"))
+                .andExpect(jsonPath("$[0].subassemblies[0].parts[0].partPrice").value(1000L))
+                .andExpect(jsonPath("$[0].subassemblies[0].parts[1].partName").value("CPU Cooler"))
+                .andExpect(jsonPath("$[0].subassemblies[0].parts[1].partPrice").value(100L))
+                .andExpect(jsonPath("$[0].subassemblies[0].parts[2].partName").value("Thermal Paste"))
+                .andExpect(jsonPath("$[0].subassemblies[0].parts[2].partPrice").value(10L))
+                .andExpect(jsonPath("$[1].machineName").value("Windows Desktop2"))
+                .andExpect(jsonPath("$[1].subassemblies[0].subassemblyName").value("CPU2"))
+                .andExpect(jsonPath("$[1].subassemblies[0].parts[0].partName").value("CPU2"))
+                .andExpect(jsonPath("$[1].subassemblies[0].parts[0].partPrice").value(10002L))
+                .andExpect(jsonPath("$[1].subassemblies[0].parts[1].partName").value("CPU Cooler2"))
+                .andExpect(jsonPath("$[1].subassemblies[0].parts[1].partPrice").value(1002L))
+                .andExpect(jsonPath("$[1].subassemblies[0].parts[2].partName").value("Thermal Paste2"))
+                .andExpect(jsonPath("$[1].subassemblies[0].parts[2].partPrice").value(102L));
+    }
+
+    @Test
+    @Transactional
     public void shouldCreateMachine() throws Exception {
         Part cpu = partRepository.save(new Part("CPU2", 10002L));
         Part cpuCooler = partRepository.save(new Part("CPU Cooler2", 1002L));
