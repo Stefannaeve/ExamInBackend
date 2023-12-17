@@ -84,13 +84,15 @@ public class PartEndToEndTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(partId))
                 .andExpect(jsonPath("$[0].partName").value("Part 1"))
-                .andExpect(jsonPath("$[0].partPrice").value(100L));
+                .andExpect(jsonPath("$[0].partPrice").value(100L))
+                .andExpect(jsonPath("$[1].partName").doesNotExist());
 
         mockMvc.perform(get("/api/part/all/1/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(part2.getId()))
                 .andExpect(jsonPath("$[0].partName").value("Part 2"))
-                .andExpect(jsonPath("$[0].partPrice").value(200L));
+                .andExpect(jsonPath("$[0].partPrice").value(200L))
+                .andExpect(jsonPath("$[1].partName").doesNotExist());
 
         mockMvc.perform(get("/api/part/all/0/2"))
                 .andExpect(status().isOk())
@@ -99,7 +101,8 @@ public class PartEndToEndTest {
                 .andExpect(jsonPath("$[0].partPrice").value(100L))
                 .andExpect(jsonPath("$[1].id").value(part2.getId()))
                 .andExpect(jsonPath("$[1].partName").value("Part 2"))
-                .andExpect(jsonPath("$[1].partPrice").value(200L));
+                .andExpect(jsonPath("$[1].partPrice").value(200L))
+                .andExpect(jsonPath("$[2].partName").doesNotExist());
 
         mockMvc.perform(get("/api/part/all/1/2"))
                 .andExpect(status().isOk())
@@ -108,7 +111,8 @@ public class PartEndToEndTest {
                 .andExpect(jsonPath("$[0].partPrice").value(300L))
                 .andExpect(jsonPath("$[1].id").value(part4.getId()))
                 .andExpect(jsonPath("$[1].partName").value("Part 4"))
-                .andExpect(jsonPath("$[1].partPrice").value(400L));
+                .andExpect(jsonPath("$[1].partPrice").value(400L))
+                .andExpect(jsonPath("$[2].partName").doesNotExist());
     }
 
     @Test
