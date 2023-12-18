@@ -19,7 +19,7 @@ public class AddressController {
         this.addressService = addressService;
     }
 
-    @PostMapping("/create")
+    @PostMapping(value="/create", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Address> createAddress(@RequestBody Address address) {
         Optional<Address> optionalAddress = addressService.createAddress(address);
         if (optionalAddress.isEmpty()) {
@@ -29,7 +29,7 @@ public class AddressController {
         }
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping(value ="/update/{id}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Address> updateAddress(@PathVariable Long id, @RequestBody Address address) {
         Optional<Address> optionalAddress = addressService.updateAddressById(id, address);
         if (optionalAddress.isEmpty()) {
