@@ -1,8 +1,11 @@
 ###
-GET localhost:8080/api/machine/6
+GET localhost:8080/api/machine/1
 
 ###
 GET localhost:8080/api/machine/all
+
+###
+GET localhost:8080/api/machine/all/0/1
 
 ###
 POST localhost:8080/api/machine/add
@@ -12,9 +15,19 @@ Content-Type: application/json
     "machineName" : "Test Machine",
     "machinePrice" : 1000,
     "subassemblies:" : [
-        {
-            "subassemblyName" : "Test Subassembly",
-            "subassemblyPrice" : 100
-        }
     ]
 }
+
+###
+PUT localhost:8080/api/machine/update/6
+Content-Type: application/json
+
+{
+    "machineName" : "Updated Test Machine",
+    "machinePrice" : 1000,
+    "subassemblies:" : [
+  ]
+}
+
+###
+DELETE localhost:8080/api/machine/delete/6
