@@ -325,9 +325,9 @@ public class CustomerEndToEndTest {
 
         customer = customerRepository.findById(customerNew.getId()).get();
         address = addressRepository.findById(customer.getAddresses().get(0).getId()).get();
-        address.setCustomer(customer);
-
-        int x = 2;
+        List<Customer> customers = List.of(customer);
+        address.setCustomer(customers);
+        System.out.println(address);
 
         MvcResult result = mockMvc.perform(delete("/api/customer/" + customer.getId() + "/address/delete/" + address.getId())
                         .accept(MediaType.APPLICATION_JSON))

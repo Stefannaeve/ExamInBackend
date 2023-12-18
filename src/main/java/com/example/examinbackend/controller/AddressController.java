@@ -46,4 +46,14 @@ public class AddressController {
     public List<Address> getAllAddressesPageable(@PathVariable int pageNumber, @PathVariable int pageSize) {
         return addressService.getAllAddressesPageable(pageNumber, pageSize);
     }
+
+    @PutMapping("/addCustomer/{addressId}/{customerId}")
+    public ResponseEntity<Address> addCustomerToAddress(@PathVariable Long addressId, @PathVariable Long customerId) {
+        Optional<Address> optionalAddress = addressService.addCustomerToAddress(addressId, customerId);
+        if (optionalAddress.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }else {
+            return ResponseEntity.status(HttpStatus.OK).body(optionalAddress.get());
+        }
+    }
 }
