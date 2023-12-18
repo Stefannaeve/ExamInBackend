@@ -21,6 +21,9 @@ GET localhost:8080/api/subassembly/all
 Content-Type: application/json
 
 ###
+GET localhost:8080/api/subassembly/all/0/1
+
+###
 PUT localhost:8080/api/subassembly/update/21
 Content-Type: application/json
 
