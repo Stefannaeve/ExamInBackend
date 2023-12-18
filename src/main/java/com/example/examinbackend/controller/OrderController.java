@@ -38,7 +38,7 @@ public class OrderController {
         return orderService.getAllOrdersPageable(pageNumber, pageSize);
     }
 
-    @PostMapping("/add/customer/{customerId}")
+    @PostMapping(value = "/add/customer/{customerId}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Order> createOrder(@PathVariable Long customerId) {
         Optional<Order> optionalOrder = orderService.createOrder(customerId);
         if (optionalOrder.isEmpty()) {
@@ -48,7 +48,7 @@ public class OrderController {
         }
     }
 
-    @PutMapping("/update/{orderId}")
+    @PutMapping(value = "/update/{orderId}", produces = "application/json", consumes = "application/json")
     public ResponseEntity<Order> updateOrderMachines(@PathVariable Long orderId, @RequestBody List<Machine> machines) {
         Optional<Order> optionalOrder = orderService.updateOrderMachines(machines, orderId);
         if (optionalOrder.isEmpty()) {
@@ -58,7 +58,7 @@ public class OrderController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping(value="/delete/{id}", produces = "application/json", consumes = "application/json")
     public ResponseEntity<Order> deleteOrder(@PathVariable Long id) {
         Optional<Order> optionalOrder = orderService.deleteOrder(id);
         if (optionalOrder.isEmpty()) {
