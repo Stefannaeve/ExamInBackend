@@ -58,7 +58,7 @@ public class OrderController {
         }
     }
 
-    @DeleteMapping(value="/delete/{id}", produces = "application/json", consumes = "application/json")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Order> deleteOrder(@PathVariable Long id) {
         Optional<Order> optionalOrder = orderService.deleteOrder(id);
         if (optionalOrder.isEmpty()) {
