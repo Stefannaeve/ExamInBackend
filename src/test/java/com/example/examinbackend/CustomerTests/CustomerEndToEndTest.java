@@ -326,16 +326,6 @@ public class CustomerEndToEndTest {
         customer = customerRepository.findById(customerNew.getId()).get();
         address = addressRepository.findById(customer.getAddresses().get(0).getId()).get();
         address.setCustomer(customer);
-        Customer customer2 = customer;
-
-        customer.setAddresses(null);
-        customerRepository.saveAndFlush(customer);
-
-        addressRepository.deleteById(address.getId());
-        addressRepository.flush();
-
-        Optional<Address> address2 = addressRepository.findById(address.getId());
-        Customer customer3 = customerRepository.findById(customer.getId()).get();
 
         int x = 2;
 
