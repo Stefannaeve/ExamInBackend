@@ -39,11 +39,11 @@ public class MachineController {
         return machineService.getAllMachinesPageable(pageNumber, pageSize);
     }
 
-    @PostMapping("/add")
+    @PostMapping(value = "/add", consumes = "application/json", produces = "application/json")
     public Machine createMachine(@RequestBody Machine machine) {
         return machineService.createMachine(machine);
     }
-    @PutMapping("/{id}/update/name")
+    @PutMapping(value = "/update/{id}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Machine> updateMachineName(@PathVariable Long id, @RequestBody Machine machine) {
         Optional<Machine> optionalMachine = machineService.updateMachineName(id, machine);
         if (optionalMachine.isEmpty()) {
@@ -52,7 +52,7 @@ public class MachineController {
             return ResponseEntity.status(HttpStatus.OK).body(optionalMachine.get());
         }
     }
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping(value ="/delete/{id}", produces = "application/json")
     public ResponseEntity<Machine> deleteMachine(@PathVariable Long id) {
         Optional<Machine> optionalMachine = machineService.deleteMachine(id);
         if (optionalMachine.isEmpty()) {
