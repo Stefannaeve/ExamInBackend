@@ -34,8 +34,13 @@ public class Customer {
     private String phone;
 
     //    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "customer_address",
+            joinColumns = @JoinColumn(name = "customer_id"),
+            inverseJoinColumns = @JoinColumn(name = "address_id"))
     @ToString.Exclude
+    @JsonIgnoreProperties("customer")
     private List<Address> addresses = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL)
