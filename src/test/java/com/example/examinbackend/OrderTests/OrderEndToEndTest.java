@@ -176,7 +176,6 @@ public class OrderEndToEndTest {
         ObjectNode jsonNode = objectMapper.createObjectNode();
         Long machineId = machine.get(0).getId();
         List<ObjectNode> jsonListOfIds = List.of(jsonNode.put("id", machineId));
-        System.out.println(jsonListOfIds);
 
         MvcResult result = mockMvc.perform(put("/api/order/update/" + orderId)
                 .contentType(MediaType.APPLICATION_JSON)

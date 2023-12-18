@@ -111,7 +111,6 @@ public class CustomerEndToEndTest {
                 .andExpect(jsonPath("$.customerName").value(customer.getCustomerName()))
                 .andExpect(jsonPath("$.email").value(customer.getEmail()))
                 .andExpect(jsonPath("$.phone").value(customer.getPhone()));
-        System.out.println("Willy Billy");
     }
 
     @Test
@@ -177,7 +176,6 @@ public class CustomerEndToEndTest {
     public void shouldUpdateCustomerName() throws Exception {
         Customer customer = new Customer("TestCustomer", "TestEmail", "012345");
         Long customerId = customerService.createCustomer(customer).getId();
-        System.out.println(customerService.getAllCustomers());
 
         MvcResult result = mockMvc.perform(put("/api/customer/update/" + customerId + "/name")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -226,7 +224,6 @@ public class CustomerEndToEndTest {
     public void shouldUpdateCustomerPhone() throws Exception {
         Customer customer = new Customer("Biggibigboi", "Biggest@Gmail.big", "787382768");
         Long customerId = customerRepository.save(customer).getId();
-        System.out.println(customerId);
 
         MvcResult result = mockMvc.perform(put("/api/customer/update/" + customerId + "/phone")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -307,7 +304,6 @@ public class CustomerEndToEndTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.address").value("FrognerParken"));
-        System.out.println(customer.getAddresses().get(0).getAddress());
     }
 
 }

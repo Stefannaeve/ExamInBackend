@@ -116,10 +116,6 @@ public void getAllAddressesPageableTest() throws Exception {
 
     @Test
     public void updateAddressTest() throws Exception {
-        List<Address> addresses = addressService.getAllAddresses();
-        for (Address address : addresses) {
-            System.out.println(address);
-        }
         mockMvc.perform(put("/api/address/update/{id}", addressIds.get(0))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"address\":\"Kongeslottet\"}")
