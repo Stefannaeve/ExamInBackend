@@ -53,6 +53,7 @@ public class CustomerEndToEndTest {
 
     @AfterEach
     public void tearDown() {
+        addressRepository.deleteAll();
         customerRepository.deleteAll();
     }
 
@@ -311,20 +312,31 @@ public class CustomerEndToEndTest {
     }
 
     @Test
-    @Transactional
     public void shouldDeleteAddressFromCustomer() throws Exception {
         Customer customer = new Customer("TestCustomer", "TestEmail", "012345");
         Address address = new Address("TestAddress");
-        Customer customerFromRepo = customerService.createCustomer(customer);
-        address.setCustomer(customerFromRepo);
-        Address repoAddress = addressRepository.save(address);
-        customerFromRepo.setAddresses(Arrays.asList(repoAddress));
-        // customer.setAddresses(Arrays.asList(addressRepository.save(new Address("TestAddress"))));
-        Customer testCustomer = customerRepository.findById(customerFromRepo.getId()).get();
-        Address testAddress = addressRepository.findById(repoAddress.getId()).get();
+
+        Customer customerNew = customerRepository.saveAndFlush(customer);
+
+        customerNew.getAddresses().add(address);
+        customerRepository.saveAndFlush(customerNew);
+
+        customer = customerRepository.findById(customerNew.getId()).get();
+        address = addressRepository.findById(customer.getAddresses().get(0).getId()).get();
+
+
+//        addressRepository.deleteById(address.getId());
+        addressRepository.deleteAll();
+        addressRepository.flush();
+
+        customer.setAddresses(null);
+        customerRepository.saveAndFlush(customer);
+
+//        Address address2 = addressRepository.findById(customer.getAddresses().get(0).getId()).get();
+        Customer customer3 = customerRepository.findById(customerNew.getId()).get();
         int x = 2;
 
-        MvcResult result = mockMvc.perform(delete("/api/customer/" + customerFromRepo.getId() + "/address/delete/" + repoAddress.getId())
+        MvcResult result = mockMvc.perform(delete("/api/customer/" + customer.getId() + "/address/delete/" + address.getId())
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.addresses").isEmpty())

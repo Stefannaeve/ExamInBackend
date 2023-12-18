@@ -33,12 +33,14 @@ public class Customer {
     @Column(name = "customer_phone")
     private String phone;
 
-    @OneToMany(mappedBy = "customer")
-    private List<Address> addresses;
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<Address> addresses = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL)
     @JsonIgnoreProperties("customer")
     @JoinColumn(name = "customer_id")
+    @ToString.Exclude
     private List<Order> orders = new ArrayList<>();
 
     public Customer(String customerName, String email, String phone) {

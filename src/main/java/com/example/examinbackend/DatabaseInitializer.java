@@ -17,17 +17,32 @@ public class DatabaseInitializer implements CommandLineRunner {
 
     private final SubassemblyService subassemblyService;
 
+    private final AddressService addressService;
+
+    private final CustomerService customerService;
+
+
+
     private final MachineService machineService;
     private final PartService partService;
 
     @Autowired
-    public DatabaseInitializer(SubassemblyService subassemblyService, MachineService machineService, PartService partService) {
+    public DatabaseInitializer(SubassemblyService subassemblyService, AddressService addressService, CustomerService customerService, MachineService machineService, PartService partService) {
         this.subassemblyService = subassemblyService;
+        this.addressService = addressService;
+        this.customerService = customerService;
         this.machineService = machineService;
         this.partService = partService;
     }
 
     public void run(String... args) {
+
+
+//        Customer customer = new Customer("John Doe", "Email@Ami.dsj", "1234567890");
+//        customer = customerService.createCustomer(customer);
+//        Address address = new Address("soledfkm");
+//        address.setCustomer(customer);
+//        addressService.createAddress(address);
 
         //region Parts
 

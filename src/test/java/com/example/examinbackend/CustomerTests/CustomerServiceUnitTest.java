@@ -99,4 +99,15 @@ public class CustomerServiceUnitTest {
         when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
         assert customerService.getCustomerById(1L).get().getAddresses().size() == 2;
     }
+
+    @Test
+    void shouldDeleteCustomerAddress(){
+        Customer customer = new Customer();
+        customer.setAddresses(List.of(new Address("Address 1"), new Address("Address 2")));
+        when(customerRepository.save(customer)).thenReturn(customer);
+        when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
+        var customerById = customerService.getCustomerById(1L);
+        customerById.get().getAddresses().remove(0);
+        assert customerService.getCustomerById(1L).get().getAddresses().size() == 1;
+    }
 }
