@@ -102,12 +102,15 @@ public class CustomerServiceUnitTest {
 
     @Test
     void shouldDeleteCustomerAddress(){
-        Customer customer = new Customer();
-        customer.setAddresses(List.of(new Address("Address 1"), new Address("Address 2")));
+        Customer customer = new Customer("Test Customer", "Test Address", "Test Phone");
+        Address address = new Address("Test Address");
+        Address addressTwo = new Address("Test Address Two");
+        customer.getAddresses().add(address);
+        customer.getAddresses().add(addressTwo);
         when(customerRepository.save(customer)).thenReturn(customer);
         when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
         var customerById = customerService.getCustomerById(1L);
-        customerById.get().getAddresses().remove(0);
+        customerById.get().getAddresses().remove(address);
         assert customerService.getCustomerById(1L).get().getAddresses().size() == 1;
     }
 }
