@@ -5,7 +5,10 @@ Content-Type: application/json
 {
   "customer" : {
     "customerName" : "Test Customer"
-  }
+  },
+  "machines": [
+      "Test Machine", "Test Machine 2"
+  ]
 }
 
 ###
