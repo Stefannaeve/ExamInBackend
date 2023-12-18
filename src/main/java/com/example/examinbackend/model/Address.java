@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 @Getter
 @Setter
 @ToString
@@ -24,9 +26,9 @@ public class Address {
     @Column(name = "address")
     private String address;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
+    @ManyToMany(mappedBy = "addresses", fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("addresses")
+    private List<Customer> customer;
 
     public Address(String address) {
         this.address = address;
