@@ -1,7 +1,5 @@
 # Exam in BackEnd Programming 2023
 
-## Motivation
-
 ## Task List
 
 ### Priority 1
@@ -13,55 +11,78 @@
   - [x] Machine
   - [x] Subassembly
   - [x] Part
+  
+
 - [x] Create domain controllers and service with working methods
-    - [ ] **Customer**
+    - [x] ***Customer***
         - [x] Create
-        - [ ] Update
+        - [x] Add
+          - [x] Address        
+        - [x] Get
+          - [x] All
+          - [x] All with pagination
+          - [x] One by id
+        - [x] Update
           - [x] Name
-          - [x] Phone
           - [x] Email
+          - [x] Phone
+          - [x] Address
+        - [x] Delete
+    - [x] ***Address***
+        - [x] Create
+        - [x] Update
+            - [ ] Address
         - [ ] Delete
-  - [ ] **Address**
+    - [x] ***Order***
       - [x] Create
-      - [ ] Update
-          - [ ] Address
-      - [ ] Delete
-    - [ ] **Order**
-        - [ ] Create
-        - [ ] Update
-            - [ ] Machines
-        - [ ] Delete
-    - [x] Machine
+      - [x] Get
+          - [x] All
+          - [x] All with pagination
+          - [x] One by id
+      - [x] Update
+          - [x] Machines
+      - [x] Delete
+    - [x] ***Machine***
+      - [x] Create
+      - [x] Get
+          - [x] All
+          - [x] All with pagination
+          - [x] One by id
+      - [x] Update
+          - [x] Name
+      - [x] Delete
+    - [x] ***Subassembly***
         - [x] Create
+        - [x] Get
+            - [x] All
+            - [x] All with pagination
+            - [x] One by id
         - [x] Update
-            - [ ] Name
-        - [x] Delete
-    - [x] Subassembly
-        - [x] Create
-        - [x] Update
-            - [] Parts
-    - [x] Part
-        - [x] Create
-        - [x] Update
-        - [x] Delete
             - [x] Name
+        - [x] Delete
+    - [x] ***Part***
+        - [x] Create
+        - [x] Get
+            - [x] All
+            - [x] All with pagination
+            - [x] One by id
+        - [x] Update
+            - [x] Name
+        - [x] Delete
 
 ### Priority 2
-
-- [ ] Add pagination to all controllers
-- [ ] Comprehensive testing
-    - [ ] Unit testing service classes
-    - [ ] Integration testing
-    - [ ] End-to-end testing
-- [ ] Implement flyway (additional feature)
+- [x] Comprehensive testing
+    - [x] Unit testing service classes
+    - [x] Integration testing
+    - [x] End-to-end testing
 
 ### Priority 3
 
-- [ ] Additional features
-- [ ] Test additional features
-  - [ ] Unit testing service classes
-  - [ ] Integration testing
-  - [ ] End-to-end testing
+- [x] Additional features
+- [x] Test additional features
+  - [x] Unit testing service classes
+  - [x] Integration testing
+  - [x] End-to-end testing
 
 ### Before delivering the exam
 
@@ -69,6 +90,18 @@
 - [ ] Deliver Zip to wise-flow
 - [ ] Format
 - [ ] Tested the application for obvious errors
+
+## How to run the project
+To run this project simply run the ***ExamInBackendApplication*** which can be found under ***Exam -> src -> main -> java -> com.example.examinbackend -> ExamInBackendApplication***.
+
+We have class named ***DatabaseInitializer*** which will populate the database with some ***parts, subassemblies, and machines.***
+
+We included scratch files, which allows you to test the CRUD operations of our application without having to use an API client such as Postman.
+Simply run the application and open the scratch files, and you can click on the green arrow next to the request you want to test.
+
+In the scratch files you will find a POST request on the top, this is due to some other API calls requiring the database to be populated.
+
+
 
 ## Information about the project
 
@@ -78,17 +111,15 @@ process of connecting a single part to various subassemblies. Initially, we were
 the exam guidelines. However, after a closer look, we're confident it meets the exam's criteria. The subassembly has been 
 designed independently of the machines, following the instructions outlined in the exam.
 
-#### --- Reasoning behind removing the address controller ---
-While we were creating our controllers and services, we started discussing whether we should implement a controller for 
-Address. Our reasoning for not including it was that it seemed counterproductive to have two controllers which can 
-accomplish the same task. According to the exam, under the additional functionality segment it read:
-1.    Create a customer and add an address to it.
-2.    Create an address and add it to a customer.
-3.    Add an address to a customer.
+## Testing ##
+Our tests can be found under ***Exam -> src -> test -> java -> com.example.examinbackend***. <br/>
+You can simply run all our tests by right-clicking on the ***java*** folder and click ***Run 'All Tests'***. <br/>
 
-We concluded that it seemed more reasonable to let a customer controller handle this type of functionality, as the 
-address is tied to a customer.
+We have created comprehensive tests through unit testing, integration testing, and end-to-end testing. <br/>
+We have tested all our controllers, services, and repositories, leaving us with **90% test coverage**. <br/>
 
 ## Plagiarism
-
+All the code in this project is written by us, or provided from various repositories from the course GitHub. <br/>
+Link to repository: https://github.com/jlwcrews2
 ## Necessary links
+Link to this projects GitHub repository: https://github.com/Stefannaeve/ExamInBackend

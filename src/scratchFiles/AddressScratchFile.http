@@ -1,0 +1,21 @@
+###
+POST localhost:8080/api/address/add
+Content-Type: application/json
+
+{
+  "address": "Test Address"
+}
+
+###
+GET localhost:8080/api/address/all
+
+###
+GET localhost:8080/api/address/all/0/1
+
+###
+PUT localhost:8080/api/address/update/1
+Content-Type: application/json
+
+{
+    "address": "Test Address Updated"
+}
