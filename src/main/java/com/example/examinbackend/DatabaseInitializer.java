@@ -1,11 +1,7 @@
 package com.example.examinbackend;
 
-import com.example.examinbackend.model.Machine;
-import com.example.examinbackend.model.Part;
-import com.example.examinbackend.model.Subassembly;
-import com.example.examinbackend.service.MachineService;
-import com.example.examinbackend.service.PartService;
-import com.example.examinbackend.service.SubassemblyService;
+import com.example.examinbackend.model.*;
+import com.example.examinbackend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
@@ -18,6 +14,7 @@ import java.util.List;
 @Component
 @Profile("!test")
 public class DatabaseInitializer implements CommandLineRunner {
+
     private final SubassemblyService subassemblyService;
 
     private final MachineService machineService;

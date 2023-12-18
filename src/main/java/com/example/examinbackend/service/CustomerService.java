@@ -2,6 +2,7 @@ package com.example.examinbackend.service;
 
 import com.example.examinbackend.model.Address;
 import com.example.examinbackend.model.Customer;
+import com.example.examinbackend.repository.AddressRepository;
 import com.example.examinbackend.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -14,10 +15,13 @@ import java.util.Optional;
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
+    private final AddressRepository addressRepository;
 
     @Autowired
-    public CustomerService(CustomerRepository customerRepository) {
+    public CustomerService(CustomerRepository customerRepository,
+                           AddressRepository addressRepository) {
         this.customerRepository = customerRepository;
+        this.addressRepository = addressRepository;
     }
 
     public Optional<Customer> getCustomerById(Long id) {
@@ -30,6 +34,12 @@ public class CustomerService {
     }
 
     public Customer createCustomer(Customer customer) {
+//        Customer repoCustomer = customerRepository.save(customer);
+//        if (repoCustomer.getAddresses() != null){
+//            for (Address address : repoCustomer.getAddresses()) {
+//                address.setCustomer(repoCustomer);
+//            }
+//        }
         return customerRepository.save(customer);
     }
 
@@ -91,6 +101,23 @@ public class CustomerService {
             return Optional.empty();
         }
         optionalCustomer.get().getAddresses().add(address);
+        return Optional.of(customerRepository.save(optionalCustomer.get()));
+    }
+
+    public Optional<Customer> deleteAddress(Long customerId, Long addressId) {
+        Optional<Customer> optionalCustomer = getCustomerById(customerId);
+        if (optionalCustomer.isEmpty()) {
+            return Optional.empty();
+        }
+        List<Address> addresses = optionalCustomer.get().getAddresses();
+        System.out.println(optionalCustomer);
+        for (Address address : addresses) {
+            if (address.getId().equals(addressId)) {
+                System.out.println(address);
+                addressRepository.delete(address);
+                break;
+            }
+        }
         return Optional.of(customerRepository.save(optionalCustomer.get()));
     }
 }

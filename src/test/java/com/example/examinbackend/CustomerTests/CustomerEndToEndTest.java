@@ -2,6 +2,7 @@ package com.example.examinbackend.CustomerTests;
 
 import com.example.examinbackend.model.Address;
 import com.example.examinbackend.model.Customer;
+import com.example.examinbackend.repository.AddressRepository;
 import com.example.examinbackend.repository.CustomerRepository;
 import com.example.examinbackend.service.CustomerService;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -44,6 +45,9 @@ public class CustomerEndToEndTest {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private AddressRepository addressRepository;
 
     private List<Long> customerIds = new ArrayList<>();
 
@@ -304,6 +308,36 @@ public class CustomerEndToEndTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.address").value("FrognerParken"));
+    }
+
+    @Test
+    @Transactional
+    public void shouldDeleteAddressFromCustomer() throws Exception {
+        Customer customer = new Customer("TestCustomer", "TestEmail", "012345");
+        Address address = new Address("TestAddress");
+        Customer customerFromRepo = customerService.createCustomer(customer);
+        address.setCustomer(customerFromRepo);
+        Address repoAddress = addressRepository.save(address);
+        customerFromRepo.setAddresses(Arrays.asList(repoAddress));
+        // customer.setAddresses(Arrays.asList(addressRepository.save(new Address("TestAddress"))));
+        Customer testCustomer = customerRepository.findById(customerFromRepo.getId()).get();
+        Address testAddress = addressRepository.findById(repoAddress.getId()).get();
+        int x = 2;
+
+        MvcResult result = mockMvc.perform(delete("/api/customer/" + customerFromRepo.getId() + "/address/delete/" + repoAddress.getId())
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.addresses").isEmpty())
+                .andReturn();
+
+        String jsonString = result.getResponse().getContentAsString();
+        JsonNode customerJson = new ObjectMapper().readTree(jsonString);
+        Long id = customerJson.path("id").asLong();
+        Optional<Customer> entity = customerRepository.findById(id);
+        assertTrue(entity.isPresent());
+
+        Customer customerEntity = entity.get();
+        assertTrue(customerEntity.getAddresses().isEmpty());
     }
 
 }

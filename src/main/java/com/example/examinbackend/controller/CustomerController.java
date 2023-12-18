@@ -127,6 +127,16 @@ public class CustomerController {
         return customerService.getAllAddresses(customerId);
     }
 
+    @DeleteMapping("/{customerId}/address/delete/{addressId}")
+    public ResponseEntity<Customer> deleteAddress(@PathVariable Long customerId, @PathVariable Long addressId) {
+        Optional<Customer> optionalCustomer = customerService.deleteAddress(customerId, addressId);
+        if (optionalCustomer.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }else {
+            return ResponseEntity.status(HttpStatus.OK).body(optionalCustomer.get());
+        }
+    }
+
     //endregion
 
 }

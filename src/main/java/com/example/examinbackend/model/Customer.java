@@ -1,5 +1,6 @@
 package com.example.examinbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -32,10 +33,8 @@ public class Customer {
     @Column(name = "customer_phone")
     private String phone;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("customer")
-    @JoinColumn(name = "customer_id")
-    private List<Address> addresses = new ArrayList<>();
+    @OneToMany(mappedBy = "customer")
+    private List<Address> addresses;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JsonIgnoreProperties("customer")
