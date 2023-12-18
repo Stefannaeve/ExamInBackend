@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -312,6 +313,7 @@ public class CustomerEndToEndTest {
     }
 
     @Test
+    @Transactional
     public void shouldDeleteAddressFromCustomer() throws Exception {
         Customer customer = new Customer("TestCustomer", "TestEmail", "012345");
         Address address = new Address("TestAddress");
@@ -323,17 +325,18 @@ public class CustomerEndToEndTest {
 
         customer = customerRepository.findById(customerNew.getId()).get();
         address = addressRepository.findById(customer.getAddresses().get(0).getId()).get();
-
-
-//        addressRepository.deleteById(address.getId());
-        addressRepository.deleteAll();
-        addressRepository.flush();
+        address.setCustomer(customer);
+        Customer customer2 = customer;
 
         customer.setAddresses(null);
         customerRepository.saveAndFlush(customer);
 
-//        Address address2 = addressRepository.findById(customer.getAddresses().get(0).getId()).get();
-        Customer customer3 = customerRepository.findById(customerNew.getId()).get();
+        addressRepository.deleteById(address.getId());
+        addressRepository.flush();
+
+        Optional<Address> address2 = addressRepository.findById(address.getId());
+        Customer customer3 = customerRepository.findById(customer.getId()).get();
+
         int x = 2;
 
         MvcResult result = mockMvc.perform(delete("/api/customer/" + customer.getId() + "/address/delete/" + address.getId())

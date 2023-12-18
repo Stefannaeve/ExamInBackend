@@ -33,7 +33,8 @@ public class Customer {
     @Column(name = "customer_phone")
     private String phone;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    //    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Address> addresses = new ArrayList<>();
 
