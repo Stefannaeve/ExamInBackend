@@ -66,3 +66,6 @@ Content-Type: application/json
 
 ###
 GET localhost:8080/api/customer/1/address/all
+
+###
+DELETE localhost:8080/api/customer/1/address/delete/1
