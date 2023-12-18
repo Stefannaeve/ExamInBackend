@@ -1,5 +1,5 @@
 ###
-POST localhost:8080/api/address/add
+POST localhost:8080/api/address/create
 Content-Type: application/json
 
 {
