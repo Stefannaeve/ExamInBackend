@@ -37,6 +37,10 @@ public class DatabaseInitializer implements CommandLineRunner {
 
     public void run(String... args) {
 
+        Address address = addressService.createAddress(new Address("soledfkm")).get();
+        Customer customer = customerService.createCustomer(new Customer("John Doe", "serfasedf", "1234567890"));
+        addressService.addCustomerToAddress(address.getId(), customer.getId());
+
 
 //        Customer customer = new Customer("John Doe", "Email@Ami.dsj", "1234567890");
 //        customer = customerService.createCustomer(customer);
