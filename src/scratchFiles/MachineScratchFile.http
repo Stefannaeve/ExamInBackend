@@ -12,21 +12,15 @@ POST localhost:8080/api/machine/add
 Content-Type: application/json
 
 {
-    "machineName" : "Test Machine",
-    "machinePrice" : 1000,
-    "subassemblies:" : [
-    ]
+    "machineName" : "Test Machine"
 }
 
 ###
-PUT localhost:8080/api/machine/update/6
+PUT localhost:8080/api/machine/update/6/name
 Content-Type: application/json
 
 {
-    "machineName" : "Updated Test Machine",
-    "machinePrice" : 1000,
-    "subassemblies:" : [
-  ]
+    "machineName" : "Updated Test Machine"
 }
 
 ###
