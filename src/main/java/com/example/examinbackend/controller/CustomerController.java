@@ -101,7 +101,7 @@ public class CustomerController {
 
     //region Address
 
-    @PostMapping("/{customerId}/address/add")
+    @PostMapping(value="/{customerId}/address/add", produces = "application/json", consumes = "application/json")
     public ResponseEntity<Customer> addAddress(@RequestBody Address address, @PathVariable Long customerId) {
         Optional<Customer> optionalCustomer = customerService.addAddress(address, customerId);
         if (optionalCustomer.isEmpty()) {
@@ -112,7 +112,7 @@ public class CustomerController {
         }
     }
 
-    @PutMapping("/address/update/{id}")
+    @PutMapping(value = "/address/update/{id}", produces = "application/json", consumes = "application/json")
     public ResponseEntity<Address> updateAddress(@PathVariable Long id, @RequestBody Address address) {
         Optional<Address> optionalAddress = addressService.updateAddressById(id, address);
         if (optionalAddress.isEmpty()) {
