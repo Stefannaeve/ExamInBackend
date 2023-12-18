@@ -1,0 +1,31 @@
+###
+POST localhost:8080/api/order/add/customer/1
+Content-Type: application/json
+
+{
+  "customer" : {
+    "customerName" : "Test Customer"
+  }
+}
+
+###
+GET localhost:8080/api/order/1
+
+###
+GET localhost:8080/api/order/all
+
+###
+GET localhost:8080/api/order/all/0/1
+
+###
+PUT localhost:8080/api/order/update/1
+Content-Type: application/json
+
+{
+    "customer" : {
+      "customerName" : "Updated Test Customer"
+    }
+}
+
+###
+DELETE localhost:8080/api/order/delete/1
