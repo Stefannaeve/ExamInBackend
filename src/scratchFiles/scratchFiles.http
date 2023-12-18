@@ -3,11 +3,11 @@ POST localhost:8080/api/customer/add
 Content-type: application/json
 
 {
-    "customerName" : "customer",
-    "email" : "123@hotmail.com",
-    "phone" : 234234,
+    "customerName" : "Test Customer",
+    "email" : "Test Email",
+    "phone" : "Test phone",
     "addresses" : [
-        "123Lane", "456Street"
+        "Test address 1", "Test address 2"
     ]
 }
 
@@ -19,19 +19,14 @@ GET localhost:8080/api/customer/all
 Content-Type: application/json
 
 ###
-POST localhost:8080/api/customer/add/1/address
-Content-Type: application/json
-
-{
-    "address" : "789Avenue"
-}
+GET localhost:8080/api/customer/all/0/1
 
 ###
 PUT localhost:8080/api/customer/update/1/name
 Content-Type: application/json
 
 {
-  "customerName" : "newCustomer"
+  "customerName" : "Updated Test Customer"
 }
 
 ###
@@ -39,7 +34,7 @@ PUT localhost:8080/api/customer/update/1/email
 Content-Type: application/json
 
 {
-  "email" : "customer@mail.com"
+  "email" : "Updated Test Email"
 }
 
 ###
@@ -47,8 +42,27 @@ PUT localhost:8080/api/customer/update/1/phone
 Content-Type: application/json
 
 {
-  "phone" : 123123
+  "phone" : "Updated Test Phone"
 }
 
 ###
 DELETE localhost:8080/api/customer/delete/1
+
+###
+POST localhost:8080/api/customer/1/address/add
+Content-Type: application/json
+
+{
+  "address" : "Adding New Test Address"
+}
+
+###
+PUT localhost:8080/api/customer/address/update/1
+Content-Type: application/json
+
+{
+  "address" : "Updated First Test Address"
+}
+
+###
+GET localhost:8080/api/customer/1/address/all
