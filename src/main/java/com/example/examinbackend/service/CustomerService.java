@@ -114,6 +114,8 @@ public class CustomerService {
         for (Address address : addresses) {
             if (address.getId().equals(addressId)) {
                 System.out.println(address);
+                optionalCustomer.get().getAddresses().remove(address);
+                customerRepository.save(optionalCustomer.get());
                 addressRepository.delete(address);
                 break;
             }
