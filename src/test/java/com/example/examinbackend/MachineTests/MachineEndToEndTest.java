@@ -219,7 +219,7 @@ public class MachineEndToEndTest {
     @Test
     @Transactional
     public void shouldUpdateMachineName() throws Exception {
-        mockMvc.perform(put("/api/machine/" + machineIds + "/update/name")
+        mockMvc.perform(put("/api/machine/update/" + machineIds + "/name")
                         .contentType("application/json")
                         .content("{\"machineName\":\"MacBook\"}")
                         .accept("application/json"))

@@ -43,7 +43,7 @@ public class MachineController {
     public Machine createMachine(@RequestBody Machine machine) {
         return machineService.createMachine(machine);
     }
-    @PutMapping(value = "/update/{id}", consumes = "application/json", produces = "application/json")
+    @PutMapping(value = "/update/{id}/name", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Machine> updateMachineName(@PathVariable Long id, @RequestBody Machine machine) {
         Optional<Machine> optionalMachine = machineService.updateMachineName(id, machine);
         if (optionalMachine.isEmpty()) {
