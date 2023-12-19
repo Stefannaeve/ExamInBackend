@@ -90,10 +90,10 @@
 
 ### Before delivering the exam
 
-- [ ] README have all necessary information, GitHub.
-- [ ] Deliver Zip to wise-flow
-- [ ] Format
-- [ ] Tested the application for obvious errors
+- [x] README have all necessary information.
+- [x] Deliver Zip to wise-flow
+- [x] Format
+- [x] Tested the application for obvious errors
 
 ## How to run the project
 To run this project simply run the ***ExamInBackendApplication*** which can be found under ***Exam -> src -> main -> java -> com.example.examinbackend -> ExamInBackendApplication***.
