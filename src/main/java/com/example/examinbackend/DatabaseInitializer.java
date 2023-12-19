@@ -1,7 +1,9 @@
 package com.example.examinbackend;
 
+import com.example.examinbackend.controller.OrderController;
 import com.example.examinbackend.controller.PartController;
 import com.example.examinbackend.model.*;
+import com.example.examinbackend.repository.CustomerRepository;
 import com.example.examinbackend.repository.PartRepository;
 import com.example.examinbackend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +23,26 @@ public class DatabaseInitializer implements CommandLineRunner {
 
     private final SubassemblyService subassemblyService;
 
+    private final OrderController orderController;
+
+    private final CustomerRepository customerRepository;
+
     private final MachineService machineService;
     private final PartService partService;
 
     @Autowired
-    public DatabaseInitializer(SubassemblyService subassemblyService, MachineService machineService, PartService partService) {
+    public DatabaseInitializer(SubassemblyService subassemblyService, OrderController orderController, CustomerRepository customerRepository, MachineService machineService, PartService partService) {
         this.subassemblyService = subassemblyService;
+        this.orderController = orderController;
+        this.customerRepository = customerRepository;
         this.machineService = machineService;
         this.partService = partService;
     }
 
     public void run(String... args) {
+
+
+
 
 //        Address address = addressService.createAddress(new Address("soledfkm")).get();
 //        Customer customer = customerService.createCustomer(new Customer("John Doe", "serfasedf", "1234567890"));
