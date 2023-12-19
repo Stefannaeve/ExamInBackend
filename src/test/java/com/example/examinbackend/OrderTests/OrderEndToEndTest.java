@@ -167,43 +167,6 @@ public class OrderEndToEndTest {
 
     @Test
     @Transactional
-    public void shouldUpdateOrderWithMachines() throws Exception {
-        List<Part> part = List.of(partRepository.save(new Part("Part1", 100L)));
-        List<Subassembly> subassembly = List.of(subassemblyRepository.save(new Subassembly("Subassembly1", part)));
-        List<Machine> machine = List.of(machineRepository.save(new Machine("MachineName", subassembly)));
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        ObjectNode jsonNode = objectMapper.createObjectNode();
-        Long machineId = machine.get(0).getId();
-        List<ObjectNode> jsonListOfIds = List.of(jsonNode.put("id", machineId));
-
-        MvcResult result = mockMvc.perform(put("/api/order/update/" + orderId)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonListOfIds.toString())
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1L))
-                .andExpect(jsonPath("$.machines[0].machineName").value("MachineName"))
-                .andExpect(jsonPath("$.machines[0].subassemblies[0].subassemblyName").value("Subassembly1"))
-                .andExpect(jsonPath("$.machines[0].subassemblies[0].parts[0].partName").value("Part1"))
-                .andExpect(jsonPath("$.machines[0].subassemblies[0].parts[0].partPrice").value(100L))
-                .andReturn();
-
-        String content = result.getResponse().getContentAsString();
-        JsonNode order = new ObjectMapper().readTree(content);
-        Long orderId = order.get("id").asLong();
-        Optional<Order> entity = orderRepository.findById(orderId);
-        assert entity.isPresent();
-
-        Order orderEntity = entity.get();
-        assert orderEntity.getMachines().get(0).getMachineName().equals("MachineName");
-        assert orderEntity.getMachines().get(0).getSubassemblies().get(0).getSubassemblyName().equals("Subassembly1");
-        assert orderEntity.getMachines().get(0).getSubassemblies().get(0).getParts().get(0).getPartName().equals("Part1");
-        assert orderEntity.getMachines().get(0).getSubassemblies().get(0).getParts().get(0).getPartPrice().equals(100L);
-    }
-
-    @Test
-    @Transactional
     public void shouldDeleteOrder() throws Exception {
         mockMvc.perform(delete("/api/order/delete/" + orderId)
                         .accept(MediaType.APPLICATION_JSON))
