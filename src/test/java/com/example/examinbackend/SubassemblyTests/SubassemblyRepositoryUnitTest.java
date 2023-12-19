@@ -21,10 +21,16 @@ public class SubassemblyRepositoryUnitTest {
 
     @Test
     void shouldFindSubassemblyBySubassemblyName(){
-        List<Part> listOfTestParts = List.of(new Part("Test part 1"), new Part("Test part 2"));
+        Part part1 = new Part("Test part 1");
+        Part part2 = new Part("Test part 2");
+        entityManager.persist(part1);
+        entityManager.persist(part2);
+
+        List<Part> listOfTestParts = List.of(part1, part2);
         Subassembly testSubassembly = new Subassembly("Test subassembly", listOfTestParts);
+
         entityManager.persist(testSubassembly);
-        entityManager.flush();
-        assert subassemblyRepository.findBySubassemblyName(testSubassembly.getSubassemblyName()).isPresent();
+
+        assert subassemblyRepository.findBySubassemblyName("Test subassembly").isPresent();
     }
 }
