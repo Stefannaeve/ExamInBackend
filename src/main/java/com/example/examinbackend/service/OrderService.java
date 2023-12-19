@@ -4,6 +4,8 @@ import com.example.examinbackend.model.Customer;
 import com.example.examinbackend.model.Machine;
 import com.example.examinbackend.model.Order;
 import com.example.examinbackend.repository.OrderRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -15,12 +17,15 @@ import java.util.Optional;
 public class OrderService {
 
     private final OrderRepository orderRepository;
+
+    private final EntityManager entityManager;
     private final CustomerService customerService;
     private final MachineService machineService;
 
     @Autowired
-    public OrderService(OrderRepository orderRepository, CustomerService customerService, MachineService machineService) {
+    public OrderService(OrderRepository orderRepository, EntityManager entityManager, CustomerService customerService, MachineService machineService) {
         this.orderRepository = orderRepository;
+        this.entityManager = entityManager;
         this.customerService = customerService;
         this.machineService = machineService;
     }
@@ -29,13 +34,15 @@ public class OrderService {
         return orderRepository.findById(id);
     }
 
+    @Transactional
     public Optional<Order> createOrder(Long customerId) {
         Order order = new Order();
         Optional<Customer> optionalCustomer = customerService.getCustomerById(customerId);
         if (optionalCustomer.isEmpty()) {
             return Optional.empty();
         }
-        order.setCustomer(optionalCustomer.get());
+        Customer customer = entityManager.merge(optionalCustomer.get());
+        order.setCustomer(customer);
         return Optional.of(orderRepository.save(order));
     }
 
@@ -64,6 +71,9 @@ public class OrderService {
             }
             optionalOrder.get().getMachines().add(optionalMachine.get());
         }
-        return Optional.of(orderRepository.save(optionalOrder.get()));
+        Order order = optionalOrder.get();
+        System.out.println(order);
+        orderRepository.deleteById(orderId);
+        return Optional.of(orderRepository.save(order));
     }
 }
