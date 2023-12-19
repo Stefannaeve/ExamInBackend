@@ -29,7 +29,7 @@ public class Order {
     @JsonIgnoreProperties("orders")
     private Customer customer;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnoreProperties("order")
     @JoinColumn(name = "order_id")
     private List<Machine> machines = new ArrayList<>();
