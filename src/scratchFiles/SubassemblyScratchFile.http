@@ -5,16 +5,11 @@ Content-Type: application/json
 {
   "subassemblyName": "Test Subassembly",
   "subassemblyPrice": 100,
-  "parts" : [
-    {
-      "partName": "Test Part for Subassembly",
-      "partPrice": 100
-    }
-  ]
+  "parts" : []
 }
 
 ###
-GET localhost:8080/api/subassembly/21
+GET localhost:8080/api/subassembly/31
 
 ###
 GET localhost:8080/api/subassembly/all
@@ -24,7 +19,7 @@ Content-Type: application/json
 GET localhost:8080/api/subassembly/all/0/1
 
 ###
-PUT localhost:8080/api/subassembly/update/21
+PUT localhost:8080/api/subassembly/update/31
 Content-Type: application/json
 
 {
@@ -39,4 +34,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE localhost:8080/api/subassembly/delete/21
+DELETE localhost:8080/api/subassembly/delete/31
