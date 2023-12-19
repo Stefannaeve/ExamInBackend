@@ -31,7 +31,7 @@ public class Subassembly {
     private Long subassemblyPrice;
 
     @JsonIgnoreProperties("subassemblies")
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "subassembly_part", joinColumns = {@JoinColumn(name = "subassembly_id")})
     private List<Part> parts = new ArrayList<>();
 
