@@ -25,21 +25,12 @@ public class CustomerService {
     }
 
     public Optional<Customer> getCustomerById(Long id) {
-        Optional<Customer> optionalCustomer = customerRepository.findById(id);
-        if (optionalCustomer.isEmpty()) {
-            return Optional.empty();
-        }else {
-            return optionalCustomer;
-        }
+        Optional<Customer> optionalCustomer;
+        optionalCustomer = customerRepository.findById(id);
+        return optionalCustomer;
     }
 
     public Customer createCustomer(Customer customer) {
-//        Customer repoCustomer = customerRepository.save(customer);
-//        if (repoCustomer.getAddresses() != null){
-//            for (Address address : repoCustomer.getAddresses()) {
-//                address.setCustomer(repoCustomer);
-//            }
-//        }
         return customerRepository.save(customer);
     }
 
@@ -89,10 +80,7 @@ public class CustomerService {
 
     public List<Address> getAllAddresses(Long id) {
         Optional<Customer> optionalCustomer = getCustomerById(id);
-        if (optionalCustomer.isEmpty()) {
-            return null;
-        }
-        return optionalCustomer.get().getAddresses();
+        return optionalCustomer.map(Customer::getAddresses).orElse(null);
     }
 
     public Optional<Customer> addAddress(Address address, Long id) {
@@ -110,10 +98,8 @@ public class CustomerService {
             return Optional.empty();
         }
         List<Address> addresses = optionalCustomer.get().getAddresses();
-        System.out.println(optionalCustomer);
         for (Address address : addresses) {
             if (address.getId().equals(addressId)) {
-                System.out.println(address);
                 optionalCustomer.get().getAddresses().remove(address);
                 customerRepository.save(optionalCustomer.get());
                 addressRepository.delete(address);

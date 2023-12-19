@@ -21,12 +21,9 @@ public class MachineController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Machine> getMachine(@PathVariable Long id) {
-        Optional<Machine> optionalMachine = machineService.getMachineById(id);
-        if (optionalMachine.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }else {
-            return ResponseEntity.status(HttpStatus.OK).body(optionalMachine.get());
-        }
+        Optional<Machine> optionalMachine;
+        optionalMachine = machineService.getMachineById(id);
+        return optionalMachine.map(machine -> ResponseEntity.status(HttpStatus.OK).body(machine)).orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
 
     }
     @GetMapping("/all")
@@ -46,19 +43,12 @@ public class MachineController {
     @PutMapping(value = "/update/{id}/name", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Machine> updateMachineName(@PathVariable Long id, @RequestBody Machine machine) {
         Optional<Machine> optionalMachine = machineService.updateMachineName(id, machine);
-        if (optionalMachine.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }else {
-            return ResponseEntity.status(HttpStatus.OK).body(optionalMachine.get());
-        }
+        return optionalMachine.map(value -> ResponseEntity.status(HttpStatus.OK).body(value)).orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
     @DeleteMapping(value ="/delete/{id}", produces = "application/json")
     public ResponseEntity<Machine> deleteMachine(@PathVariable Long id) {
-        Optional<Machine> optionalMachine = machineService.deleteMachine(id);
-        if (optionalMachine.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }else {
-            return ResponseEntity.status(HttpStatus.OK).body(optionalMachine.get());
-        }
+        Optional<Machine> optionalMachine;
+        optionalMachine = machineService.deleteMachine(id);
+        return optionalMachine.map(machine -> ResponseEntity.status(HttpStatus.OK).body(machine)).orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 }

@@ -23,12 +23,9 @@ public class PartController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Part> getPartById(@PathVariable Long id) {
-        Optional<Part> optionalPart = partService.getPartById(id);
-        if (optionalPart.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        } else {
-            return ResponseEntity.status(HttpStatus.OK).body(optionalPart.get());
-        }
+        Optional<Part> optionalPart;
+        optionalPart = partService.getPartById(id);
+        return optionalPart.map(part -> ResponseEntity.status(HttpStatus.OK).body(part)).orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
     @GetMapping("/all")
@@ -48,21 +45,15 @@ public class PartController {
 
     @PutMapping(value = "/update/{id}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Part> updatePartName(@PathVariable Long id, @RequestBody Part part) {
-        Optional<Part> optionalPart = partService.updatePartName(id, part);
-        if (optionalPart.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        } else {
-            return ResponseEntity.status(HttpStatus.OK).body(optionalPart.get());
-        }
+        Optional<Part> optionalPart;
+        optionalPart = partService.updatePartName(id, part);
+        return optionalPart.map(value -> ResponseEntity.status(HttpStatus.OK).body(value)).orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
     @DeleteMapping(value = "/delete/{id}", produces = "application/json")
     public ResponseEntity<Part> deletePart(@PathVariable Long id) {
-        Optional<Part> optionalPart = partService.deletePart(id);
-        if (optionalPart.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        } else {
-            return ResponseEntity.status(HttpStatus.OK).body(optionalPart.get());
-        }
+        Optional<Part> optionalPart;
+        optionalPart = partService.deletePart(id);
+        return optionalPart.map(part -> ResponseEntity.status(HttpStatus.OK).body(part)).orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 }

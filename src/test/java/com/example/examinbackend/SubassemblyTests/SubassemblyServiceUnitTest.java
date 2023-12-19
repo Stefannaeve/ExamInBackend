@@ -28,7 +28,6 @@ public class SubassemblyServiceUnitTest {
     @Test
     void shouldGetSubassemblyById() {
         List<Part> parts = List.of(new Part(), new Part());
-        Subassembly subassemblyOne = new Subassembly("Subassembly 1", parts);
         Subassembly subassemblyTwo = new Subassembly("Subassembly 2", parts);
         when(subassemblyRepository.findById(2L)).thenReturn(Optional.of(subassemblyTwo));
         var foundSubassembly = subassemblyService.getSubassemblyById(2L);
@@ -37,7 +36,7 @@ public class SubassemblyServiceUnitTest {
 
     @Test
     void shouldCreateANewSubassembly() {
-        List<Part> parts = List.of(new Part("sdfseda", 200L), new Part("dfgd", 300L));
+        List<Part> parts = List.of(new Part("Test Part", 200L), new Part("Test Part Two", 300L));
         Subassembly subassembly = new Subassembly("Subassembly 1", parts);
         when(subassemblyRepository.save(subassembly)).thenReturn(subassembly);
         assert subassembly.getSubassemblyName().equals("Subassembly 1");

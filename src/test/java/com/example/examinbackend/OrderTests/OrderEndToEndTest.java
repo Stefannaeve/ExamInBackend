@@ -5,7 +5,6 @@ import com.example.examinbackend.repository.*;
 import com.example.examinbackend.service.OrderService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +16,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -42,20 +40,11 @@ public class OrderEndToEndTest {
     @Autowired
     private CustomerRepository customerRepository;
 
-    @Autowired
-    private PartRepository partRepository;
-
-    @Autowired
-    private SubassemblyRepository subassemblyRepository;
-
-    @Autowired
-    private MachineRepository machineRepository;
-
     private Long orderId;
 
     @BeforeEach
     public void setUp() {
-        Customer customer = customerRepository.save(new Customer("Johnn Doe", "Email@email.email", "123"));
+        Customer customer = customerRepository.save(new Customer("TestCustomer", "TestEmail", "TestPhone"));
         orderId = orderService.createOrder(customer.getId()).get().getId();
     }
 
@@ -64,19 +53,19 @@ public class OrderEndToEndTest {
     @Test
     @Transactional
     public void shouldGetAllOrders() throws Exception {
-        Customer customer = customerRepository.save(new Customer("Johnny Big Boi", "Johnny@big.boi", "BIG BOI's NUMBER"));
+        Customer customer = customerRepository.save(new Customer("Test Customer", "Test Email", "Test Phone"));
         Customer order2 = orderService.createOrder(customer.getId()).get().getCustomer();
 
         mockMvc.perform(get("/api/order/all"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(orderId))
-                .andExpect(jsonPath("$[0].customer.customerName").value("Johnn Doe"))
-                .andExpect(jsonPath("$[0].customer.email").value("Email@email.email"))
-                .andExpect(jsonPath("$[0].customer.phone").value("123"))
+                .andExpect(jsonPath("$[0].customer.customerName").value("TestCustomer"))
+                .andExpect(jsonPath("$[0].customer.email").value("TestEmail"))
+                .andExpect(jsonPath("$[0].customer.phone").value("TestPhone"))
                 .andExpect(jsonPath("$[1].id").value(order2.getId()))
-                .andExpect(jsonPath("$[1].customer.customerName").value("Johnny Big Boi"))
-                .andExpect(jsonPath("$[1].customer.email").value("Johnny@big.boi"))
-                .andExpect(jsonPath("$[1].customer.phone").value("BIG BOI's NUMBER"));
+                .andExpect(jsonPath("$[1].customer.customerName").value("Test Customer"))
+                .andExpect(jsonPath("$[1].customer.email").value("Test Email"))
+                .andExpect(jsonPath("$[1].customer.phone").value("Test Phone"));
     }
 
     @Test
@@ -92,7 +81,7 @@ public class OrderEndToEndTest {
         mockMvc.perform(get("/api/order/all/0/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(orderId))
-                .andExpect(jsonPath("$[0].customer.customerName").value("Johnn Doe"))
+                .andExpect(jsonPath("$[0].customer.customerName").value("TestCustomer"))
                 .andExpect(jsonPath("$[1].id").doesNotExist());
 
         mockMvc.perform(get("/api/order/all/1/1"))
@@ -104,7 +93,7 @@ public class OrderEndToEndTest {
         mockMvc.perform(get("/api/order/all/0/3"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(orderId))
-                .andExpect(jsonPath("$[0].customer.customerName").value("Johnn Doe"))
+                .andExpect(jsonPath("$[0].customer.customerName").value("TestCustomer"))
                 .andExpect(jsonPath("$[1].id").value(order2.getId()))
                 .andExpect(jsonPath("$[1].customer.customerName").value("customer2"))
                 .andExpect(jsonPath("$[2].id").value(order3.getId()))
@@ -125,9 +114,9 @@ public class OrderEndToEndTest {
         mockMvc.perform(get("/api/order/" + orderId))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(orderId))
-                .andExpect(jsonPath("$.customer.customerName").value("Johnn Doe"))
-                .andExpect(jsonPath("$.customer.email").value("Email@email.email"))
-                .andExpect(jsonPath("$.customer.phone").value("123"));
+                .andExpect(jsonPath("$.customer.customerName").value("TestCustomer"))
+                .andExpect(jsonPath("$.customer.email").value("TestEmail"))
+                .andExpect(jsonPath("$.customer.phone").value("TestPhone"));
     }
 
     @Test
@@ -141,16 +130,16 @@ public class OrderEndToEndTest {
     @Transactional
     public void ShouldAddCustomerToOrderAndCreateOrder() throws Exception {
 
-        Customer customer = customerRepository.save(new Customer("James", "Small boie", "123"));
+        Customer customer = customerRepository.save(new Customer("Test Customer", "Test Email", "Test Phone"));
 
         MvcResult result = mockMvc.perform(post("/api/order/add/customer/" + customer.getId())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"customerName\":\"James\", \"email\":\"Small boie\", \"phone\":\"123\"}")
+                .content("{\"customerName\":\"Test Customer\", \"email\":\"Test Email\", \"phone\":\"Test Phone\"}")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.customer.customerName").value("James"))
-                .andExpect(jsonPath("$.customer.email").value("Small boie"))
-                .andExpect(jsonPath("$.customer.phone").value("123"))
+                .andExpect(jsonPath("$.customer.customerName").value("Test Customer"))
+                .andExpect(jsonPath("$.customer.email").value("Test Email"))
+                .andExpect(jsonPath("$.customer.phone").value("Test Phone"))
                 .andReturn();
 
         String content = result.getResponse().getContentAsString();
@@ -160,9 +149,9 @@ public class OrderEndToEndTest {
         assert entity.isPresent();
 
         Order orderEntity = entity.get();
-        assert orderEntity.getCustomer().getCustomerName().equals("James");
-        assert orderEntity.getCustomer().getEmail().equals("Small boie");
-        assert orderEntity.getCustomer().getPhone().equals("123");
+        assert orderEntity.getCustomer().getCustomerName().equals("Test Customer");
+        assert orderEntity.getCustomer().getEmail().equals("Test Email");
+        assert orderEntity.getCustomer().getPhone().equals("Test Phone");
     }
 
     @Test
@@ -171,9 +160,9 @@ public class OrderEndToEndTest {
         mockMvc.perform(delete("/api/order/delete/" + orderId)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.customer.customerName").value("Johnn Doe"))
-                .andExpect(jsonPath("$.customer.email").value("Email@email.email"))
-                .andExpect(jsonPath("$.customer.phone").value("123"));
+                .andExpect(jsonPath("$.customer.customerName").value("TestCustomer"))
+                .andExpect(jsonPath("$.customer.email").value("TestEmail"))
+                .andExpect(jsonPath("$.customer.phone").value("TestPhone"));
 
         Optional<Order> entity = orderRepository.findById(orderId);
         assert entity.isEmpty();

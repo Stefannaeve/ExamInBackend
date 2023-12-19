@@ -21,12 +21,9 @@ public class OrderController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Order> getOrder(@PathVariable Long id) {
-        Optional<Order> optionalOrder = orderService.getOrderById(id);
-        if (optionalOrder.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        } else {
-            return ResponseEntity.status(HttpStatus.OK).body(optionalOrder.get());
-        }
+        Optional<Order> optionalOrder;
+        optionalOrder = orderService.getOrderById(id);
+        return optionalOrder.map(order -> ResponseEntity.status(HttpStatus.OK).body(order)).orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
     @GetMapping("/all")
@@ -40,31 +37,21 @@ public class OrderController {
 
     @PostMapping(value = "/add/customer/{customerId}", produces = "application/json")
     public ResponseEntity<Order> createOrder(@PathVariable Long customerId) {
-        Optional<Order> optionalOrder = orderService.createOrder(customerId);
-        if (optionalOrder.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        } else {
-            return ResponseEntity.status(HttpStatus.CREATED).body(optionalOrder.get());
-        }
+        Optional<Order> optionalOrder;
+        optionalOrder = orderService.createOrder(customerId);
+        return optionalOrder.map(order -> ResponseEntity.status(HttpStatus.CREATED).body(order)).orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
     @PutMapping(value = "/update/{orderId}", produces = "application/json", consumes = "application/json")
     public ResponseEntity<Order> updateOrderMachines(@PathVariable Long orderId, @RequestBody List<Machine> machines) {
-        Optional<Order> optionalOrder = orderService.updateOrderMachines(machines, orderId);
-        if (optionalOrder.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        } else {
-            return ResponseEntity.status(HttpStatus.OK).body(optionalOrder.get());
-        }
+        Optional<Order> optionalOrder;
+        optionalOrder = orderService.updateOrderMachines(machines, orderId);
+        return optionalOrder.map(order -> ResponseEntity.status(HttpStatus.OK).body(order)).orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Order> deleteOrder(@PathVariable Long id) {
         Optional<Order> optionalOrder = orderService.deleteOrder(id);
-        if (optionalOrder.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        } else {
-            return ResponseEntity.status(HttpStatus.OK).body(optionalOrder.get());
-        }
+        return optionalOrder.map(order -> ResponseEntity.status(HttpStatus.OK).body(order)).orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 }

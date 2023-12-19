@@ -34,7 +34,6 @@ public class PartServiceUnitTest {
     }
     @Test
     void shouldGetPartByName() {
-        Part partOne = new Part("Part 1", 200L);
         Part partTwo = new Part("Part 2", 300L);
         when(partRepository.findByPartName("Part 2")).thenReturn(Optional.of(partTwo));
         var partByName = partService.getPartByName("Part 2");

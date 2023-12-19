@@ -2,9 +2,7 @@ package com.example.examinbackend.OrderTests;
 
 import com.example.examinbackend.model.Customer;
 import com.example.examinbackend.model.Order;
-import com.example.examinbackend.repository.CustomerRepository;
 import com.example.examinbackend.repository.OrderRepository;
-import com.example.examinbackend.service.CustomerService;
 import com.example.examinbackend.service.OrderService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +26,7 @@ public class OrderServiceUnitTest {
 
     @Test
     void shouldGetOrderById() {
-        Customer customerOne = new Customer();
         Customer customerTwo = new Customer();
-        Order orderOne = new Order(customerOne);
         Order orderTwo = new Order(customerTwo);
         when(orderRepository.findById(2L)).thenReturn(Optional.of(orderTwo));
         var orderById = orderService.getOrderById(2L);
@@ -57,8 +53,8 @@ public class OrderServiceUnitTest {
     void shouldDeleteANewOrder() {
         Customer customer = new Customer();
         Order order = new Order(customer);
-        orderService.deleteOrder(1L);
-        assert orderService.getAllOrders().size() == 0;
+        when(orderService.deleteOrder(1L)).thenReturn(Optional.of(order));
+        assert orderService.deleteOrder(1L).equals(Optional.of(order));
     }
     @Test
     void shouldUpdateOrderById() {

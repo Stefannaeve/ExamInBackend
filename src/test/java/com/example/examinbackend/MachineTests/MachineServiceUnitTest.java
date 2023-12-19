@@ -26,7 +26,6 @@ public class MachineServiceUnitTest {
     @Test
     void shouldGetMachineById() {
         List<Subassembly> subassemblies =  List.of(new Subassembly(), new Subassembly());
-        Machine machineOne = new Machine("Machine 1", subassemblies);
         Machine machineTwo = new Machine("Machine 2", subassemblies);
         when(machineRepository.findById(2L)).thenReturn(Optional.of(machineTwo));
         var machineById = machineService.getMachineById(2L);
@@ -52,7 +51,7 @@ public class MachineServiceUnitTest {
         Machine machine = new Machine("Machine 1", subassemblies);
         when(machineRepository.save(machine)).thenReturn(machine);
         when(machineRepository.findById(1L)).thenReturn(Optional.of(machine));
-        machineService.deleteMachine(1l);
+        machineService.deleteMachine(1L);
         assert machineService.getAllMachines().size() == 0;
     }
     @Test

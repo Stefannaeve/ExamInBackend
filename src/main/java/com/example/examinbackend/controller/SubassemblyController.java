@@ -20,12 +20,9 @@ public class SubassemblyController {
     }
     @GetMapping("/{id}")
     public ResponseEntity<Subassembly> getSubassembly(@PathVariable Long id) {
-        Optional<Subassembly> optionalSubassembly = subassemblyService.getSubassemblyById(id);
-        if (optionalSubassembly.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }else {
-            return ResponseEntity.status(HttpStatus.OK).body(optionalSubassembly.get());
-        }
+        Optional<Subassembly> optionalSubassembly;
+        optionalSubassembly = subassemblyService.getSubassemblyById(id);
+        return optionalSubassembly.map(subassembly -> ResponseEntity.status(HttpStatus.OK).body(subassembly)).orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
     @GetMapping("/all")
     public List<Subassembly> getAllSubassemblies() {
@@ -42,20 +39,14 @@ public class SubassemblyController {
     }
     @PutMapping(value = "/update/{id}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Subassembly> updateSubassemblyName(@PathVariable Long id, @RequestBody Subassembly subassembly) {
-        Optional<Subassembly> optionalSubassembly = subassemblyService.updateSubassemblyName(id, subassembly);
-        if (optionalSubassembly.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }else {
-            return ResponseEntity.status(HttpStatus.OK).body(optionalSubassembly.get());
-        }
+        Optional<Subassembly> optionalSubassembly;
+        optionalSubassembly = subassemblyService.updateSubassemblyName(id, subassembly);
+        return optionalSubassembly.map(value -> ResponseEntity.status(HttpStatus.OK).body(value)).orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
     @DeleteMapping(value ="/delete/{id}", produces = "application/json")
     public ResponseEntity<Subassembly> deleteSubassembly(@PathVariable Long id) {
-        Optional<Subassembly> optionalSubassembly = subassemblyService.deleteSubassembly(id);
-        if (optionalSubassembly.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }else {
-            return ResponseEntity.status(HttpStatus.OK).body(optionalSubassembly.get());
-        }
+        Optional<Subassembly> optionalSubassembly;
+        optionalSubassembly = subassemblyService.deleteSubassembly(id);
+        return optionalSubassembly.map(subassembly -> ResponseEntity.status(HttpStatus.OK).body(subassembly)).orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 }

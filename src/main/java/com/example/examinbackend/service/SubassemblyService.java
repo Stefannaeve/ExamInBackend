@@ -21,12 +21,7 @@ public class SubassemblyService {
     }
 
     public Optional<Subassembly> getSubassemblyById(Long id) {
-        Optional<Subassembly> optionalSubassembly = subassemblyRepository.findById(id);
-        if (optionalSubassembly.isEmpty()) {
-            return Optional.empty();
-        }else {
-            return optionalSubassembly;
-        }
+        return subassemblyRepository.findById(id);
     }
 
     public Subassembly createSubassembly(Subassembly subassembly) {
@@ -64,11 +59,6 @@ public class SubassemblyService {
     }
 
     public Optional<Subassembly> getSubassemblyByName(String name) {
-        Optional<Subassembly> optionalSubassembly = subassemblyRepository.findBySubassemblyName(name);
-        if (optionalSubassembly.isEmpty()) {
-            return Optional.empty();
-        }else {
-            return optionalSubassembly;
-        }
+        return subassemblyRepository.findBySubassemblyName(name);
     }
 }

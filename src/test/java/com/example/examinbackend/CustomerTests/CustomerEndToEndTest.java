@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -185,10 +184,10 @@ public class CustomerEndToEndTest {
 
         MvcResult result = mockMvc.perform(put("/api/customer/update/" + customerId + "/name")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"customerName\":\"Bob Marley\"}")
+                        .content("{\"customerName\":\"Test Customer\"}")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.customerName").value("Bob Marley"))
+                .andExpect(jsonPath("$.customerName").value("Test Customer"))
                 .andReturn();
 
         String jsonString = result.getResponse().getContentAsString();
@@ -198,21 +197,21 @@ public class CustomerEndToEndTest {
         assertTrue(entity.isPresent());
 
         Customer customerEntity = entity.get();
-        assertEquals("Bob Marley", customerEntity.getCustomerName());
+        assertEquals("Test Customer", customerEntity.getCustomerName());
     }
 
     @Test
     @Transactional
     public void shouldUpdateCustomerEmail() throws Exception {
-        Customer customer = new Customer("Harald Haraldson", "Harald@Haraldson.Harald", "20842048");
+        Customer customer = new Customer("Test Customer", "Test Email", "20842048");
         Long customerId = customerRepository.save(customer).getId();
 
         MvcResult result = mockMvc.perform(put("/api/customer/update/" + customerId + "/email")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"email\":\"Harald@BobbyBigBoi.com\"}")
+                        .content("{\"email\":\"TestEmail\"}")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.email").value("Harald@BobbyBigBoi.com"))
+                .andExpect(jsonPath("$.email").value("TestEmail"))
                 .andReturn();
 
         String jsonString = result.getResponse().getContentAsString();
@@ -222,13 +221,13 @@ public class CustomerEndToEndTest {
         assertTrue(entity.isPresent());
 
         Customer customerEntity = entity.get();
-        assertEquals("Harald@BobbyBigBoi.com", customerEntity.getEmail());
+        assertEquals("TestEmail", customerEntity.getEmail());
     }
 
     @Test
     @Transactional
     public void shouldUpdateCustomerPhone() throws Exception {
-        Customer customer = new Customer("Biggibigboi", "Biggest@Gmail.big", "787382768");
+        Customer customer = new Customer("Test Customer", "Test Email", "787382768");
         Long customerId = customerRepository.save(customer).getId();
 
         MvcResult result = mockMvc.perform(put("/api/customer/update/" + customerId + "/phone")
@@ -301,15 +300,15 @@ public class CustomerEndToEndTest {
     @Transactional
     public void shouldUpdateAddressInCustomer() throws Exception {
         Customer customer = new Customer("TestCustomer", "TestEmail", "012345");
-        customer.setAddresses(Arrays.asList(new Address("TestAddress")));
+        customer.setAddresses(List.of(new Address("TestAddress")));
         Address address = customerService.createCustomer(customer).getAddresses().get(0);
 
         mockMvc.perform(put("/api/customer/address/update/" + address.getId())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"address\":\"FrognerParken\"}")
+                        .content("{\"address\":\"Test Address\"}")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.address").value("FrognerParken"));
+                .andExpect(jsonPath("$.address").value("Test Address"));
     }
 
     @Test
@@ -327,7 +326,6 @@ public class CustomerEndToEndTest {
         address = addressRepository.findById(customer.getAddresses().get(0).getId()).get();
         List<Customer> customers = List.of(customer);
         address.setCustomer(customers);
-        System.out.println(address);
 
         MvcResult result = mockMvc.perform(delete("/api/customer/" + customer.getId() + "/address/delete/" + address.getId())
                         .accept(MediaType.APPLICATION_JSON))

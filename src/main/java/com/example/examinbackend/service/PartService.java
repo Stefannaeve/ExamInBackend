@@ -19,12 +19,9 @@ public class PartService {
     }
 
     public Optional<Part> getPartById(Long id) {
-        Optional<Part> optionalPart = partRepository.findById(id);
-        if (optionalPart.isEmpty()) {
-            return Optional.empty();
-        }else {
-            return optionalPart;
-        }
+        Optional<Part> optionalPart;
+        optionalPart = partRepository.findById(id);
+        return optionalPart;
     }
     public Part getPartByName(String name) {
         return partRepository.findByPartName(name).orElse(null);

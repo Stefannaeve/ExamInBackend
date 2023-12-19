@@ -25,7 +25,6 @@ public class CustomerServiceUnitTest {
 
     @Test
     void shouldGetCustomerById(){
-        Customer customerOne = new Customer("Customer 1", "Address 1", "Phone 1");
         Customer customerTwo = new Customer("Customer 2", "Address 2", "Phone 2");
         when(customerRepository.findById(2L)).thenReturn(Optional.of(customerTwo));
         var foundCustomer = customerService.getCustomerById(2L);

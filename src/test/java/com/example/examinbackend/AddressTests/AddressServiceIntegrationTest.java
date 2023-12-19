@@ -20,7 +20,6 @@ public class AddressServiceIntegrationTest {
 
     @Test
     void shouldGetAddressById() {
-        Address addressOne = new Address("Address 1");
         Address addressTwo = new Address("Address 2");
         Address savedAddress = addressRepository.save(addressTwo);
         var addressById = addressService.getAddressById(savedAddress.getId());

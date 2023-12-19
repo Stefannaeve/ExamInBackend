@@ -61,7 +61,7 @@ public class MachineEndToEndTest {
         List<Part> cpuParts = Arrays.asList(cpu, cpuCooler, thermalPaste);
 
         Subassembly cpuSubassembly = subassemblyRepository.save(new Subassembly("CPU", cpuParts));
-        List<Subassembly> subassemblies = Arrays.asList(cpuSubassembly);
+        List<Subassembly> subassemblies = List.of(cpuSubassembly);
 
         machineIds = machineRepository.save(new Machine("Windows Desktop", subassemblies)).getId();
     }
@@ -104,7 +104,7 @@ public class MachineEndToEndTest {
         List<Part> cpuParts = Arrays.asList(cpu, cpuCooler, thermalPaste);
 
         Subassembly cpuSubassembly = subassemblyRepository.save(new Subassembly("CPU2", cpuParts));
-        List<Subassembly> subassemblies = Arrays.asList(cpuSubassembly);
+        List<Subassembly> subassemblies = List.of(cpuSubassembly);
 
         machineIds = machineRepository.save(new Machine("Windows Desktop2", subassemblies)).getId();
 
@@ -137,7 +137,7 @@ public class MachineEndToEndTest {
         List<Part> cpuParts = Arrays.asList(cpu, cpuCooler, thermalPaste);
 
         Subassembly cpuSubassembly = subassemblyRepository.save(new Subassembly("CPU2", cpuParts));
-        List<Subassembly> subassemblies = Arrays.asList(cpuSubassembly);
+        List<Subassembly> subassemblies = List.of(cpuSubassembly);
 
         machineRepository.save(new Machine("Windows Desktop2", subassemblies));
 

@@ -28,11 +28,7 @@ public class CustomerController {
     @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<Customer> getCustomer(@PathVariable Long id) {
         Optional<Customer> optionalCustomer = customerService.getCustomerById(id);
-        if (optionalCustomer.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }else {
-            return ResponseEntity.status(HttpStatus.OK).body(optionalCustomer.get());
-        }
+        return optionalCustomer.map(customer -> ResponseEntity.status(HttpStatus.OK).body(customer)).orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
     @GetMapping(value = "/all", produces = "application/json")
@@ -59,31 +55,19 @@ public class CustomerController {
     @PutMapping(value = "/update/{id}/name", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Customer> updateCustomerName(@PathVariable Long id, @RequestBody Customer customer) {
         Optional<Customer> optionalCustomer = customerService.updateCustomerName(id, customer);
-        if (optionalCustomer.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }else {
-            return ResponseEntity.status(HttpStatus.CREATED).body(optionalCustomer.get());
-        }
+        return optionalCustomer.map(value -> ResponseEntity.status(HttpStatus.CREATED).body(value)).orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
     @PutMapping(value = "/update/{id}/email", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Customer> updateCustomerEmail(@PathVariable Long id, @RequestBody Customer customer) {
         Optional<Customer> optionalCustomer = customerService.updateCustomerEmail(id, customer);
-        if (optionalCustomer.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }else {
-            return ResponseEntity.status(HttpStatus.CREATED).body(optionalCustomer.get());
-        }
+        return optionalCustomer.map(value -> ResponseEntity.status(HttpStatus.CREATED).body(value)).orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
     @PutMapping(value = "/update/{id}/phone", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Customer> updateCustomerPhone(@PathVariable Long id, @RequestBody Customer customer) {
         Optional<Customer> optionalCustomer = customerService.updateCustomerPhone(id, customer);
-        if (optionalCustomer.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }else {
-            return ResponseEntity.status(HttpStatus.CREATED).body(optionalCustomer.get());
-        }
+        return optionalCustomer.map(value -> ResponseEntity.status(HttpStatus.CREATED).body(value)).orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
     //endregion
 
@@ -91,11 +75,7 @@ public class CustomerController {
     @DeleteMapping(value = "/delete/{id}", produces = "application/json")
     public ResponseEntity<Customer> deleteCustomer(@PathVariable Long id) {
         Optional<Customer> optionalCustomer = customerService.deleteCustomer(id);
-        if (optionalCustomer.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }else {
-            return ResponseEntity.status(HttpStatus.OK).body(optionalCustomer.get());
-        }
+        return optionalCustomer.map(customer -> ResponseEntity.status(HttpStatus.OK).body(customer)).orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
     //endregion
 
@@ -104,22 +84,13 @@ public class CustomerController {
     @PostMapping(value="/{customerId}/address/add", produces = "application/json", consumes = "application/json")
     public ResponseEntity<Customer> addAddress(@RequestBody Address address, @PathVariable Long customerId) {
         Optional<Customer> optionalCustomer = customerService.addAddress(address, customerId);
-        if (optionalCustomer.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-        else {
-            return ResponseEntity.status(HttpStatus.CREATED).body(optionalCustomer.get());
-        }
+        return optionalCustomer.map(customer -> ResponseEntity.status(HttpStatus.CREATED).body(customer)).orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
     @PutMapping(value = "/address/update/{id}", produces = "application/json", consumes = "application/json")
     public ResponseEntity<Address> updateAddress(@PathVariable Long id, @RequestBody Address address) {
         Optional<Address> optionalAddress = addressService.updateAddressById(id, address);
-        if (optionalAddress.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }else {
-            return ResponseEntity.status(HttpStatus.OK).body(optionalAddress.get());
-        }
+        return optionalAddress.map(value -> ResponseEntity.status(HttpStatus.OK).body(value)).orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
     @GetMapping("/{customerId}/address/all")
@@ -130,11 +101,7 @@ public class CustomerController {
     @DeleteMapping("/{customerId}/address/delete/{addressId}")
     public ResponseEntity<Customer> deleteAddress(@PathVariable Long customerId, @PathVariable Long addressId) {
         Optional<Customer> optionalCustomer = customerService.deleteAddress(customerId, addressId);
-        if (optionalCustomer.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }else {
-            return ResponseEntity.status(HttpStatus.OK).body(optionalCustomer.get());
-        }
+        return optionalCustomer.map(customer -> ResponseEntity.status(HttpStatus.OK).body(customer)).orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
     //endregion

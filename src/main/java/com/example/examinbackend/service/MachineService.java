@@ -20,8 +20,7 @@ public class MachineService {
         this.machineRepository = machineRepository;
     }
     public Optional<Machine> getMachineById(Long id) {
-        Optional<Machine> optionalMachine = machineRepository.findById(id);
-        return optionalMachine;
+        return machineRepository.findById(id);
     }
     public Machine createMachine(Machine machine) {
         long subassemblyPrice = 0;

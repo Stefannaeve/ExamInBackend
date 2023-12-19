@@ -24,7 +24,6 @@ public class AddressServiceUnitTest {
 
     @Test
     void shouldGetAddressById() {
-        Address addressOne = new Address("Address 1");
         Address addressTwo = new Address("Address 2");
         when(addressRepository.findById(2L)).thenReturn(Optional.of(addressTwo));
         var addressById = addressService.getAddressById(2L);

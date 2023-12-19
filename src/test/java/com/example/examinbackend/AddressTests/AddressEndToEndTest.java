@@ -55,7 +55,7 @@ public class AddressEndToEndTest {
     }
     @Test
     public void shouldCreateAddress() throws Exception {
-        String addressString = "Miami";
+        String addressString = "Test Address";
         MvcResult result = mockMvc.perform(post("/api/address/create")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"address\":\"" + addressString + "\"}")
@@ -64,14 +64,12 @@ public class AddressEndToEndTest {
                 .andExpect(jsonPath("$.address").value(addressString))
                 .andReturn();
 
-        // Verifying that the address is created in the database
         String jsonString = result.getResponse().getContentAsString();
         JsonNode address = new ObjectMapper().readTree(jsonString);
         Long id = address.path("id").asLong();
         Optional<Address> entity = addressRepository.findById(id);
         assertTrue(entity.isPresent());
 
-        // Verifying that the address string is correct
         Address addressEntity = entity.get();
         assertEquals(addressString, addressEntity.getAddress());
     }
@@ -118,9 +116,9 @@ public void getAllAddressesPageableTest() throws Exception {
     public void updateAddressTest() throws Exception {
         mockMvc.perform(put("/api/address/update/{id}", addressIds.get(0))
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"address\":\"Kongeslottet\"}")
+                .content("{\"address\":\"Updated Address\"}")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.address").value("Kongeslottet"));
+                .andExpect(jsonPath("$.address").value("Updated Address"));
     }
 }

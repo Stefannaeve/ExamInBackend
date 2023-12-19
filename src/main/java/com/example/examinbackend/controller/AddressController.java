@@ -22,21 +22,13 @@ public class AddressController {
     @PostMapping(value="/create", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Address> createAddress(@RequestBody Address address) {
         Optional<Address> optionalAddress = addressService.createAddress(address);
-        if (optionalAddress.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }else {
-            return ResponseEntity.status(HttpStatus.CREATED).body(optionalAddress.get());
-        }
+        return optionalAddress.map(value -> ResponseEntity.status(HttpStatus.CREATED).body(value)).orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
     @PutMapping(value ="/update/{id}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Address> updateAddress(@PathVariable Long id, @RequestBody Address address) {
         Optional<Address> optionalAddress = addressService.updateAddressById(id, address);
-        if (optionalAddress.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }else {
-            return ResponseEntity.status(HttpStatus.OK).body(optionalAddress.get());
-        }
+        return optionalAddress.map(value -> ResponseEntity.status(HttpStatus.OK).body(value)).orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
     @GetMapping("/all")
     public List<Address> getAllAddresses() {
@@ -50,10 +42,6 @@ public class AddressController {
     @PutMapping(value="/add/customer/{addressId}/{customerId}", produces = "application/json")
     public ResponseEntity<Address> addCustomerToAddress(@PathVariable Long addressId, @PathVariable Long customerId) {
         Optional<Address> optionalAddress = addressService.addCustomerToAddress(addressId, customerId);
-        if (optionalAddress.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }else {
-            return ResponseEntity.status(HttpStatus.OK).body(optionalAddress.get());
-        }
+        return optionalAddress.map(address -> ResponseEntity.status(HttpStatus.OK).body(address)).orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 }
