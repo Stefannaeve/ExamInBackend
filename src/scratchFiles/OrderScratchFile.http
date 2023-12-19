@@ -1,15 +1,6 @@
 ###
-POST localhost:8080/api/order/add/customer/1
+POST localhost:8080/api/order/add/customer/3
 Content-Type: application/json
-
-{
-  "customer" : {
-    "customerName" : "Test Customer"
-  },
-  "machines": [
-      "Test Machine", "Test Machine 2"
-  ]
-}
 
 ###
 GET localhost:8080/api/order/1
@@ -24,11 +15,179 @@ GET localhost:8080/api/order/all/0/1
 PUT localhost:8080/api/order/update/1
 Content-Type: application/json
 
-{
-    "customer" : {
-      "customerName" : "Updated Test Customer"
-    }
-}
+[
+  {
+    "id": 1,
+    "machineName": "Windows Desktop",
+    "machinePrice": 14550,
+    "subassemblies": [
+      {
+        "id": 1,
+        "subassemblyName": "CPU",
+        "subassemblyPrice": 1650,
+        "parts": [
+          {
+            "id": 1,
+            "partName": "CPU",
+            "partPrice": 1000
+          },
+          {
+            "id": 6,
+            "partName": "CPU Cooler",
+            "partPrice": 600
+          },
+          {
+            "id": 7,
+            "partName": "Thermal Paste",
+            "partPrice": 50
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "subassemblyName": "Motherboard",
+        "subassemblyPrice": 3000,
+        "parts": [
+          {
+            "id": 8,
+            "partName": "Motherboard",
+            "partPrice": 2000
+          },
+          {
+            "id": 13,
+            "partName": "BIOS FIRMWARE",
+            "partPrice": 400
+          },
+          {
+            "id": 14,
+            "partName": "On-Board Audio and Network Card",
+            "partPrice": 600
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "subassemblyName": "Ram",
+        "subassemblyPrice": 2400,
+        "parts": [
+          {
+            "id": 18,
+            "partName": "32gb RAM",
+            "partPrice": 2100
+          },
+          {
+            "id": 20,
+            "partName": "Memory Slots",
+            "partPrice": 300
+          }
+        ]
+      },
+      {
+        "id": 16,
+        "subassemblyName": "Gpu",
+        "subassemblyPrice": 7500,
+        "parts": [
+          {
+            "id": 21,
+            "partName": "GPU",
+            "partPrice": 6300
+          },
+          {
+            "id": 26,
+            "partName": "GPU Cooling System",
+            "partPrice": 1200
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "machineName": "Windows Laptop",
+    "machinePrice": 11150,
+    "subassemblies": [
+      {
+        "id": 2,
+        "subassemblyName": "Laptop CPU",
+        "subassemblyPrice": 1450,
+        "parts": [
+          {
+            "id": 2,
+            "partName": "Laptop CPU",
+            "partPrice": 800
+          },
+          {
+            "id": 6,
+            "partName": "CPU Cooler",
+            "partPrice": 600
+          },
+          {
+            "id": 7,
+            "partName": "Thermal Paste",
+            "partPrice": 50
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "subassemblyName": "Laptop Motherboard",
+        "subassemblyPrice": 2500,
+        "parts": [
+          {
+            "id": 9,
+            "partName": "Laptop Motherboard",
+            "partPrice": 1500
+          },
+          {
+            "id": 13,
+            "partName": "BIOS FIRMWARE",
+            "partPrice": 400
+          },
+          {
+            "id": 14,
+            "partName": "On-Board Audio and Network Card",
+            "partPrice": 600
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "subassemblyName": "Laptop Ram",
+        "subassemblyPrice": 1500,
+        "parts": [
+          {
+            "id": 17,
+            "partName": "16gb RAM",
+            "partPrice": 1200
+          },
+          {
+            "id": 20,
+            "partName": "Memory Slots",
+            "partPrice": 300
+          }
+        ]
+      },
+      {
+        "id": 17,
+        "subassemblyName": "Laptop Gpu",
+        "subassemblyPrice": 5700,
+        "parts": [
+          {
+            "id": 22,
+            "partName": "Laptop GPU",
+            "partPrice": 4500
+          },
+          {
+            "id": 26,
+            "partName": "GPU Cooling System",
+            "partPrice": 1200
+          }
+        ]
+      }
+    ]
+  }
+]
+
 
 ###
-DELETE localhost:8080/api/order/delete/1
+DELETE localhost:8080/api/order/delete/2
