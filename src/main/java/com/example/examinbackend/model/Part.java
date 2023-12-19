@@ -28,7 +28,8 @@ public class Part {
     @Column(name = "part_price")
     private Long partPrice;
 
-    @ManyToMany(mappedBy = "parts")
+    @ManyToMany(mappedBy = "parts", fetch = FetchType.EAGER)
+    @ToString.Exclude
     private List<Subassembly> subassemblies = new ArrayList<>();
 
     public Part(String partName, Long partPrice) {
