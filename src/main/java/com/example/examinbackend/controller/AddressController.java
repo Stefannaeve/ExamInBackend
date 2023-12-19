@@ -47,7 +47,7 @@ public class AddressController {
         return addressService.getAllAddressesPageable(pageNumber, pageSize);
     }
 
-    @PutMapping("/addCustomer/{addressId}/{customerId}")
+    @PutMapping(value="/add/customer/{addressId}/{customerId}", produces = "application/json")
     public ResponseEntity<Address> addCustomerToAddress(@PathVariable Long addressId, @PathVariable Long customerId) {
         Optional<Address> optionalAddress = addressService.addCustomerToAddress(addressId, customerId);
         if (optionalAddress.isEmpty()) {
