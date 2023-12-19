@@ -49,7 +49,7 @@ Content-Type: application/json
 DELETE localhost:8080/api/customer/delete/1
 
 ###
-POST localhost:8080/api/customer/1/address/add
+POST localhost:8080/api/customer/2/address/add
 Content-Type: application/json
 
 {
@@ -57,7 +57,7 @@ Content-Type: application/json
 }
 
 ###
-PUT localhost:8080/api/customer/address/update/1
+PUT localhost:8080/api/customer/address/update/3
 Content-Type: application/json
 
 {
