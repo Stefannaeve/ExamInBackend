@@ -43,7 +43,7 @@ public class Customer {
     @JsonIgnoreProperties("customer")
     private List<Address> addresses = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnoreProperties("customer")
     @JoinColumn(name = "customer_id")
     @ToString.Exclude
