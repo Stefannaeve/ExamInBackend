@@ -1,15 +1,19 @@
 package com.example.examinbackend;
 
+import com.example.examinbackend.controller.PartController;
 import com.example.examinbackend.model.*;
+import com.example.examinbackend.repository.PartRepository;
 import com.example.examinbackend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @Profile("!test")
@@ -17,29 +21,21 @@ public class DatabaseInitializer implements CommandLineRunner {
 
     private final SubassemblyService subassemblyService;
 
-    private final AddressService addressService;
-
-    private final CustomerService customerService;
-
-
-
     private final MachineService machineService;
     private final PartService partService;
 
     @Autowired
-    public DatabaseInitializer(SubassemblyService subassemblyService, AddressService addressService, CustomerService customerService, MachineService machineService, PartService partService) {
+    public DatabaseInitializer(SubassemblyService subassemblyService, MachineService machineService, PartService partService) {
         this.subassemblyService = subassemblyService;
-        this.addressService = addressService;
-        this.customerService = customerService;
         this.machineService = machineService;
         this.partService = partService;
     }
 
     public void run(String... args) {
 
-        Address address = addressService.createAddress(new Address("soledfkm")).get();
-        Customer customer = customerService.createCustomer(new Customer("John Doe", "serfasedf", "1234567890"));
-        addressService.addCustomerToAddress(address.getId(), customer.getId());
+//        Address address = addressService.createAddress(new Address("soledfkm")).get();
+//        Customer customer = customerService.createCustomer(new Customer("John Doe", "serfasedf", "1234567890"));
+//        addressService.addCustomerToAddress(address.getId(), customer.getId());
 
 
 //        Customer customer = new Customer("John Doe", "Email@Ami.dsj", "1234567890");
