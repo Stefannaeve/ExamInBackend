@@ -5,7 +5,7 @@ GET localhost:8080/api/machine/1
 GET localhost:8080/api/machine/all
 
 ###
-GET localhost:8080/api/machine/all/0/1
+GET localhost:8080/api/machine/all/0/2
 
 ###
 POST localhost:8080/api/machine/add
