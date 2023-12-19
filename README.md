@@ -105,6 +105,8 @@ Simply run the application and open the scratch files, and you can click on the 
 
 In the scratch files you will find a POST request on the top, this is due to some other API calls requiring the database to be populated.
 
+This project is run on JDK 17, so make sure you have the correct JDK installed.
+
 #### NOTE
 You will have to manually update the ids in some of the API paths to match the ids of the objects you have updated.
 
