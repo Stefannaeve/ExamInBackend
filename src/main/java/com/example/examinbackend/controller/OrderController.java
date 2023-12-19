@@ -38,7 +38,7 @@ public class OrderController {
         return orderService.getAllOrdersPageable(pageNumber, pageSize);
     }
 
-    @PostMapping(value = "/add/customer/{customerId}", consumes = "application/json", produces = "application/json")
+    @PostMapping(value = "/add/customer/{customerId}", produces = "application/json")
     public ResponseEntity<Order> createOrder(@PathVariable Long customerId) {
         Optional<Order> optionalOrder = orderService.createOrder(customerId);
         if (optionalOrder.isEmpty()) {
